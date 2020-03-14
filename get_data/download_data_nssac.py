@@ -12,7 +12,7 @@ import get_data.utils as utils
 
 base_url = "http://nssac.bii.virginia.edu/covid-19/dashboard/data/nssac-ncov-sd-{date}.csv"
 
-DATA_FOLDER = '../data/historical'
+DATA_FOLDER = '../data/raw/historical'
 DATE_FORMAT = "%m-%d-%Y"
 SLEEP_SEC = 3
 start_date = datetime.strptime("01-23-2020", DATE_FORMAT)
@@ -31,8 +31,15 @@ def daterange(start_date, end_date):
         yield start_date + timedelta(n)
 
 
-# for date in daterange(start_date, end_date + timedelta(1)):
-#     date_string = date.strftime(DATE_FORMAT)
-#     csv_url = base_url.format(date=date_string)
-#     print("Downaloading data from:", csv_url)
-#     time.sleep(SLEEP_SEC)
+for date in daterange(start_date, end_date + timedelta(1)):
+    date_string = date.strftime(DATE_FORMAT)
+    csv_url = base_url.format(date=date_string)
+    print(f"Downaloading data from {csv_url} ...")
+    try:
+        response = requests.get(csv_url)
+        response.raise_for_status()
+        utils.save(response, DATA_FOLDER)
+    except requests.HTTPError as e:
+        print(f"Failed downloading {csv_url}. Exception: {e}")
+    print(f"Sleeping {SLEEP_SEC} seconds ...")
+    time.sleep(SLEEP_SEC)
