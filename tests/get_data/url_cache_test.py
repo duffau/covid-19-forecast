@@ -18,11 +18,14 @@ def url_set_non_member():
 def url_set(url_set_member):
     return {url_set_member, 'b', 'c'}
 
+@pytest.fixture
+def url_cache_file_string():
+    return 'a\nb\nc'
 
 @pytest.fixture
-def url_cache(url_set):
-    cache_file = io.BytesIO()
-    pickle.dump(url_set, cache_file)
+def url_cache(url_cache_file_string):
+    cache_file = io.StringIO()
+    cache_file.write(url_cache_file_string)
     cache_file.seek(0)  # Reset cursor to head of file
     return URLCache(cache_file)
 
@@ -32,26 +35,16 @@ def test_init():
 
 
 def test_init_with_empty_file():
-    cache_file = io.BytesIO()
-    with pytest.raises(EOFError):
-        URLCache(cache_file)
+    cache_file = io.StringIO()
+    URLCache(cache_file)
 
 
-def test_init_with_pickled_file(url_set):
-    cache_file = io.BytesIO()
-    pickle.dump(url_set, cache_file)
+def test_init_with_string_file(url_set, url_cache_file_string):
+    cache_file = io.StringIO()
+    cache_file.write(url_cache_file_string)
     cache_file.seek(0)  # Reset cursor to head of file
-    print("size:", cache_file.tell())
     url_cache = URLCache(cache_file)
     assert url_cache.cache == url_set
-
-
-def test_init_with_cache_file_cant_cast_to_set():
-    cache_file = io.BytesIO()
-    pickle.dump(42, cache_file)
-    cache_file.seek(0)  # Reset cursor to head of file
-    with pytest.raises(TypeError):
-        URLCache(cache_file)
 
 
 def test_repr(url_cache):

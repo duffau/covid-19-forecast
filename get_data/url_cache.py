@@ -1,7 +1,6 @@
-import pickle
-
 
 class URLCache:
+    SEP_STR = "\n"
 
     def __init__(self, cache_file=None):
         if cache_file:
@@ -17,10 +16,10 @@ class URLCache:
         return item in self.cache
 
     def read(self, cache_file):
-        return pickle.load(cache_file)
+        return set(cache_file.read().split(self.SEP_STR))
 
     def save(self, cache_file):
-        pickle.dump(self.cache, cache_file)
+        return cache_file.write(self.SEP_STR.join(self.cache))
 
     def add(self, url):
         self.cache.add(url)
