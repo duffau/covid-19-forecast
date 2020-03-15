@@ -1,3 +1,4 @@
 data
 *.pdf
 */plots
+*/.url_cache
