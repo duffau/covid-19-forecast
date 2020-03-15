@@ -17,17 +17,20 @@ def add_constant_variables(df, names, values):
     return df
 
 
-def construct_variables(df):
-    df['total_removed'] = df.total_recovered + df.total_deaths
-    df['total_infected'] = df.total_confirmed - df.total_removed
-    df['total_susceptible'] = df.total_population - df.total_removed - df.total_infected
+def construct_sir_variables(df, recovered_name='total_recovered',
+                            deaths_name='total_deaths',
+                            cases_name='total_confirmed',
+                            population_name='total_population'):
+    df['total_removed'] = df[recovered_name] + df[deaths_name]
+    df['total_infected'] = df[cases_name] - df.total_removed
+    df['total_susceptible'] = df[population_name] - df.total_removed - df.total_infected
     return df
 
 
 def preprocess(df):
     DATE_FORMAT = "%m-%d-%Y"
     df.date = parse_date(df.date, DATE_FORMAT)
-    df = construct_variables(df)
+    df = construct_sir_variables(df)
     return df
 
 

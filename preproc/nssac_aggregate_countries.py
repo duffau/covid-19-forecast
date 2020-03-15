@@ -24,9 +24,18 @@ def run(
     df = csvs_to_dataframe(csv_files)
     df = aggregate_country(df)
     df_world_pop = utils.read_data(world_pop_csv)
-    df = pd.merge(df, df_world_pop[['name', 'pop2019']], how='left', left_on='Region', right_on='name')
+    df = pd.merge(df, df_world_pop[['name', 'pop2019']], how='left', left_on='country', right_on='name')
+    df = df.rename(columns={'pop2019': 'population', 'Last Update': 'date'})
     del df['name']
     df = normz.normalize_variable_names(df)
+    df = utils.construct_sir_variables(
+        df,
+        recovered_name='recovered',
+        deaths_name='deaths',
+        cases_name='confirmed',
+        population_name='population'
+    )
+
     print("\nAggregated df:")
     df.info()
     print("\nIs NA:")
@@ -68,12 +77,20 @@ def csvs_to_dataframe(csv_files):
 def normalize(df):
     df['Last Update'] = clean.clean_datetime(df['Last Update'], timestamp_pattern=r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}")
     df['Last Update'] = utils.parse_date(df['Last Update'], format='%Y-%m-%d %H:%M:%S')
+    df['country'] = normz.normalize_country(df['Region'], nssac_country_map)
     return df
+
+
+def nssac_country_map(region):
+    if 'China' in region:
+        return 'China'
+    else:
+        return region
 
 
 def aggregate_country(df):
     df = df.drop('name', axis=1)
-    return df.groupby(['Region', 'Last Update']).sum().reset_index()
+    return df.groupby(['country', 'Last Update']).sum().reset_index()
 
 
 if __name__ == '__main__':
