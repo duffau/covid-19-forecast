@@ -64,3 +64,8 @@ def test_is_member_in_url_cache(url_set_member, url_cache):
 
 def test_is_not_member_in_url_cache(url_set_non_member, url_cache):
     assert url_set_non_member not in url_cache
+
+
+def test_add_url_to_cache(url_set_non_member, url_cache):
+    url_cache.add(url_set_non_member)
+    assert url_set_non_member in url_cache

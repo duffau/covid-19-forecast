@@ -21,3 +21,6 @@ class URLCache:
 
     def save(self, cache_file):
         pickle.dump(self.cache, cache_file)
+
+    def add(self, url):
+        self.cache.add(url)
