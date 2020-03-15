@@ -19,7 +19,8 @@ class URLCache:
         return set(cache_file.read().split(self.SEP_STR))
 
     def save(self, cache_file):
-        return cache_file.write(self.SEP_STR.join(self.cache))
+        cache = sorted(self.cache)
+        return cache_file.write(self.SEP_STR.join(cache))
 
     def add(self, url):
         self.cache.add(url)
