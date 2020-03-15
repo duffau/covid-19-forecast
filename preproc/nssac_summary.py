@@ -1,3 +1,4 @@
+import preproc.normalize as normalize
 import preproc.utils as utils
 
 
@@ -9,7 +10,7 @@ def run(csv_file, world_pop_csv, output_folder):
         names=['total_population'],
         values=[utils.get_population_size(df_world_pop, "World")]
     )
-    df = utils.rename_variables(df)
+    df = normalize.normalize_variable_names(df)
     df = utils.preprocess(df)
     utils.save(df, csv_file, output_folder)
 
