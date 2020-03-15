@@ -6,6 +6,7 @@ verify_ssl = true
 [dev-packages]
 matplotlib = "*"
 pytest = "*"
+pytest-cov = "*"
 
 [packages]
 requests = "*"
