@@ -23,11 +23,12 @@ def run(
     csv_files = replace_known_errors(csv_files, known_errors)
     df = csvs_to_dataframe(csv_files)
     df = aggregate_country(df)
+
     df_world_pop = utils.read_data(world_pop_csv)
-    df = pd.merge(df, df_world_pop[['name', 'pop2019']], how='left', left_on='country', right_on='name')
-    df = df.rename(columns={'pop2019': 'population', 'Last Update': 'date'})
-    del df['name']
+    df = add_population(df, df_world_pop)
+
     df = normz.normalize_variable_names(df)
+
     df = utils.construct_sir_variables(
         df,
         recovered_name='recovered',
@@ -88,9 +89,22 @@ def nssac_country_map(region):
         return region
 
 
-def aggregate_country(df):
+def aggregate_country(df: pd.DataFrame):
     df = df.drop('name', axis=1)
-    return df.groupby(['country', 'Last Update']).sum().reset_index()
+    df = df.drop_duplicates()
+    df = df.groupby(['country', 'Last Update']).sum().reset_index()
+    df.sort_values(by=['country', 'Last Update'])
+    df = df.rename(columns={'Last Update': 'date'})
+    df = df.drop_duplicates()
+    return df
+
+
+def add_population(df, df_pop):
+    df = pd.merge(df, df_pop[['name', 'pop2019']], how='left', left_on='country', right_on='name')
+    df = df.drop('name', axis=1)
+    df.pop2019 *= 1000
+    df = df.rename(columns={'pop2019': 'population'})
+    return df
 
 
 if __name__ == '__main__':
