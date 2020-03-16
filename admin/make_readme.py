@@ -3,6 +3,7 @@ import glob
 from datetime import datetime
 
 FORECAST_PLOT_FOLDER = '../forecast_plots'
+RAW_HISTORICAL_DATA_FOLDER = '../data/raw/historical'
 README_FILE = '../README.md'
 
 readme_markdown_template = '''
@@ -24,10 +25,24 @@ The model is governed by two parameters, the rate at which individuals contract 
 {plots}
 '''
 
+
 def extract_country(plot_filename):
     base, _ = op.splitext(plot_filename)
     country, _ = base.split('_')
     return country.capitalize()
+
+
+def latest_dataset_date(folder):
+    files = glob.glob(op.join(folder, '*.csv'))
+    basenames = [op.basename(filename) for filename in files]
+    dates = []
+    for name in basenames:
+        try:
+            date = datetime.strptime(name[-14:-4], "%m-%d-%Y")
+            dates.append(date)
+        except Exception as e:
+            print(e)
+    return max(dates)
 
 
 plot_img_markdown_template = "![country](./forecast_plots/{plot_filename})"
@@ -43,7 +58,7 @@ for forecast_plot in forecast_plots:
     readme_plot_makdowns.append(plot_img_markdown)
 
 readme_markdown = readme_markdown_template.format(
-    date=datetime.now().strftime("%d-%m-%Y"),
+    date=latest_dataset_date(RAW_HISTORICAL_DATA_FOLDER).strftime("%d-%m-%Y"),
     plots='\n\n'.join(readme_plot_makdowns)
 )
 
