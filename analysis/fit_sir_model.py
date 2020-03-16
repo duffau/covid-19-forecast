@@ -12,7 +12,7 @@ DATA_FILE = '../data/pre-processed/historical/nssac_agg_data.pickle'
 df_all = pd.read_pickle(DATA_FILE)
 model_name = 'sir'
 
-for country in ['Denmark', 'Iran', 'Sweden', 'Italy']:
+for country in ['Denmark', 'Iran', 'Sweden', 'Italy', 'Spain']:
     plot_filename = f'{country}_{model_name}.png'.lower()
 
     df = df_all[df_all.country == country]
