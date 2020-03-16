@@ -43,6 +43,8 @@ def run(
     print(utils.column_na_stats(df))
     pickled_path = os.path.join(output_folder, 'nssac_agg_data.pickle')
     df.to_pickle(pickled_path)
+    csv_path = os.path.join(output_folder, 'nssac_agg_data.csv')
+    df.to_csv(csv_path, index=False)
 
 
 def read_all(csv_filenames: List[str]) -> List[CSVFile]:
