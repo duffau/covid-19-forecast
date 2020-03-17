@@ -80,6 +80,7 @@ def csvs_to_dataframe(csv_files):
 def normalize(df):
     df['Last Update'] = clean.clean_datetime(df['Last Update'], timestamp_pattern=r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}")
     df['Last Update'] = utils.parse_date(df['Last Update'], format='%Y-%m-%d %H:%M:%S')
+    df = df.rename(columns={'Last Update': 'last_update_ts'})
     df['country'] = normz.normalize_country(df['Region'], nssac_country_map)
     return df
 
@@ -93,10 +94,10 @@ def nssac_country_map(region):
 
 def aggregate_country(df: pd.DataFrame):
     df = df.drop('name', axis=1)
+    df['last_update_date'] = df['last_update_ts'].dt.date
     df = df.drop_duplicates()
-    df = df.groupby(['country', 'Last Update']).sum().reset_index()
-    df.sort_values(by=['country', 'Last Update'])
-    df = df.rename(columns={'Last Update': 'date'})
+    df = df.groupby(['country', 'last_update_date']).sum().reset_index()
+    df.sort_values(by=['country', 'last_update_date'])
     df = df.drop_duplicates()
     return df
 
@@ -110,10 +111,10 @@ def add_population(df, df_pop):
 
 
 if __name__ == '__main__':
-    from preproc.nssac_known_errors import nssac_known_errors
+    from data_prep.nssac_known_errors import nssac_known_errors
 
     CSV_WORLD_POP = '../data/raw/world_population.csv'
-    DATED_CSV_FILES_FOLDER = '../data/raw/historical'
+    DATED_CSV_FILES_FOLDER = '../data/raw/nssac/historical'
     PRE_PROCESSED_DATA_FOLDER = '../data/pre-processed/historical'
 
     dated_csv_file_pattern = os.path.join(DATED_CSV_FILES_FOLDER, 'nssac-ncov-sd-*-2020.csv')
