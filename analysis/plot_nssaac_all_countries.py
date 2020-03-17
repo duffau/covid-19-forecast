@@ -12,11 +12,11 @@ df.info()
 for country in df.country.unique():
     print(f"Plotting data for {country} ...")
     try:
-        df[df.country == country].plot(x='date', y=['confirmed', 'deaths', 'recovered'], title=country)
+        df[df.country == country].plot(x='last_update_date', y=['confirmed', 'deaths', 'recovered'], title=country)
         plt.savefig(os.path.join(PLOT_FOLDER, "{}-nssac-covid19-cumulativ.png".format(country.lower())))
         plt.close()
 
-        df[df.country == country].plot(x='date', y=['total_infected', 'total_removed'])
+        df[df.country == country].plot(x='last_update_date', y=['total_infected', 'total_removed'])
         plt.savefig(os.path.join(PLOT_FOLDER, "{}-nssac-covid19-cumulativ-SIR.png".format(country.lower())))
         plt.close()
     except Exception as e:

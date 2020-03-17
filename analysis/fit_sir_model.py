@@ -22,7 +22,7 @@ for country in ['Denmark', 'Iran', 'Sweden', 'Italy', 'Spain']:
     if df.size < 2:
         continue
 
-    dates_obs = df.date.values
+    dates_obs = df.last_update_date.values
     susceptible_obs = df.total_susceptible.values
     infected_obs = df.total_infected.values
     removed_obs = df.total_removed.values
