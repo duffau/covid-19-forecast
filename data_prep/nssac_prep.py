@@ -86,16 +86,16 @@ def normalize(df):
 
 
 def nssac_country_map(region):
-    if 'China' in region:
+    if 'Mainland China' in region:
         return 'China'
     else:
         return region
 
 
 def aggregate_country(df: pd.DataFrame):
-    df = df.drop('name', axis=1)
     df['last_update_date'] = df['last_update_ts'].dt.date
-    df = df.drop_duplicates()
+    df = df.groupby(['name', 'last_update_date']).max().reset_index()
+    df = df.drop('name', axis=1)
     df = df.groupby(['country', 'last_update_date']).sum().reset_index()
     df.sort_values(by=['country', 'last_update_date'])
     df = df.drop_duplicates()

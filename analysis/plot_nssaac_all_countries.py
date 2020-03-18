@@ -9,7 +9,8 @@ os.makedirs(PLOT_FOLDER, exist_ok=True)
 df = pd.read_pickle(DATA_FILE)
 df.info()
 
-for country in df.country.unique():
+# for country in df.country.unique():
+for country in ['China']:
     print(f"Plotting data for {country} ...")
     try:
         df[df.country == country].plot(x='last_update_date', y=['confirmed', 'deaths', 'recovered'], title=country)
