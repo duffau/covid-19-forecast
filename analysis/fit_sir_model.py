@@ -11,7 +11,6 @@ pd.set_option('display.max_columns', 500)
 pd.set_option('display.max_rows', 1000)
 PLOT_FOLDER = '../forecast_plots'
 DATA_FILE = '../data/pre-processed/cssegi_sand_data/cssegi_agg_data.csv'
-# DATA_FILE = '../data/pre-processed/historical/nssac_agg_data.csv'
 RANDOM_SEED = 43
 df_all = pd.read_csv(DATA_FILE)
 model_name = 'sir'

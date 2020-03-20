@@ -1,1 +1,0 @@
-url = "https://services1.arcgis.com/0MSEUqKaxRlEPj5g/arcgis/rest/services/Coronavirus_2019_nCoV_Cases/FeatureServer/2/query?outFields=*&where=1%3D1&f=geojson"
