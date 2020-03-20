@@ -1,68 +1,71 @@
+from typing import List
 import os.path as op
-import glob
 from datetime import datetime
 
 FORECAST_PLOT_FOLDER = '../forecast_plots'
 RAW_HISTORICAL_DATA_FOLDER = '../data/raw/historical'
 README_FILE = '../README.md'
+README_FOLDER = op.dirname(README_FILE)
+OUTPUT_DATE_FORMAT = "%d-%m-%Y"
 
-readme_markdown_template = '''
+README_TEMPLATE = '''
 # Forecasting COVID-19 cases
 
 Attempt to forecast the number of cases of COVID-19 around the world using the simple SIR model.
 
-## Forecasts updated: {date}
+## Forecasts
+*Updated: {date}*
 
-Forecast are based on the simple [SIR model](https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology#The_SIR_model) which assumes
-an individual can be one of three states:
+Forecasts are based on the simple [SIR model](https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology#The_SIR_model) which assumes
+an individual can be in one of three states,
 
-- Susceptible: Part of the population not immune to the disease 
-- Infected: Are currently infected.
-- Removed: Are immune after a recovery or dead.
+- Susceptible: Part of the population not immune to the disease, 
+- Infected: Is currently infected,
+- Removed: Is immune after a recovery or death.
 
 The model is governed by two parameters, the rate at which individuals contract the disease 𝛽 (beta), and the rate at which they are removed from the infected group 𝛾 (gamma). 
+
+Data is downloaded from *Johns Hopkins University Center for Systems Science and Engineering* COVID-19 [data repository](](https://github.com/CSSEGISandData/COVID-19)), used by their 
+[dashboard](https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6) app.
 
 {plots}
 '''
 
+README_PLOT_TEMPLATE = '''|![{country}]({file_path})|\n|:----------------------------------------:|\n| *Latest data point: {latest_data_point}*|'''
 
-def extract_country(plot_filename):
-    base, _ = op.splitext(plot_filename)
+
+def make_plots_markdown(plot_paths: List[str], latest_data_point_dates: List[datetime]):
+    readme_plot_makdowns = []
+    for plot_path, latest_data_point in zip(plot_paths, latest_data_point_dates):
+        country = extract_country(plot_path)
+        forecast_plot_rel_path = op.relpath(plot_path, README_FOLDER)
+        plot_img_markdown = README_PLOT_TEMPLATE.format(country=country,
+                                                        file_path=forecast_plot_rel_path,
+                                                        latest_data_point=latest_data_point.strftime(OUTPUT_DATE_FORMAT))
+        readme_plot_makdowns.append(plot_img_markdown)
+    return readme_plot_makdowns
+
+
+def make_readme_markdown(plots_md: List[str], update_date: datetime):
+    readme_markdown = README_TEMPLATE.format(
+        date=update_date.strftime(OUTPUT_DATE_FORMAT),
+        plots='\n\n'.join(plots_md)
+    )
+    return readme_markdown
+
+
+def extract_country(plot_filepath):
+    base, _ = op.splitext(op.basename(plot_filepath))
     country, _ = base.split('_')
     return country.capitalize()
 
 
-def latest_dataset_date(folder):
-    files = glob.glob(op.join(folder, '*.csv'))
-    basenames = [op.basename(filename) for filename in files]
-    dates = []
-    for name in basenames:
-        try:
-            date = datetime.strptime(name[-14:-4], "%m-%d-%Y")
-            dates.append(date)
-        except Exception as e:
-            print(e)
-    return max(dates)
-
-
-plot_img_markdown_template = "![country](./forecast_plots/{plot_filename})"
-
-forecast_plots = glob.glob(op.join(FORECAST_PLOT_FOLDER, '*.png'))
-
-readme_plot_makdowns = []
-
-for forecast_plot in forecast_plots:
-    plot_filename = op.basename(forecast_plot)
-    country = extract_country(plot_filename)
-    plot_img_markdown = plot_img_markdown_template.format(country=country, plot_filename=plot_filename)
-    readme_plot_makdowns.append(plot_img_markdown)
-
-readme_markdown = readme_markdown_template.format(
-    date=latest_dataset_date(RAW_HISTORICAL_DATA_FOLDER).strftime("%d-%m-%Y"),
-    plots='\n\n'.join(readme_plot_makdowns)
-)
-
-with open(README_FILE,'w') as readme_file:
-    readme_file.write(readme_markdown)
-
-
+if __name__ == '__main__':
+    import glob
+    forecast_plots_paths = glob.glob(op.join(FORECAST_PLOT_FOLDER, '*.png'))
+    latests_data_points = [datetime.now()]*len(forecast_plots_paths)
+    update_date = datetime.now()
+    plots_md = make_plots_markdown(forecast_plots_paths, latests_data_points)
+    readme_markdown = make_readme_markdown(plots_md, update_date)
+    with open(README_FILE, 'w') as readme_file:
+        readme_file.write(readme_markdown)
