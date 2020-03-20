@@ -108,7 +108,7 @@ def forecast(df, country, extract_forecast_info: callable, n_days_predict: int,
     SECS_PER_DAY = 60 * 60 * 24
     t_eval = (dates_obs - dates_obs[0]).astype('timedelta64[s]').astype('float64') / SECS_PER_DAY
     t_eval_pred = (dates_eval_pred - dates_eval_pred[0]).astype('timedelta64[s]').astype('float64') / SECS_PER_DAY
-    t_span = (min(t0, t_eval_pred.min()), t_eval_pred.max())
+    t_span = (t_eval_pred.min(), t_eval_pred.max())
 
     res = minimize(
         minimize_wrapper, np.array([beta, gamma, I0]), (y_obs, t_eval, S0, R0, N, t_span),
