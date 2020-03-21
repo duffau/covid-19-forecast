@@ -2,12 +2,14 @@ from typing import Iterable
 import pandas as pd
 import numpy as np
 import random
+import logging
 from scipy.integrate import solve_ivp
 from scipy.optimize import minimize
 from . import Params
 from forecast.forecast_info import ForecastInfo, ForecastInfoCollection
 
 
+logger = logging.getLogger(__name__)
 
 def forecast_countries(df: pd.DataFrame, col_country: str, extract_forecast_info: callable, n_days_predict: int,
                        start_params_collection: dict = None,
@@ -40,7 +42,7 @@ def forecast(df, country, extract_forecast_info: callable, n_days_predict: int,
     SCALING = 1000
     MODEL_NAME = 'SIR'
 
-    print(f"Forecasting {country}")
+    logger.info(f"Forecasting {country}")
     df = df[df.country == country]
     if df.size < 2:
         return None, None
@@ -54,7 +56,7 @@ def forecast(df, country, extract_forecast_info: callable, n_days_predict: int,
     removed_obs = df.total_removed.values / SCALING
     N = df.population.iloc[0] / SCALING
     y_obs = susceptible_obs, infected_obs, removed_obs
-    print(f'N: {N}')
+    logger.info(f'N: {N}')
 
     def sir_deriv(t, y, N, beta, gamma):
         S, I, R = y
@@ -65,7 +67,7 @@ def forecast(df, country, extract_forecast_info: callable, n_days_predict: int,
 
     def eval_sir_model(beta, gamma, I0, S0, R0, N, t_span, t_eval=None):
         y0 = (S0, I0, R0)
-        print(f'beta: {beta}, gamma: {gamma}, S0: {S0}, I0: {I0}')
+        logger.debug(f'beta: {beta}, gamma: {gamma}, S0: {S0}, I0: {I0}')
         sol = solve_ivp(sir_deriv, t_span, y0, t_eval=t_eval, args=(N, beta, gamma))
         return sol.y
 
@@ -76,7 +78,7 @@ def forecast(df, country, extract_forecast_info: callable, n_days_predict: int,
         val += ((S_hat_t - S_t) ** 2).mean()
         val += ((I_hat_t - I_t) ** 2).mean()
         val += ((R_hat_t - R_t) ** 2).mean()
-        print('sumsq:', val)
+        logger.debug(f'sumsq: {val:.3g}')
         return val
 
     def minimize_wrapper(params, y_obs, t_eval, *args, **kwargs):
@@ -90,11 +92,11 @@ def forecast(df, country, extract_forecast_info: callable, n_days_predict: int,
         return np.log(params)
 
     if start_params:
-        beta, gamma, I0 = repam(start_params)
+        beta, gamma, I0 = start_params
     else:
         np.random.seed(seed)
         beta, gamma = np.random.uniform(low=0.01, high=5.0, size=2)
-        I0 = infected_obs[0] if infected_obs[0] > 0 else random.uniform(a=1.0, b=50.0, size=1)
+        I0 = infected_obs[0] if infected_obs[0] > 0 else random.uniform(a=1.0 / SCALING, b=50.0 / SCALING)
 
     beta, gamma, I0 = repam([beta, gamma, I0])
 
@@ -114,9 +116,10 @@ def forecast(df, country, extract_forecast_info: callable, n_days_predict: int,
         method='Nelder-Mead',
         options={'maxiter': 2500, 'maxfev': 5000}
     )
-    print(res)
+    logger.info(res)
     beta, gamma, I0 = inv_repam(res.x)
-    print(f'R0 = {beta / gamma:.2f}')
+    logger.info(f'R0 = {beta / gamma:.2f}')
+
     S_t, I_t, R_t = eval_sir_model(beta, gamma, I0, S0, R0, N, t_span, t_eval_pred)
 
     df_forecast = pd.DataFrame(
