@@ -11,9 +11,14 @@ from forecast.forecast_info import ForecastInfo, ForecastInfoCollection
 
 logger = logging.getLogger(__name__)
 
-def forecast_countries(df: pd.DataFrame, col_country: str, extract_forecast_info: callable, n_days_predict: int,
+
+def forecast_countries(df: pd.DataFrame,
+                       col_country: str,
+                       extract_forecast_info: callable,
+                       n_days_predict: int,
                        start_params_collection: dict = None,
-                       countries: Iterable = tuple(), skip_countries: Iterable = tuple()):
+                       countries: Iterable = tuple(),
+                       skip_countries: Iterable = tuple()) -> (pd.DataFrame, ForecastInfoCollection):
 
     skip_countries = set(skip_countries)
     df_forecasts = []

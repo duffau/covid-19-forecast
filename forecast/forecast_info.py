@@ -1,14 +1,18 @@
+from typing import Iterable
 from datetime import datetime
 from pandas import DataFrame
+
+from . import Params
 
 
 class ForecastInfo:
 
-    def __init__(self, id: str, model_name: str, forecast_time: datetime, latest_data_point: datetime):
+    def __init__(self, id: str, model_name: str, forecast_time: datetime, latest_data_point: datetime, params: Params):
         self.id = id
         self.model_name = model_name
         self.forecast_time = forecast_time
         self.latest_data_point = latest_data_point
+        self.params = params
 
     def __str__(self):
         sorted_attributes = sorted(self.__dict__.items(), key=lambda item: item[0])
@@ -21,12 +25,24 @@ class ForecastInfo:
         return "\n".join([header, body])
 
 
-def extract_cssegi_forecast_info(country: str, model_name: str, df: DataFrame):
+class ForecastInfoCollection:
+    def __init__(self):
+        self.collection = {}
+
+    def add(self, forecast_info: ForecastInfo):
+        self.collection[forecast_info.id] = forecast_info
+
+    def get(self, id):
+        return self.collection.get(id)
+
+
+def extract_cssegi_forecast_info(country: str, model_name: str, params: Params, df: DataFrame):
     return ForecastInfo(
         id=country,
         model_name=model_name,
         forecast_time=datetime.now(),
-        latest_data_point=df.date.max().to_pydatetime()
+        latest_data_point=df.date.max().to_pydatetime(),
+        params=params
     )
 
 
