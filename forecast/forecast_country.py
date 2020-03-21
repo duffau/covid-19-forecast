@@ -4,10 +4,9 @@ import numpy as np
 import random
 from scipy.integrate import solve_ivp
 from scipy.optimize import minimize
-from collections import namedtuple
-from forecast.forecast_info import ForecastInfo
+from . import Params
+from forecast.forecast_info import ForecastInfo, ForecastInfoCollection
 
-StartParams = namedtuple('StartParams', ['beta', 'gamma', 'I0'])
 
 
 def forecast_countries(df: pd.DataFrame, col_country: str, extract_forecast_info: callable, n_days_predict: int,
