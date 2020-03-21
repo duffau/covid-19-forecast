@@ -18,7 +18,8 @@ def forecast_countries(df: pd.DataFrame,
                        n_days_predict: int,
                        start_params_collection: dict = None,
                        countries: Iterable = tuple(),
-                       skip_countries: Iterable = tuple()) -> (pd.DataFrame, ForecastInfoCollection):
+                       skip_countries: Iterable = tuple(),
+                       seed=42) -> (pd.DataFrame, ForecastInfoCollection):
 
     skip_countries = set(skip_countries)
     df_forecasts = []
@@ -36,7 +37,7 @@ def forecast_countries(df: pd.DataFrame,
         else:
             start_params = None
 
-        df_forecast, forecast_info = forecast(df_country, country, extract_forecast_info, n_days_predict, start_params)
+        df_forecast, forecast_info = forecast(df_country, country, extract_forecast_info, n_days_predict, start_params, seed)
         df_forecasts.append(df_forecast)
         forecast_info_col.add(forecast_info)
     return pd.concat(df_forecasts, axis=0, ignore_index=True), forecast_info_col
@@ -124,6 +125,7 @@ def forecast(df, country, extract_forecast_info: callable, n_days_predict: int,
     logger.info(res)
     beta, gamma, I0 = inv_repam(res.x)
     logger.info(f'R0 = {beta / gamma:.2f}')
+    logger.info(f'beta = {beta:.3g}, gamma = {gamma:.3g}, I0 = {I0:.3g}')
 
     S_t, I_t, R_t = eval_sir_model(beta, gamma, I0, S0, R0, N, t_span, t_eval_pred)
 

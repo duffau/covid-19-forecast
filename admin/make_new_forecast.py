@@ -9,8 +9,10 @@ OUT_TIME_SERIES_FOLDER = '../data/forecasts/time_series'
 OUT_INFO_FOLDER = '../data/forecasts/info'
 OUT_PLOT_FOLDER = '../forecast_plots'
 DATA_FILE = '../data/pre-processed/cssegi_sand_data/cssegi_agg_data.pickle'
-N_DAYS_PREDICT = 300
+N_DAYS_PREDICT = 400
 COUNTRIES = ['Denmark', 'Spain', 'Iran', 'Italy', 'Sweden']
+SEED = 42
+
 df_all = pd.read_pickle(DATA_FILE)
 
 logging.basicConfig(level=logging.INFO)
@@ -26,7 +28,8 @@ df_forecasts, forecast_info_collection = forecast_countries(
     extract_forecast_info=extract_cssegi_forecast_info,
     n_days_predict=N_DAYS_PREDICT,
     start_params_collection=start_params,
-    countries=COUNTRIES
+    countries=COUNTRIES,
+    seed=SEED
 )
 update_time = datetime.now().strftime('%Y-%m-%d')
 

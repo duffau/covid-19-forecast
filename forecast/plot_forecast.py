@@ -8,10 +8,8 @@ from forecast import ForecastInfo, Params
 
 SCALING_FACTOR = 1000
 
-def plot_forecast(df_forecast: DataFrame, forecast_info: ForecastInfo) -> plt.Figure:
-    days_short_term = 5
-    days_long_term = 30
 
+def plot_forecast(df_forecast: DataFrame, forecast_info: ForecastInfo, days_short_term=5, days_long_term=30) -> plt.Figure:
     fig = plt.figure(figsize=(8, 5), constrained_layout=True)
     gs = fig.add_gridspec(4, 3)
     long_term_plot = fig.add_subplot(gs[0:2, 0:2])
@@ -88,7 +86,7 @@ def calc_plot_stats(df_forecast: DataFrame, params: Params) -> dict:
     peak_infected_index = df_forecast.infected_forecast.idxmax()
     return {
         'r0': params.beta / params.gamma,
-        'peak_infected': df_forecast.infected_forecast[peak_infected_index]*SCALING_FACTOR,
+        'peak_infected': df_forecast.infected_forecast[peak_infected_index] * SCALING_FACTOR,
         'peak_date': df_forecast.dates[peak_infected_index]
     }
 
@@ -96,12 +94,12 @@ def calc_plot_stats(df_forecast: DataFrame, params: Params) -> dict:
 def format_counts(count):
     if count < 1e5:
         return f'{count:.0f}'
-    elif count <1e6:
-        return f'{count/1e3:.0f} Thousand'
-    elif count <1e9:
-        return f'{count/1e6:.2f} Million'
+    elif count < 1e6:
+        return f'{count / 1e3:.0f} Thousand'
+    elif count < 1e9:
+        return f'{count / 1e6:.2f} Million'
     else:
-        return f'{count/1e9:.2f} Billion'
+        return f'{count / 1e9:.2f} Billion'
 
 
 def save_plot(fig: plt.Figure, filename: str) -> None:

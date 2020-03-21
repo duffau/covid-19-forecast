@@ -2,7 +2,8 @@ from pandas import DataFrame, Series
 import re
 
 
-def normalize_variable_names(df: DataFrame):
+def normalize_variable_names(df: DataFrame, mapping):
+    df = df.rename(columns=mapping)
     df = df.rename(columns=lambda name: _strip_whitespace(name))
     df = df.rename(columns=lambda name: _replace_whitespace_with_underscore(name))
     df = df.rename(columns=lambda name: _camel_case_to_snake_case(name))
