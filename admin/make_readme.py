@@ -1,22 +1,22 @@
 from typing import List
 import os.path as op
 from datetime import datetime
+from dateutil import parser as dateparser
 
 FORECAST_PLOT_FOLDER = '../forecast_plots'
-RAW_HISTORICAL_DATA_FOLDER = '../data/raw/historical'
 README_FILE = '../README.md'
 README_FOLDER = op.dirname(README_FILE)
 OUTPUT_DATE_FORMAT = "%d-%m-%Y"
 
 README_TEMPLATE = '''
-# Forecasting COVID-19 cases
+<h1 align="center">Forecasting COVID-19 cases</h1>
 
-Attempt to forecast the number of cases of COVID-19 around the world using the simple SIR model.
+Attempt to forecast the number of cases of COVID-19 around the world using the simple [SIR model][sir_model_wiki].
 
 ## Forecasts
 *Updated: {date}*
 
-Forecasts are based on the simple [SIR model](https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology#The_SIR_model) which assumes
+Forecasts are based on the simple [SIR model][sir_model_wiki] which assumes
 an individual can be in one of three states,
 
 - Susceptible: Part of the population not immune to the disease, 
@@ -25,10 +25,15 @@ an individual can be in one of three states,
 
 The model is governed by two parameters, the rate at which individuals contract the disease 𝛽 (beta), and the rate at which they are removed from the infected group 𝛾 (gamma). 
 
-Data is downloaded from *Johns Hopkins University Center for Systems Science and Engineering* COVID-19 [data repository](](https://github.com/CSSEGISandData/COVID-19)), used by their 
-[dashboard](https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6) app.
+Data is downloaded from *Johns Hopkins University Center for Systems Science and Engineering* COVID-19 [data repository][csse-data-repo], used in their 
+[dashboard][john-hopkins-dashboard] app.
 
+### Plots
 {plots}
+
+[sir_model_wiki]: https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology#The_SIR_model
+[csse-data-repo]: https://github.com/CSSEGISandData/COVID-19
+[john-hopkins-dashboard]: https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6
 '''
 
 README_PLOT_TEMPLATE = '''|![{country}]({file_path})|\n|:----------------------------------------:|\n| *Latest data point: {latest_data_point}*|'''
@@ -62,10 +67,19 @@ def extract_country(plot_filepath):
 
 if __name__ == '__main__':
     import glob
-    forecast_plots_paths = glob.glob(op.join(FORECAST_PLOT_FOLDER, '*.png'))
-    latests_data_points = [datetime.now()]*len(forecast_plots_paths)
-    update_date = datetime.now()
-    plots_md = make_plots_markdown(forecast_plots_paths, latests_data_points)
+    from configparser import ConfigParser
+    config = ConfigParser()
+    forecast_plots_paths = sorted(glob.glob(op.join(FORECAST_PLOT_FOLDER, '*.png')))
+    forecast_info_paths = sorted(glob.glob(op.join(FORECAST_PLOT_FOLDER, '*.ini')))
+    assert len(forecast_plots_paths) == len(forecast_info_paths), f'len(forecast_plots_paths) = {len(forecast_plots_paths)} != len(forecast_info_paths) = {len(forecast_info_paths)}'
+
+    forecast_infos = []
+    for forecast_info_path in forecast_info_paths:
+        config.read(forecast_info_path)
+        forecast_infos.append(config._sections['forecast-info'].copy())
+    latest_data_points = [dateparser.parse(forecast_info['latest_data_point'].strip('"')) for forecast_info in forecast_infos]
+    update_date = dateparser.parse(forecast_infos[0]['forecast_time'].strip('"'))
+    plots_md = make_plots_markdown(forecast_plots_paths, latest_data_points)
     readme_markdown = make_readme_markdown(plots_md, update_date)
     with open(README_FILE, 'w') as readme_file:
         readme_file.write(readme_markdown)

@@ -22,7 +22,7 @@ def forecast_countries(df: pd.DataFrame,
 
     skip_countries = set(skip_countries)
     df_forecasts = []
-    forecast_infos = []
+    forecast_info_col = ForecastInfoCollection()
     countries = countries if countries else df[col_country].unique()
 
     for country in countries:
@@ -38,8 +38,8 @@ def forecast_countries(df: pd.DataFrame,
 
         df_forecast, forecast_info = forecast(df_country, country, extract_forecast_info, n_days_predict, start_params)
         df_forecasts.append(df_forecast)
-        forecast_infos.append(forecast_info)
-    return pd.concat(df_forecasts, axis=0, ignore_index=True), forecast_infos
+        forecast_info_col.add(forecast_info)
+    return pd.concat(df_forecasts, axis=0, ignore_index=True), forecast_info_col
 
 
 def forecast(df, country, extract_forecast_info: callable, n_days_predict: int,
@@ -127,18 +127,24 @@ def forecast(df, country, extract_forecast_info: callable, n_days_predict: int,
 
     S_t, I_t, R_t = eval_sir_model(beta, gamma, I0, S0, R0, N, t_span, t_eval_pred)
 
-    df_forecast = pd.DataFrame(
-        {
-            'country': country,
-            'dates': dates_eval_pred,
-            'susceptible_obs': susceptible_obs,
-            'susceptible_forecast': S_t,
-            'infected_obs': infected_obs,
-            'infected_forecast': I_t,
-            'removed_obs': removed_obs,
-            'removed_forecast': R_t
+    def pad_nan(obs_array, n_predicted):
+        return np.pad(obs_array, (0, n_predicted), 'constant', constant_values=np.nan)
 
-        }
-    )
-    forecast_info = extract_forecast_info(country, MODEL_NAME, df)
+    forecast_data = {
+        'country': country,
+        'dates': dates_eval_pred,
+        'susceptible_obs': pad_nan(susceptible_obs, n_days_predict),
+        'susceptible_forecast': S_t,
+        'infected_obs': pad_nan(infected_obs, n_days_predict),
+        'infected_forecast': I_t,
+        'removed_obs': pad_nan(removed_obs, n_days_predict),
+        'removed_forecast': R_t
+    }
+
+    df_forecast = pd.DataFrame(forecast_data)
+    forecast_info = extract_forecast_info(country=country,
+                                          model_name=MODEL_NAME,
+                                          df=df,
+                                          params=Params(beta, gamma, I0)
+                                          )
     return df_forecast, forecast_info
