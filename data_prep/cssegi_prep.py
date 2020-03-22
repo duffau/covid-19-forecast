@@ -78,7 +78,7 @@ def add_population(df, df_pop):
     return df
 
 
-if __name__ == '__main__':
+def main():
     CSV_WORLD_POP = '../data/raw/world_population.csv'
     CONFIRMED_CSV_FILE_PATH = '../data/raw/cssegi_sand_data/time_series_19-covid-Confirmed.csv'
     DEATHS_CSV_FILE_PATH = '../data/raw/cssegi_sand_data/time_series_19-covid-Deaths.csv'
@@ -91,3 +91,7 @@ if __name__ == '__main__':
         world_pop_csv=CSV_WORLD_POP,
         output_folder=PRE_PROCESSED_DATA_FOLDER
     )
+
+
+if __name__ == '__main__':
+    main()

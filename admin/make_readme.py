@@ -2,6 +2,12 @@ from typing import List
 import os.path as op
 from datetime import datetime
 from dateutil import parser as dateparser
+import glob
+from configparser import ConfigParser
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 FORECAST_PLOT_FOLDER = '../forecast_plots'
 README_FILE = '../README.md'
@@ -65,9 +71,8 @@ def extract_country(plot_filepath):
     return country.capitalize()
 
 
-if __name__ == '__main__':
-    import glob
-    from configparser import ConfigParser
+def main():
+    logger.info('Compiling README ...')
     config = ConfigParser()
     forecast_plots_paths = sorted(glob.glob(op.join(FORECAST_PLOT_FOLDER, '*.png')))
     forecast_info_paths = sorted(glob.glob(op.join(FORECAST_PLOT_FOLDER, '*.ini')))
@@ -83,3 +88,7 @@ if __name__ == '__main__':
     readme_markdown = make_readme_markdown(plots_md, update_date)
     with open(README_FILE, 'w') as readme_file:
         readme_file.write(readme_markdown)
+
+
+if __name__ == '__main__':
+    main()
