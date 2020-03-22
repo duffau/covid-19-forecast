@@ -1,3 +1,17 @@
+## Sunday 22/3 Update 2
+
+Fitting the SIR model with unit population, setting N=1. This seems to make the estimation more numerical stable.
+It make the beta and gamma estimates directly comparable across countries which makes it easier
+to set sensible starting values. There is still a significant discrepancy in the plots between observed and 
+predicted values, suggesting the model is somehow mis-specified or a pour fit to the problem. 
+
+![Denmark](changelog_img/22-03-2020-2/denmark_sir.png)
+![Iran](changelog_img/22-03-2020-2/iran_sir.png)
+![Italy](changelog_img/22-03-2020-2/italy_sir.png)
+![Spain](changelog_img/22-03-2020-2/spain_sir.png)
+![Sweden](changelog_img/22-03-2020-2/sweden_sir.png)
+
+
 ## Sunday 22/3
 
 Fitting the SIR model on data from Denmark, Iran, Sweden, Italy, and Spain. With a fixed gamma value.

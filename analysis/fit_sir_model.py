@@ -131,6 +131,8 @@ for country in countries:
     # plt.plot(dates_obs, susceptible_obs, "k*:", label="Susceptible - Observed ({SCALE_FACTOR} pers.)")
     plt.plot(dates_obs, infected_obs*population, "k*:", label=f"Infected - Observed")
     plt.plot(dates_obs, removed_obs*population, "k*:", label=f"Removed - Observed")
+    param_string = f'$R_0 = {beta/gamma:.2f}$\n$\\beta= {beta:.3g}$, $\\gamma = {gamma:.3g}$\n$Susceptible_0 = {S0:.3g}$\n$Infected_0 = {I0:.3g}$\n$Removed_0 = {R0:.3g}$'
+    plt.text(0.01, .5, param_string, ha='left', va='top', transform=plt.gca().transAxes)
     plt.xticks(rotation=45)
     plt.grid("True")
     plt.title(country)
