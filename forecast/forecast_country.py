@@ -46,6 +46,7 @@ def forecast_countries(df: pd.DataFrame,
 def forecast(df, country, extract_forecast_info: callable, n_days_predict: int,
              start_params=None, seed=42) -> (pd.DataFrame, ForecastInfo):
     SCALING = 1000
+    GAMMA = 1/2.9
     MODEL_NAME = 'SIR'
 
     logger.info(f"Forecasting {country}")
@@ -98,17 +99,17 @@ def forecast(df, country, extract_forecast_info: callable, n_days_predict: int,
         return np.log(params)
 
     if start_params:
-        beta, gamma, I0 = start_params
+        beta, R0, I0 = start_params.beta, start_params.R0, start_params.I0
     else:
         random.seed(seed)
         beta = random.uniform(0.01, 5.0)
-        gamma = random.uniform(0.01, 5.0)
         I0 = infected_obs[0] if infected_obs[0] > 0 else random.uniform(a=1.0 / SCALING, b=50.0 / SCALING)
+        R0 = removed_obs[0] if removed_obs[0] > 0 else random.uniform(a=1.0 / SCALING, b=50.0 / SCALING)
 
-    beta, gamma, I0 = repam([beta, gamma, I0])
+    fit_params = repam([beta, R0, I0])
 
+    gamma = GAMMA
     S0 = susceptible_obs[0]
-    R0 = removed_obs[0]
 
     dates_pred = np.arange(dates_obs[-1] + np.timedelta64(1, 'D'), dates_obs[-1] + np.timedelta64(n_days_predict + 1, 'D'), np.timedelta64(1, 'D'))
     dates_eval_pred = np.append(dates_obs, dates_pred)
@@ -119,14 +120,14 @@ def forecast(df, country, extract_forecast_info: callable, n_days_predict: int,
     t_span = (t_eval_pred.min(), t_eval_pred.max())
 
     res = minimize(
-        minimize_wrapper, np.array([beta, gamma, I0]),
+        minimize_wrapper, np.array(fit_params),
         method='Nelder-Mead',
         options={'maxiter': 2500, 'maxfev': 5000}
     )
     logger.info(res)
-    beta, gamma, I0 = inv_repam(res.x)
+    beta, R0, I0 = inv_repam(res.x)
     logger.info(f'R0 = {beta / gamma:.2f}')
-    logger.info(f'beta = {beta:.3g}, gamma = {gamma:.3g},S0 = {S0:.3g}, I0 = {I0:.3g}, R0 = {R0:.3g}')
+    logger.info(f'beta = {beta:.3g}, gamma = {gamma:.3g}, S0 = {S0:.3g}, I0 = {I0:.3g}, R0 = {R0:.3g}')
 
     S_t, I_t, R_t = eval_sir_model(beta, gamma, I0, S0, R0, N, t_span, t_eval_pred)
 
@@ -148,6 +149,6 @@ def forecast(df, country, extract_forecast_info: callable, n_days_predict: int,
     forecast_info = extract_forecast_info(country=country,
                                           model_name=MODEL_NAME,
                                           df=df,
-                                          params=Params(beta, gamma, I0)
+                                          params=Params(beta=beta, gamma=gamma, I0=I0, R0=R0, S0=S0)
                                           )
     return df_forecast, forecast_info

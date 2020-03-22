@@ -16,11 +16,8 @@ def main():
 
     df_all = pd.read_pickle(DATA_FILE)
 
-    logging.basicConfig(level=logging.INFO)
-
     start_params = {
-        'Denmark': Params(beta=1.4863183028145124, gamma=0.9927890258623339, I0=1e-7),
-        # 'China': StartParams(beta=0.35, gamma=0.04, I0=200)
+        'Denmark': Params(beta=1.4863183028145124, gamma=None, R0=0.1, I0=1e-7, S0=None),
     }
 
     df_forecasts, forecast_info_collection = forecast_countries(
