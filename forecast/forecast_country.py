@@ -87,9 +87,9 @@ def forecast(df, country, extract_forecast_info: callable, n_days_predict: int,
         logger.debug(f'sumsq: {val:.3g}')
         return val
 
-    def minimize_wrapper(params, y_obs, t_eval, *args, **kwargs):
+    def minimize_wrapper(params):
         beta, gamma, I0 = inv_repam(params)
-        return sum_sq(y_obs, beta, gamma, I0, t_eval=t_eval, *args, **kwargs)
+        return sum_sq(y_obs, beta, gamma, I0, S0, R0, N, t_span, t_eval=t_eval)
 
     def inv_repam(params):
         return np.exp(params)
@@ -100,8 +100,9 @@ def forecast(df, country, extract_forecast_info: callable, n_days_predict: int,
     if start_params:
         beta, gamma, I0 = start_params
     else:
-        np.random.seed(seed)
-        beta, gamma = np.random.uniform(low=0.01, high=5.0, size=2)
+        random.seed(seed)
+        beta = random.uniform(0.01, 5.0)
+        gamma = random.uniform(0.01, 5.0)
         I0 = infected_obs[0] if infected_obs[0] > 0 else random.uniform(a=1.0 / SCALING, b=50.0 / SCALING)
 
     beta, gamma, I0 = repam([beta, gamma, I0])
@@ -118,14 +119,14 @@ def forecast(df, country, extract_forecast_info: callable, n_days_predict: int,
     t_span = (t_eval_pred.min(), t_eval_pred.max())
 
     res = minimize(
-        minimize_wrapper, np.array([beta, gamma, I0]), (y_obs, t_eval, S0, R0, N, t_span),
+        minimize_wrapper, np.array([beta, gamma, I0]),
         method='Nelder-Mead',
         options={'maxiter': 2500, 'maxfev': 5000}
     )
     logger.info(res)
     beta, gamma, I0 = inv_repam(res.x)
     logger.info(f'R0 = {beta / gamma:.2f}')
-    logger.info(f'beta = {beta:.3g}, gamma = {gamma:.3g}, I0 = {I0:.3g}')
+    logger.info(f'beta = {beta:.3g}, gamma = {gamma:.3g},S0 = {S0:.3g}, I0 = {I0:.3g}, R0 = {R0:.3g}')
 
     S_t, I_t, R_t = eval_sir_model(beta, gamma, I0, S0, R0, N, t_span, t_eval_pred)
 
