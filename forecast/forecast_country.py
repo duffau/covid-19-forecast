@@ -89,7 +89,7 @@ def forecast(df, country, extract_forecast_info: callable, n_days_predict: int,
         return val
 
     def minimize_wrapper(params):
-        beta, gamma, I0 = inv_repam(params)
+        beta, R0, I0 = inv_repam(params)
         return sum_sq(y_obs, beta, gamma, I0, S0, R0, N, t_span, t_eval=t_eval)
 
     def inv_repam(params):
