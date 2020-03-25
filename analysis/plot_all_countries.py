@@ -17,7 +17,7 @@ for country in df.country.unique():
         plt.savefig(os.path.join(PLOT_FOLDER, "{}-cumulativ.png".format(country.lower())))
         plt.close()
 
-        df[df.country == country].plot(x='date', y=['total_infected', 'total_removed'])
+        df[df.country == country].plot(x='date', y=['total_infected', 'total_removed', 'hospital_beds_total'])
         plt.savefig(os.path.join(PLOT_FOLDER, "{}-SIR.png".format(country.lower())))
         plt.close()
     except Exception as e:

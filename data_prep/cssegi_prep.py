@@ -18,7 +18,8 @@ pd.set_option('display.max_rows', 1000)
 
 def run(csv_file_paths: List[str],
         known_errors: Union[KnownErrors, None],
-        world_pop_csv: str,
+        world_pop_file: str,
+        world_hosp_beds_file: str,
         output_folder: str, ):
     dfs = []
     for csv_file_path in csv_file_paths:
@@ -35,8 +36,12 @@ def run(csv_file_paths: List[str],
         dfs.append(df)
     df = reduce(lambda x, y: pd.merge(x, y, on=['Country/Region', 'date']), dfs)
     df = normz.normalize_variable_names(df, mapping={'Country/Region': 'country', 'Death': 'deaths'})
-    df_world_pop = utils.read_data(world_pop_csv)
+
+    df_world_pop = utils.read_data(world_pop_file)
     df = add_population(df, df_world_pop)
+
+    df_world_hosp_beds = utils.read_data(world_hosp_beds_file)
+    df = add_hosp_beds(df, df_world_hosp_beds)
 
     df = utils.construct_sir_variables(
         df,
@@ -71,15 +76,23 @@ def is_date(s):
 
 
 def add_population(df, df_pop):
-    df = pd.merge(df, df_pop[['name', 'pop2019']], how='left', left_on='country', right_on='name')
-    df = df.drop('name', axis=1)
-    df.pop2019 *= 1000
-    df = df.rename(columns={'pop2019': 'population'})
+    df = pd.merge(df, df_pop[['Country Name', 'Fact']], how='left', left_on='country', right_on='Country Name')
+    df = df.drop('Country Name', axis=1)
+    df = df.rename(columns={'Fact': 'population'})
+    return df
+
+
+def add_hosp_beds(df, df_beds):
+    df = pd.merge(df, df_beds[['Country Name', 'Fact']], how='left', left_on='country', right_on='Country Name')
+    df = df.drop('Country Name', axis=1)
+    df = df.rename(columns={'Fact': 'hospital_beds_per_thousand_cap'})
+    df['hospital_beds_total'] = df.population * df.hospital_beds_per_thousand_cap/1000
     return df
 
 
 def main():
-    CSV_WORLD_POP = '../data/raw/world_population.csv'
+    WORLD_POP_DF = '../data/pre-processed/world_bank/population.pickle'
+    WORLD_HOSP_BEDS_DF = '../data/pre-processed/world_bank/hospital_beds.pickle'
     CONFIRMED_CSV_FILE_PATH = '../data/raw/cssegi_sand_data/time_series_19-covid-Confirmed.csv'
     DEATHS_CSV_FILE_PATH = '../data/raw/cssegi_sand_data/time_series_19-covid-Deaths.csv'
     RECOVERED_CSV_FILE_PATH = '../data/raw/cssegi_sand_data/time_series_19-covid-Recovered.csv'
@@ -88,7 +101,8 @@ def main():
     run(
         csv_file_paths=[CONFIRMED_CSV_FILE_PATH, DEATHS_CSV_FILE_PATH, RECOVERED_CSV_FILE_PATH],
         known_errors=None,
-        world_pop_csv=CSV_WORLD_POP,
+        world_pop_file=WORLD_POP_DF,
+        world_hosp_beds_file=WORLD_HOSP_BEDS_DF,
         output_folder=PRE_PROCESSED_DATA_FOLDER
     )
 

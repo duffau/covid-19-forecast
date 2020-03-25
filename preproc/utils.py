@@ -3,7 +3,12 @@ import os
 
 
 def read_data(filepath):
-    df = pd.read_csv(filepath)
+    if filepath.endswith('.csv'):
+        df = pd.read_csv(filepath)
+    elif filepath.endswith('.pickle'):
+        df = pd.read_pickle(filepath)
+    else:
+        raise ValueError(f'Invalid file format of {filepath}')
     return df
 
 
