@@ -14,16 +14,19 @@ PLOT_FOLDER = 'plots/forecasts'
 DATA_FILE = '../data/pre-processed/cssegi_sand_data/cssegi_agg_data.pickle'
 RANDOM_SEED = 41
 SCALE_FACTOR = 1000
-INCUBATION_PERIOD = 5.0
+INCUBATION_PERIOD = 4.0
 INFECTIOUS_PERIOD = 2.9
 df_all = pd.read_pickle(DATA_FILE)
 model_name = 'SEIR'
 
 t0 = 0
-n_days_predict = 100
+n_days_predict = 5
 start_params = {
-    # 'China': Params(beta=0.06138, gamma=0.046619, I0=2.02930572e+04, S0=1000000),
-    'Denmark': Params(beta=2./INFECTIOUS_PERIOD, R0=100., I0=10.)
+    'Denmark': Params(beta=2./INFECTIOUS_PERIOD, E0=.001, R0=0.001, I0=0.001),
+    'Iran': Params(beta=2. / INFECTIOUS_PERIOD, E0=.001, R0=0.001, I0=0.001),
+    'Sweden': Params(beta=2. / INFECTIOUS_PERIOD, E0=.001, R0=0.001, I0=0.001),
+    'Italy': Params(beta=2. / INFECTIOUS_PERIOD, E0=.001, R0=0.001, I0=0.001),
+    'Spain': Params(beta=2. / INFECTIOUS_PERIOD, E0=.001, R0=0.001, I0=0.001)
 }
 
 countries = ['Denmark', 'Iran', 'Sweden', 'Italy', 'Spain']
@@ -53,7 +56,7 @@ for country in countries:
     def seir_deriv(t, y, N, beta, gamma, alpha):
         S, E, I, R = y
         dSdt = -beta * S * I / N
-        dEdt = beta * S * I / N - alpha * I
+        dEdt = beta * S * I / N - alpha * E
         dIdt = alpha*E - gamma * I
         dRdt = gamma * I
         return dSdt, dEdt, dIdt, dRdt
@@ -95,13 +98,13 @@ for country in countries:
 
     random.seed(RANDOM_SEED)
     if not beta:
-        beta = random.uniform(a=0.01, b=5.0)
+        beta = random.uniform(a=0.01, b=1.)
     if not E0:
         E0 = random.uniform(a=0.001, b=1.)
     if not I0:
         I0 = infected_obs[0] if infected_obs[0] > 0 else random.uniform(a=0.001, b=1.)
     if not R0:
-        R0 = removed_obs[0] if infected_obs[0] > 0 else random.uniform(a=0.001, b=1.)
+        R0 = removed_obs[0] if removed_obs[0] > 0 else random.uniform(a=0.001, b=1.)
 
     fit_params = repam([beta, E0, I0, R0])
     gamma = 1/INFECTIOUS_PERIOD
@@ -135,6 +138,8 @@ for country in countries:
     # plt.plot(dates_obs, susceptible_obs, "k*:", label="Susceptible - Observed ({SCALE_FACTOR} pers.)")
     plt.plot(dates_obs, infected_obs, "k*:", label=f"Infected - Observed")
     plt.plot(dates_obs, removed_obs, "k*:", label=f"Removed - Observed")
+    param_string = f'$R_0 = {beta/gamma:.2f}$\n$\\beta= {beta:.3g}$, $\\gamma = {gamma:.3g}$\n$Susceptible_0 = {S0:.3g}$\n$Infected_0 = {I0:.3g}$\n$Removed_0 = {R0:.3g}$'
+    plt.text(0.01, .5, param_string, ha='left', va='top', transform=plt.gca().transAxes)
     plt.xticks(rotation=45)
     plt.grid("True")
     plt.title(country)
