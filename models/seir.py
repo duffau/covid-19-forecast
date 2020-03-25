@@ -1,5 +1,5 @@
 from typing import Iterable
-from .params import SEIRParams
+from models.params import SEIRParams
 from scipy.integrate import solve_ivp
 
 
@@ -14,7 +14,7 @@ class SEIR:
     def _deriv(self, t, y, beta, gamma, alpha):
         S, E, I, R = y
         dSdt = -beta * S * I
-        dEdt = beta * S * I - alpha * I
+        dEdt = beta * S * I - alpha * E
         dIdt = alpha * E - gamma * I
         dRdt = gamma * I
         return dSdt, dEdt, dIdt, dRdt
