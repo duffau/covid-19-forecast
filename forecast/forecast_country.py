@@ -5,7 +5,7 @@ import random
 import logging
 from scipy.integrate import solve_ivp
 from scipy.optimize import minimize
-from . import Params
+from models import SIRParams
 from forecast.forecast_info import ForecastInfo, ForecastInfoCollection
 
 
@@ -149,6 +149,6 @@ def forecast(df, country, extract_forecast_info: callable, n_days_predict: int,
     forecast_info = extract_forecast_info(country=country,
                                           model_name=MODEL_NAME,
                                           df=df,
-                                          params=Params(beta=beta, gamma=gamma, I0=I0, R0=R0, S0=S0)
+                                          params=SIRParams(beta=beta, gamma=gamma, I0=I0, R0=R0, S0=S0)
                                           )
     return df_forecast, forecast_info

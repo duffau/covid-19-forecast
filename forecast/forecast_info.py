@@ -2,12 +2,12 @@ from typing import Iterable
 from datetime import datetime
 from pandas import DataFrame
 
-from . import Params
+from models import SIRParams
 
 
 class ForecastInfo:
 
-    def __init__(self, id: str, model_name: str, forecast_time: datetime, latest_data_point: datetime, params: Params):
+    def __init__(self, id: str, model_name: str, forecast_time: datetime, latest_data_point: datetime, params: SIRParams):
         self.id = id
         self.model_name = model_name
         self.forecast_time = forecast_time
@@ -36,7 +36,7 @@ class ForecastInfoCollection:
         return self.collection.get(id)
 
 
-def extract_cssegi_forecast_info(country: str, model_name: str, params: Params, df: DataFrame):
+def extract_cssegi_forecast_info(country: str, model_name: str, params: SIRParams, df: DataFrame):
     return ForecastInfo(
         id=country,
         model_name=model_name,

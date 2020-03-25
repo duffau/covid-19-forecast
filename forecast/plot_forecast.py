@@ -4,7 +4,8 @@ from pandas import DataFrame, Series
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.dates import DateFormatter
-from forecast import ForecastInfo, Params
+from forecast import ForecastInfo
+from models import SIRParams
 
 SCALING_FACTOR = 1000
 
@@ -54,7 +55,7 @@ def plot_forecast(df_forecast: DataFrame, forecast_info: ForecastInfo, days_shor
 
 
 def make_infected_removed_plot(ax, dates: Iterable[datetime],
-                               infected_forecast=Series(tuple()), removed_forecast=Series(tuple()), infected_obs=Series(tuple()), removed_obs=Series(tuple()),
+                               infected_forecast=Series(dtype='float64'), removed_forecast=Series(dtype='float64'), infected_obs=Series(dtype='float64'), removed_obs=Series(dtype='float64'),
                                title='', ylabel="Persons (thousands)", date_formatter=DateFormatter("%d-%b")):
     ax.set_title(title)
 
@@ -82,7 +83,7 @@ def make_centered_text_box(ax, textstr, size=12):
     return ax
 
 
-def calc_plot_stats(df_forecast: DataFrame, params: Params) -> dict:
+def calc_plot_stats(df_forecast: DataFrame, params: SIRParams) -> dict:
     peak_infected_index = df_forecast.infected_forecast.idxmax()
     return {
         'r0': params.beta / params.gamma,
