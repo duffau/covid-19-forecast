@@ -12,6 +12,7 @@ pytest-cov = "*"
 requests = "*"
 scipy = "*"
 altair = "*"
+statsmodels = "*"
 
 [requires]
 python_version = "3.6"

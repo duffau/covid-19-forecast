@@ -5,12 +5,13 @@ from dateutil import parser as dateparser
 import glob
 from configparser import ConfigParser
 import logging
+import scripts.config as config
 
 logger = logging.getLogger(__name__)
 
 
-FORECAST_PLOT_FOLDER = '../forecast_plots'
-README_FILE = '../README.md'
+FORECAST_PLOT_FOLDER = config.FORECAST_PLOT_FOLDER
+README_FILE = config.README_FILE
 README_FOLDER = op.dirname(README_FILE)
 OUTPUT_DATE_FORMAT = "%d-%m-%Y"
 

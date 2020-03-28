@@ -4,7 +4,7 @@
 Attempt to forecast the number of cases of COVID-19 around the world using the simple [SIR model][sir_model_wiki].
 
 ## Forecasts
-*Updated: 25-03-2020*
+*Updated: 28-03-2020*
 
 Forecasts are based on the simple [SIR model][sir_model_wiki] which assumes
 an individual can be in one of three states,
@@ -21,7 +21,7 @@ Data is downloaded from *Johns Hopkins University Center for Systems Science and
 ### Plots
 |![Denmark](forecast_plots/denmark_SIR.png)|
 |:----------------------------------------:|
-| *Latest data point: 23-03-2020*|
+| *Latest data point: 27-03-2020*|
 
 |![Iran](forecast_plots/iran_SIR.png)|
 |:----------------------------------------:|
@@ -29,15 +29,15 @@ Data is downloaded from *Johns Hopkins University Center for Systems Science and
 
 |![Italy](forecast_plots/italy_SIR.png)|
 |:----------------------------------------:|
-| *Latest data point: 23-03-2020*|
+| *Latest data point: 27-03-2020*|
 
 |![Spain](forecast_plots/spain_SIR.png)|
 |:----------------------------------------:|
-| *Latest data point: 23-03-2020*|
+| *Latest data point: 27-03-2020*|
 
 |![Sweden](forecast_plots/sweden_SIR.png)|
 |:----------------------------------------:|
-| *Latest data point: 23-03-2020*|
+| *Latest data point: 27-03-2020*|
 
 [sir_model_wiki]: https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology#The_SIR_model
 [csse-data-repo]: https://github.com/CSSEGISandData/COVID-19

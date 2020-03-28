@@ -5,13 +5,13 @@ import os
 import os.path as op
 from functools import reduce
 
-from preproc.known_error import KnownErrors
-import preproc.utils as utils
-import preproc.normalize as normz
+from data_prep.preproc.known_error import KnownErrors
+import data_prep.preproc.utils as utils
+import data_prep.preproc.normalize as normz
 
 COL_DATE_RE_PATTERN = r'\d{1,2}/\d{1,2}/\d{1,2}'
 COL_DATE_DATE_FORMAT = '%m/%d/%y'
-LEFT_FILENAME_BASE = 'time_series_19-covid-'
+VAR_NAME_PATTERN = '^time_series_covid19_(\w+)_global.csv$'
 pd.set_option('display.max_columns', 500)
 pd.set_option('display.max_rows', 1000)
 
@@ -20,12 +20,13 @@ def run(csv_file_paths: List[str],
         known_errors: Union[KnownErrors, None],
         world_pop_file: str,
         world_hosp_beds_file: str,
-        output_folder: str, ):
+        output_file: str, ):
     dfs = []
     for csv_file_path in csv_file_paths:
         var_name = extract_var_name(csv_file_path)
         df = pd.read_csv(csv_file_path)
         df = append_x_to_date_columns(df)
+        df.info()
         df = pd.wide_to_long(df, stubnames=['x'], i=['Province/State', 'Country/Region'], j='date', suffix=COL_DATE_RE_PATTERN)
         df.reset_index(inplace=True)
         df.rename(columns={'x': var_name}, inplace=True)
@@ -56,14 +57,11 @@ def run(csv_file_paths: List[str],
     print("\nIs NA:")
     print(utils.column_na_stats(df))
 
-    pickled_path = op.join(output_folder, 'cssegi_agg_data.pickle')
-    df.to_pickle(pickled_path)
-    csv_path = op.join(output_folder, 'cssegi_agg_data.csv')
-    df.to_csv(csv_path, index=False)
+    df.to_pickle(output_file)
 
 
 def extract_var_name(csv_file_path):
-    return op.basename(csv_file_path).lstrip(LEFT_FILENAME_BASE).rstrip('.csv')
+    return re.match(VAR_NAME_PATTERN, op.basename(csv_file_path)).group(1)
 
 
 def append_x_to_date_columns(df: pd.DataFrame):
@@ -90,22 +88,3 @@ def add_hosp_beds(df, df_beds):
     return df
 
 
-def main():
-    WORLD_POP_DF = '../data/pre-processed/world_bank/population.pickle'
-    WORLD_HOSP_BEDS_DF = '../data/pre-processed/world_bank/hospital_beds.pickle'
-    CONFIRMED_CSV_FILE_PATH = '../data/raw/cssegi_sand_data/time_series_19-covid-Confirmed.csv'
-    DEATHS_CSV_FILE_PATH = '../data/raw/cssegi_sand_data/time_series_19-covid-Deaths.csv'
-    RECOVERED_CSV_FILE_PATH = '../data/raw/cssegi_sand_data/time_series_19-covid-Recovered.csv'
-    PRE_PROCESSED_DATA_FOLDER = '../data/pre-processed/cssegi_sand_data'
-    os.makedirs(PRE_PROCESSED_DATA_FOLDER, exist_ok=True)
-    run(
-        csv_file_paths=[CONFIRMED_CSV_FILE_PATH, DEATHS_CSV_FILE_PATH, RECOVERED_CSV_FILE_PATH],
-        known_errors=None,
-        world_pop_file=WORLD_POP_DF,
-        world_hosp_beds_file=WORLD_HOSP_BEDS_DF,
-        output_folder=PRE_PROCESSED_DATA_FOLDER
-    )
-
-
-if __name__ == '__main__':
-    main()

@@ -10,3 +10,7 @@ def deploy():
     call(f'git commit -am "{commit_msg}"', shell=True)
     call(f'git tag {commit_tag}', shell=True)
     call('git push origin master --tags', shell=True)
+
+
+if __name__ == '__main__':
+    deploy()
