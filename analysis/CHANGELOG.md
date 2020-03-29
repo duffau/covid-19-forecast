@@ -1,3 +1,19 @@
+## Saturday 28/3
+
+Replicating the the plots presented in the minutephysics youtube video 
+[How To Tell If We're Beating COVID-19](https://www.youtube.com/watch?v=54XLXg4fYsc) 
+and the corresponding [interactive site](http://aatishb.com/covidtrends).
+
+![](changelog_img/28-03-2020/china_loglog_new_confirmed.png)
+![](changelog_img/28-03-2020/denmark_loglog_new_confirmed.png)
+![](changelog_img/28-03-2020/us_loglog_new_confirmed.png)
+
+This got me thinking that I should try using a more robust estimation method
+when fitting the the SIR model. Taking advantage of the (near) exponential growth
+at the start of the pandemic and estimate the transmition rate (beta) with a linear
+regression on log-transformed confirmed cases, varying across time. Even though minutephysics
+said "never plot against time" :-) 
+
 ## Sunday 22/3 Update 2
 
 Fitting the SIR model with unit population, setting N=1. This seems to make the estimation more numerical stable.
