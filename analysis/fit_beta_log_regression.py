@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+from matplotlib.ticker import FormatStrFormatter
 import numpy as np
 import os.path as op
 import os
@@ -14,7 +15,7 @@ PLOT_NAME = 'beta_regr'
 GEO_REGION_VAR = 'country'
 INFECTIOUS_PERIOD = 2.9
 GAMMA = 1 / INFECTIOUS_PERIOD
-LOWESS_FRAC = 0.5
+LOESS_FRAC = 0.5
 
 os.makedirs(PLOT_FOLDER, exist_ok=True)
 
@@ -41,9 +42,9 @@ print(ols_fit.summary())
 print(f'ols_fit.params: {ols_fit.params}')
 ols_slope = ols_fit.params[1]
 
-lowess_fit = sm.nonparametric.lowess(endog=y_obs, exog=days_since_start, frac=LOWESS_FRAC, return_sorted=False)
-df_fit['lowess_fit'] = lowess_fit
-df_fit['lowess_fit_exp'] = np.exp(lowess_fit)
+lowess_fit = sm.nonparametric.lowess(endog=y_obs, exog=days_since_start, frac=LOESS_FRAC, return_sorted=False)
+df_fit['loess_fit'] = lowess_fit
+df_fit['loess_fit_exp'] = np.exp(lowess_fit)
 
 
 def slopes(x, lowess_fit):
@@ -58,34 +59,45 @@ def beta(slope, gamma):
     return (slope / gamma + 1) * gamma
 
 lowess_slopes = slopes(days_since_start, lowess_fit)
-print('lowess slopes:', lowess_slopes)
+print('loess slopes:', lowess_slopes)
 
 lowess_slope = end_slope(days_since_start, lowess_fit, n_end=5)
-print(f'lowes end slope: {lowess_slope}')
+print(f'loess end slope: {lowess_slope}')
 
 beta_hat_ols = beta(ols_slope, GAMMA)
 print(f'beta_hat ols = {beta_hat_ols}')
 
 beta_hat_lowess = beta(lowess_slope, GAMMA)
-print(f'beta_hat lowess = {beta_hat_lowess}')
+print(f'beta_hat loess = {beta_hat_lowess}')
 
 betas_hat_lowess = beta(lowess_slopes, GAMMA)
-print(f'beta_hat lowess = {beta_hat_lowess}')
+print(f'beta_hat loess = {beta_hat_lowess}')
 
 df_fit['beta_ols'] = beta_hat_ols
-df_fit['beta_end_lowess'] = beta_hat_lowess
-df_fit['beta_lowess'] = [np.nan] + list(betas_hat_lowess)
+df_fit['beta_end_loess'] = beta_hat_lowess
+df_fit['beta_loess'] = [np.nan] + list(betas_hat_lowess)
 
 ax = df_fit.plot(x='date', y=['total_infected', 'ols_fit_exp'], logy=True, title=country)
 ax.set_ylabel('infected - log scale')
+param_string = f'$slope = {ols_slope:.2f}$\n$R_0 = {beta_hat_ols / GAMMA:.2f}$\n$\\beta= {beta_hat_ols:.3g}$\n$\\gamma = {GAMMA:.3g}$ (assumed)'
+ax.text(0.01, .75, param_string, ha='left', va='top', transform=plt.gca().transAxes)
+
+plt.tight_layout()
 plt.savefig(op.join(PLOT_FOLDER, f'{country.lower()}_ols.png'))
 
 
-ax = df_fit.plot(x='date', y=['total_infected', 'lowess_fit_exp'], logy=True, title=country)
+ax = df_fit.plot(x='date', y=['total_infected', 'loess_fit_exp'], logy=True, title=country)
 ax.set_ylabel('infected - log scale')
-plt.savefig(op.join(PLOT_FOLDER, f'{country.lower()}_lowess.png'))
+param_string = f'LOESS frac = {LOESS_FRAC:.3g}'
+ax.text(0.01, .75, param_string, ha='left', va='top', transform=plt.gca().transAxes)
+plt.tight_layout()
+plt.savefig(op.join(PLOT_FOLDER, f'{country.lower()}_loess.png'))
 
 
-ax = df_fit.plot(x='date', y=['beta_ols','beta_end_lowess', 'beta_lowess'], logy=True, title=country)
-ax.set_ylabel('infected - log scale')
+ax = df_fit.plot(x='date', y=['beta_ols', 'beta_end_loess', 'beta_loess'], logy=False, title=country)
+ax.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
+ax.set_ylabel('avg. transmissions per infected per day')
+param_string = f'$\\gamma = {GAMMA:.3g}$ (assumed)\nLOESS frac = {LOESS_FRAC:.3g}'
+ax.text(0.01, .75, param_string, ha='left', va='top', transform=plt.gca().transAxes)
+plt.tight_layout()
 plt.savefig(op.join(PLOT_FOLDER, f'{country.lower()}_beta.png'))

@@ -1,3 +1,5 @@
+
+
 ## Sunday 29/3
 
 Implemented a linear regression estimating beta based on the approximation
@@ -12,7 +14,26 @@ So during the exponential phase, the slope parameter of a linear regression
 is an estimator for `(R0 - 1) * gamma`.  In SIR model the basic reproduction number 
 `R0 = beta/gamma`, so a beta-estimator could be `beta = (slope/gamma + 1)*gamma`.
 
+![OLS](changelog_img/29-03-2020/denmark_ols.png)
 
+In the above plot we see the fitted regression line. Assuming a gamma of 0.345, which is equivalent 
+with a average infectious period of 2.9 days, we can transform the slope to a beta estimate.
+
+The above plot also indicates that the slope might be changing over time,
+since new policy measures attempt to lower the transmission rate.  
+To estimate a time varying slope an consequently transmission rate I have 
+tried using a locally estimated scatterplot smoothing (LOESS). This is an easy to use
+ad-hoc technique to estimate a varying slope.
+
+![LOESS](changelog_img/29-03-2020/denmark_loess.png)
+
+Again a assuming a fixed recovery rate (gamma) of 0.345 infected per day, we get the following 
+time varying estimates of the transmission rate.
+ 
+![LOESS](changelog_img/29-03-2020/denmark_beta.png)
+
+The `beta_end_loess` curve represents the beta value at the last data point on the 
+loess estimate. This value is a good candidate to use in forecasts.
 
 ## Saturday 28/3
 
