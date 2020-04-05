@@ -60,20 +60,19 @@ def test_fuzzy_merge_different_close_all_match():
     assert sum(df.value_right.isna()) == 0
 
 
-
 def test_fuzzy_merge_big_data():
     """Big data set smoke test for speed comparisons. Use with pytest flag --durations=0"""
 
     left = pd.DataFrame({
-            'country': COUNTRIES_1,
-            'x_values': [random.uniform(0, 1) for _ in range(len(COUNTRIES_1))]
-        }
+        'country': COUNTRIES_1,
+        'x_values': [random.uniform(0, 1) for _ in range(len(COUNTRIES_1))]
+    }
     )
 
     right = pd.DataFrame({
-            'country': COUNTRIES_2,
-            'y_values': [random.uniform(0, 1) for _ in range(len(COUNTRIES_2))]
-        }
+        'country': COUNTRIES_2,
+        'y_values': [random.uniform(0, 1) for _ in range(len(COUNTRIES_2))]
+    }
     )
 
     fuzz.fuzzy_left_merge(left.copy(), right.copy(), left_on='country', right_on='country')
