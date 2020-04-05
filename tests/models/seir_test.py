@@ -44,7 +44,7 @@ def test_equal_params():
 
 def test_not_equal_params():
     params1 = SEIRParams(beta=BETA, gamma=GAMMA, alpha=ALPHA, S0=S0, E0=E0, I0=I0, R0=R0)
-    params2 = SEIRParams(beta=BETA+1, gamma=GAMMA, alpha=ALPHA, S0=S0, E0=E0, I0=I0, R0=R0)
+    params2 = SEIRParams(beta=BETA + 1, gamma=GAMMA, alpha=ALPHA, S0=S0, E0=E0, I0=I0, R0=R0)
     assert params1 != params2
 
 
@@ -56,8 +56,32 @@ def test_params_values(seir_params):
 
 def test_params_from_values(seir_params):
     vals = seir_params.values
-    expected_vals = np.array([BETA, GAMMA, ALPHA, S0, E0, I0, R0])
-    assert (vals == expected_vals).all()
+    new_params = SEIRParams.from_values(vals)
+    assert new_params == seir_params
+
+
+def test_params_from_random():
+    new_params = SEIRParams.from_random(seed=123)
+    assert new_params.beta > 0.0
+    assert new_params.beta < 1.0
+
+    assert new_params.gamma > 0.0
+    assert new_params.gamma < 1.0
+
+    assert new_params.alpha > 0.0
+    assert new_params.alpha < 1.0
+
+    assert new_params.S0 > 0.9
+    assert new_params.S0 < 1.0
+
+    assert new_params.E0 > 0.0
+    assert new_params.E0 < 0.1
+
+    assert new_params.I0 > 0.0
+    assert new_params.I0 < 0.1
+
+    assert new_params.R0 > 0.0
+    assert new_params.R0 < 0.1
 
 
 def test_init_model(seir_model):

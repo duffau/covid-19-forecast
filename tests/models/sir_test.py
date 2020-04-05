@@ -56,6 +56,30 @@ def test_params_values(sir_params):
     assert (vals == expected_vals).all()
 
 
+def test_params_from_values(sir_params):
+    vals = sir_params.values
+    new_params = SIRParams.from_values(vals)
+    assert new_params == sir_params
+
+
+def test_params_from_random():
+    new_params = SIRParams.from_random(seed=123)
+    assert new_params.beta > 0.0
+    assert new_params.beta < 1.0
+
+    assert new_params.gamma > 0.0
+    assert new_params.gamma < 1.0
+
+    assert new_params.S0 > 0.9
+    assert new_params.S0 < 1.0
+
+    assert new_params.I0 > 0.0
+    assert new_params.I0 < 0.1
+
+    assert new_params.R0 > 0.0
+    assert new_params.R0 < 0.1
+
+
 def test_init_model(sir_model):
     pass
 
@@ -77,3 +101,12 @@ def test_simulate_model(sir_model):
     assert (R > 0).any()
 
     assert ((S + I + R) - N < 1e-15).all()
+
+
+def test_fit_model(sir_model):
+    n = 50
+    t_eval = range(n)
+    S, I, R = sir_model.simulate(t_eval=t_eval)
+
+    # new_model()
+

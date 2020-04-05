@@ -7,6 +7,14 @@ class Params:
     def values(self) -> np.ndarray:
         raise NotImplementedError
 
+    @classmethod
+    def from_values(cls, values):
+        raise NotImplementedError
+
+    @classmethod
+    def from_random(cls, seed):
+        raise NotImplementedError
+
     def __eq__(self, other):
         if not isinstance(other, self.__class__):
             return False
@@ -31,6 +39,18 @@ class SIRParams(Params):
     def values(self) -> np.ndarray:
         return np.array([self.beta, self.gamma, self.S0, self.I0, self.R0])
 
+    @classmethod
+    def from_values(cls, values):
+        return cls(*values)
+
+    @classmethod
+    def from_random(cls, seed=42):
+        np.random.seed(seed)
+        rand = np.random.random(size=(5,))
+        rand *= np.array((1., 1., 0.1, 0.1, 0.1))
+        rand += np.array((0., 0., 0.9, 0.0, 0.0))
+        return cls.from_values(rand)
+
 
 class SEIRParams(Params):
 
@@ -50,3 +70,11 @@ class SEIRParams(Params):
     @classmethod
     def from_values(cls, values):
         return cls(*values)
+
+    @classmethod
+    def from_random(cls, seed=42):
+        np.random.seed(seed)
+        rand = np.random.random(size=(7,))
+        rand *= np.array((1., 1., 1., 0.1, 0.1, 0.1, 0.1))
+        rand += np.array((0., 0., 0., 0.9, 0.0, 0.0, 0.0))
+        return cls.from_values(rand)
