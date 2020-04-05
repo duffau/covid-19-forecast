@@ -13,37 +13,67 @@ COUNTRIES_2 = ['Afghanistan', 'Albania', 'Algeria', 'American Samoa', 'Andorra',
 
 
 def test_fuzzy_merge_all_matches():
-    df1 = pd.DataFrame({'key': ['abc', 'def', 'xyz'], 'value_1': [1, 1, 1]})
-    df2 = pd.DataFrame({'key': ['abc', 'def', 'xyz'], 'value_2': [2, 2, 2]})
-    df = fuzz.fuzzy_left_merge(df1.copy(), df2.copy(), left_on='key', right_on='key')
-    assert (df.key == df1.key).all().all()
-    assert (df.key == df2.key).all().all()
-    assert sum(df.value_1.isna()) == 0
-    assert sum(df.value_2.isna()) == 0
+    left = pd.DataFrame({'key': ['abc', 'def', 'xyz'], 'value_left': [1, 1, 1]})
+    right = pd.DataFrame({'key': ['abc', 'def', 'xyz'], 'value_right': [2, 2, 2]})
+    df = fuzz.fuzzy_left_merge(left.copy(), right.copy(), left_on='key', right_on='key')
+    assert (df.key == left.key).all(), print(df)
+    assert (df.key == right.key).all(), print(df)
+    assert sum(df.value_left.isna()) == 0
+    assert sum(df.value_right.isna()) == 0
 
 
 def test_fuzzy_merge_one_mismatch():
-    df1 = pd.DataFrame({'key': ['abc', 'def', 'xyz']})
-    df2 = pd.DataFrame({'key': ['abc', 'def', 'lmn']})
-    df = fuzz.fuzzy_left_merge(df1.copy(), df2.copy(), left_on='key', right_on='key')
-    assert (df.key == df1.key).all(), print(df)
-    assert sum(df.value_1.isna()) == 1
-    assert sum(df.value_2.isna()) == 1
+    left = pd.DataFrame({'key': ['abc', 'def', 'xyz'], 'value_left': [1] * 3})
+    right = pd.DataFrame({'key': ['abc', 'def', 'lmn'], 'value_right': [2] * 3})
+    df = fuzz.fuzzy_left_merge(left.copy(), right.copy(), left_on='key', right_on='key', suffixes=('_left', '_right'))
+    assert (df.key == left.key).all(), f'{str(df)}\n{df.info()}'
+    assert not (df.key == right.key).all(), f'{str(df)}\n{df.info()}'
+    assert sum(df.value_left.isna()) == 0
+    assert sum(df.value_right.isna()) == 1
 
 
-def test_fuzzy_merge():
-    """Big data set smoke test and speed test"""
+def test_fuzzy_merge_one_close_match():
+    left = pd.DataFrame({'key': ['abc', 'def', 'xyz'], 'value_left': [1] * 3})
+    right = pd.DataFrame({'key': ['abc', 'def', 'xyzz'], 'value_right': [2] * 3})
+    df = fuzz.fuzzy_left_merge(left.copy(), right.copy(), left_on='key', right_on='key', threshold=80, suffixes=('_left', '_right'))
+    assert (df.key == left.key).all(), print(df)
+    assert sum(df.value_left.isna()) == 0
+    assert sum(df.value_right.isna()) == 0
 
-    df1 = pd.DataFrame({
-            'country_1': COUNTRIES_1,
+
+def test_fuzzy_merge_different_size_all_match():
+    left = pd.DataFrame({'key': ['abc', 'def', 'xyz'] * 3, 'value_left': [1] * 3 * 3})
+    right = pd.DataFrame({'key': ['abc', 'def', 'xyz'], 'value_right': [2] * 3})
+    df = fuzz.fuzzy_left_merge(left.copy(), right.copy(), left_on='key', right_on='key', suffixes=('_left', '_right'))
+    assert (df.key == left.key).all(), print(df)
+    assert set(df.key) == set(right.key), print(df)
+    assert sum(df.value_left.isna()) == 0
+    assert sum(df.value_right.isna()) == 0
+
+
+def test_fuzzy_merge_different_close_all_match():
+    left = pd.DataFrame({'key': ['abc', 'def', 'xyz'] * 3, 'value_left': [1] * 3 * 3})
+    right = pd.DataFrame({'key': ['abc', 'def', 'xxyz'], 'value_right': [2] * 3})
+    df = fuzz.fuzzy_left_merge(left.copy(), right.copy(), left_on='key', right_on='key', threshold=80, suffixes=('_left', '_right'))
+    assert (df.key == left.key).all(), print(df)
+    assert sum(df.value_left.isna()) == 0
+    assert sum(df.value_right.isna()) == 0
+
+
+
+def test_fuzzy_merge_big_data():
+    """Big data set smoke test for speed comparisons. Use with pytest flag --durations=0"""
+
+    left = pd.DataFrame({
+            'country': COUNTRIES_1,
             'x_values': [random.uniform(0, 1) for _ in range(len(COUNTRIES_1))]
         }
     )
 
-    df2 = pd.DataFrame({
-            'country_2': COUNTRIES_1,
-            'y_values': [random.uniform(0, 1) for _ in range(len(COUNTRIES_1))]
+    right = pd.DataFrame({
+            'country': COUNTRIES_2,
+            'y_values': [random.uniform(0, 1) for _ in range(len(COUNTRIES_2))]
         }
     )
 
-    fuzz.fuzzy_left_merge(df1.copy(), df2.copy(), left_on='country_1', right_on='country_2')
+    fuzz.fuzzy_left_merge(left.copy(), right.copy(), left_on='country', right_on='country')
