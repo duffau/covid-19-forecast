@@ -1,5 +1,6 @@
 import pytest
 from models import SIRParams, SIR
+import numpy as np
 
 BETA = 0.6
 GAMMA = 0.35
@@ -35,6 +36,12 @@ def sir_sim(model):
 
 def test_init_sir_params(sir_params):
     pass
+
+
+def test_params_values(sir_params):
+    vals = sir_params.values
+    expected_vals = np.array([BETA, GAMMA, S0, I0, R0])
+    assert (vals == expected_vals).all()
 
 
 def test_init_model(sir_model):

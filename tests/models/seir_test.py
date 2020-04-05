@@ -1,5 +1,6 @@
 import pytest
 from models import SEIR, SEIRParams
+import numpy as np
 
 BETA = 0.6
 GAMMA = 0.35
@@ -33,6 +34,12 @@ def seir_model(seir_params):
 
 def test_init_params(seir_params):
     pass
+
+
+def test_params_values(seir_params):
+    vals = seir_params.values
+    expected_vals = np.array([BETA, GAMMA, ALPHA, S0, E0, I0, R0])
+    assert (vals == expected_vals).all()
 
 
 def test_init_model(seir_model):
