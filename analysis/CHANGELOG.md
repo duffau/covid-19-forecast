@@ -1,3 +1,19 @@
+## Sunday 29/3
+
+Implemented a linear regression estimating beta based on the approximation
+```
+I_t = I_0 * exp((R0 - 1) * gamma * t)
+```
+where `R0` is the basic reproduction rate. Taking logs:
+```
+log I_t = log I_0  + (R0 - 1) * gamma * t
+```
+So during the exponential phase, the slope parameter of a linear regression 
+is an estimator for `(R0 - 1) * gamma`.  In SIR model the basic reproduction number 
+`R0 = beta/gamma`, so a beta-estimator could be `beta = (slope/gamma + 1)*gamma`.
+
+
+
 ## Saturday 28/3
 
 Replicating the the plots presented in the minutephysics youtube video 
