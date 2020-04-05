@@ -1,13 +1,13 @@
 from typing import List, Union
 import pandas as pd
 import re
-import os
 import os.path as op
 from functools import reduce
 
 from data_prep.preproc.known_error import KnownErrors
 import data_prep.preproc.utils as utils
 import data_prep.preproc.normalize as normz
+import data_prep.fuzzy_merge as fuz
 
 COL_DATE_RE_PATTERN = r'\d{1,2}/\d{1,2}/\d{1,2}'
 COL_DATE_DATE_FORMAT = '%m/%d/%y'
@@ -23,6 +23,7 @@ def run(csv_file_paths: List[str],
         output_file: str, ):
     dfs = []
     for csv_file_path in csv_file_paths:
+        print(f'Loading {csv_file_path} and appending ...')
         var_name = extract_var_name(csv_file_path)
         df = pd.read_csv(csv_file_path)
         df = append_x_to_date_columns(df)
@@ -74,14 +75,16 @@ def is_date(s):
 
 
 def add_population(df, df_pop):
-    df = pd.merge(df, df_pop[['Country Name', 'Fact']], how='left', left_on='country', right_on='Country Name')
+    print('Adding population variable ...')
+    df = fuz.fuzzy_left_merge(df, df_pop[['Country Name', 'Fact']], left_on='country', right_on='Country Name')
     df = df.drop('Country Name', axis=1)
     df = df.rename(columns={'Fact': 'population'})
     return df
 
 
 def add_hosp_beds(df, df_beds):
-    df = pd.merge(df, df_beds[['Country Name', 'Fact']], how='left', left_on='country', right_on='Country Name')
+    print('Adding hospital beds variable ...')
+    df = fuz.fuzzy_left_merge(df, df_beds[['Country Name', 'Fact']], left_on='country', right_on='Country Name')
     df = df.drop('Country Name', axis=1)
     df = df.rename(columns={'Fact': 'hospital_beds_per_thousand_cap'})
     df['hospital_beds_total'] = df.population * df.hospital_beds_per_thousand_cap/1000
