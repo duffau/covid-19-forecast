@@ -36,7 +36,25 @@ def test_init_params(seir_params):
     pass
 
 
+def test_equal_params():
+    params1 = SEIRParams(beta=BETA, gamma=GAMMA, alpha=ALPHA, S0=S0, E0=E0, I0=I0, R0=R0)
+    params2 = SEIRParams(beta=BETA, gamma=GAMMA, alpha=ALPHA, S0=S0, E0=E0, I0=I0, R0=R0)
+    assert params1 == params2
+
+
+def test_not_equal_params():
+    params1 = SEIRParams(beta=BETA, gamma=GAMMA, alpha=ALPHA, S0=S0, E0=E0, I0=I0, R0=R0)
+    params2 = SEIRParams(beta=BETA+1, gamma=GAMMA, alpha=ALPHA, S0=S0, E0=E0, I0=I0, R0=R0)
+    assert params1 != params2
+
+
 def test_params_values(seir_params):
+    vals = seir_params.values
+    expected_vals = np.array([BETA, GAMMA, ALPHA, S0, E0, I0, R0])
+    assert (vals == expected_vals).all()
+
+
+def test_params_from_values(seir_params):
     vals = seir_params.values
     expected_vals = np.array([BETA, GAMMA, ALPHA, S0, E0, I0, R0])
     assert (vals == expected_vals).all()

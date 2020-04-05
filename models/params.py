@@ -7,6 +7,16 @@ class Params:
     def values(self) -> np.ndarray:
         raise NotImplementedError
 
+    def __eq__(self, other):
+        if not isinstance(other, self.__class__):
+            return False
+
+        for atr in self.__dict__.keys():
+            if not atr.startswith('_'):
+                if not self.__dict__[atr] == other.__dict__[atr]:
+                    return False
+        return True
+
 
 class SIRParams(Params):
 
@@ -36,3 +46,7 @@ class SEIRParams(Params):
     @property
     def values(self) -> np.ndarray:
         return np.array([self.beta, self.gamma, self.alpha, self.S0, self.E0, self.I0, self.R0])
+
+    @classmethod
+    def from_values(cls, values):
+        return cls(*values)

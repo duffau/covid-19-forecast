@@ -38,6 +38,18 @@ def test_init_sir_params(sir_params):
     pass
 
 
+def test_equal_params():
+    params1 = SIRParams(beta=BETA, gamma=GAMMA, S0=S0, I0=I0, R0=R0)
+    params2 = SIRParams(beta=BETA, gamma=GAMMA, S0=S0, I0=I0, R0=R0)
+    assert params1 == params2
+
+
+def test_not_equal_params():
+    params1 = SIRParams(beta=BETA, gamma=GAMMA, S0=S0, I0=I0, R0=R0)
+    params2 = SIRParams(beta=BETA + 1, gamma=GAMMA, S0=S0, I0=I0, R0=R0)
+    assert params1 != params2
+
+
 def test_params_values(sir_params):
     vals = sir_params.values
     expected_vals = np.array([BETA, GAMMA, S0, I0, R0])
