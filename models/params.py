@@ -35,6 +35,9 @@ class SIRParams(Params):
         self.I0 = I0
         self.R0 = R0
 
+    def __repr__(self):
+        return f'SIRParams(beta={self.beta}, gamma={self.gamma}, S0={self.S0}, I0={self.I0}, R0={self.R0})'
+
     @property
     def values(self) -> np.ndarray:
         return np.array([self.beta, self.gamma, self.S0, self.I0, self.R0])
@@ -62,6 +65,9 @@ class SEIRParams(Params):
         self.E0 = E0
         self.I0 = I0
         self.R0 = R0
+
+    def __repr__(self):
+        return f'SIRParams(beta={self.beta}, gamma={self.gamma}, alpha={self.alpha}, S0={self.S0}, E0={self.E0}, I0={self.I0}, R0={self.R0})'
 
     @property
     def values(self) -> np.ndarray:

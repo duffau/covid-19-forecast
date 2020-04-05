@@ -5,9 +5,9 @@ import numpy as np
 BETA = 0.6
 GAMMA = 0.35
 N = 1.0
-I0 = 0.001
-S0 = N - I0
-R0 = 0.0
+I0 = 0.01
+R0 = 0.001
+S0 = N - I0 - R0
 
 
 @pytest.fixture
@@ -105,8 +105,12 @@ def test_simulate_model(sir_model):
 
 def test_fit_model(sir_model):
     n = 50
+    xatol = 1e-3
     t_eval = range(n)
-    S, I, R = sir_model.simulate(t_eval=t_eval)
-
-    # new_model()
-
+    y_obs = sir_model.simulate(t_eval=t_eval)
+    start_params = SIRParams.from_random(seed=42)
+    start_params.gamma = GAMMA
+    start_params.S0 = S0
+    new_model = SIR(params=start_params)
+    new_model.fit(y_obs, t_eval, options={'xatol': xatol})
+    assert (new_model.params.values - sir_model.params.values < 0.01).all()
