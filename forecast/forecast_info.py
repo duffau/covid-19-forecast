@@ -45,12 +45,3 @@ def extract_cssegi_forecast_info(country: str, model_name: str, params: SIRParam
         params=params
     )
 
-
-if __name__ == '__main__':
-    fi = ForecastInfo(
-        id='some string',
-        model_name='SIR',
-        forecast_time=datetime(2020, 3, 19, 17, 59),
-        latest_data_point=datetime(2020, 3, 18, 12, 0)
-    )
-    print(str(fi))
