@@ -1,5 +1,5 @@
 import pytest
-from preproc.known_time_series_breaks import KnownTimeSeriesBreak
+from data_prep.preproc.known_time_series_breaks import KnownTimeSeriesBreak
 from datetime import datetime
 from pandas import DataFrame, Series
 

@@ -2,7 +2,6 @@ import pandas as pd
 import random
 import data_prep.fuzzy_merge.fuzzy_merge as fuzz
 
-
 COUNTRIES_1 = ['Afghanistan', 'Albania', 'Algeria', 'American Samoa', 'Andorra', 'Angola', 'Anguilla', 'Antigua and Barbuda', 'Argentina', 'Armenia', 'Aruba', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bermuda', 'Bhutan', 'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'British Virgin Islands', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Cambodia', 'Cameroon', 'Canada', 'Cape Verde', 'Cayman Islands', 'Central African Republic', 'Chad', 'Chile', 'China', 'Colombia', 'Comoros', 'Cook Islands', 'Costa Rica', 'Croatia', 'Cuba', 'Curacao', 'Cyprus', 'Czech Republic', 'DR Congo', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'Ecuador', 'Egypt', 'El Salvador', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Ethiopia', 'Falkland Islands', 'Faroe Islands', 'Fiji', 'Finland', 'France', 'French Guiana', 'French Polynesia', 'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Gibraltar',
                'Greece', 'Greenland', 'Grenada', 'Guadeloupe', 'Guam', 'Guatemala', 'Guinea', 'Guinea-Bissau', 'Guyana', 'Haiti', 'Honduras', 'Hong Kong', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland', 'Isle of Man', 'Israel', 'Italy', 'Ivory Coast', 'Jamaica', 'Japan', 'Jordan', 'Kazakhstan', 'Kenya', 'Kiribati', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Macau', 'Macedonia', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Martinique', 'Mauritania', 'Mauritius', 'Mayotte', 'Mexico', 'Micronesia', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Montserrat', 'Morocco', 'Mozambique', 'Myanmar', 'Namibia', 'Nauru', 'Nepal', 'Netherlands', 'New Caledonia', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'Niue', 'North Korea', 'Northern Mariana Islands', 'Norway', 'Oman', 'Pakistan', 'Palau', 'Palestine', 'Panama', 'Papua New Guinea',
                'Paraguay', 'Peru', 'Philippines', 'Poland', 'Portugal', 'Puerto Rico', 'Qatar', 'Republic of the Congo', 'Reunion', 'Romania', 'Russia', 'Rwanda', 'Saint Barthélemy', 'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Martin', 'Saint Pierre and Miquelon', 'Saint Vincent and the Grenadines', 'Samoa', 'San Marino', 'Sao Tome and Principe', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Sint Maarten', 'Slovakia', 'Slovenia', 'Solomon Islands', 'Somalia', 'South Africa', 'South Korea', 'South Sudan', 'Spain', 'Sri Lanka', 'Sudan', 'Suriname', 'Swaziland', 'Sweden', 'Switzerland', 'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Timor-Leste', 'Togo', 'Tokelau', 'Tonga', 'Trinidad and Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Turks and Caicos Islands', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'United States', 'United States Virgin Islands', 'Uruguay', 'Uzbekistan', 'Vanuatu', 'Vatican City',
@@ -14,26 +13,37 @@ COUNTRIES_2 = ['Afghanistan', 'Albania', 'Algeria', 'American Samoa', 'Andorra',
 
 
 def test_fuzzy_merge_all_matches():
+    df1 = pd.DataFrame({'key': ['abc', 'def', 'xyz'], 'value_1': [1, 1, 1]})
+    df2 = pd.DataFrame({'key': ['abc', 'def', 'xyz'], 'value_2': [2, 2, 2]})
+    df = fuzz.fuzzy_left_merge(df1.copy(), df2.copy(), left_on='key', right_on='key')
+    assert (df.key == df1.key).all().all()
+    assert (df.key == df2.key).all().all()
+    assert sum(df.value_1.isna()) == 0
+    assert sum(df.value_2.isna()) == 0
+
+
+def test_fuzzy_merge_one_mismatch():
     df1 = pd.DataFrame({'key': ['abc', 'def', 'xyz']})
-    df2 = pd.DataFrame({'key': ['abc', 'def', 'xyz']})
-    df = fuzz.fuzzy_left_merge(df1.copy(), df2.copy(), key1='key', key2='key')
-    assert (df == df1).all().all()
-    assert (df == df2).all().all()
+    df2 = pd.DataFrame({'key': ['abc', 'def', 'lmn']})
+    df = fuzz.fuzzy_left_merge(df1.copy(), df2.copy(), left_on='key', right_on='key')
+    assert (df.key == df1.key).all(), print(df)
+    assert sum(df.value_1.isna()) == 1
+    assert sum(df.value_2.isna()) == 1
 
 
 def test_fuzzy_merge():
-    """Real life smoke test"""
+    """Big data set smoke test and speed test"""
+
     df1 = pd.DataFrame({
-        'country_1': COUNTRIES_1,
-        'x_values': [random.uniform(0, 1) for _ in range(len(COUNTRIES_1))]
+            'country_1': COUNTRIES_1,
+            'x_values': [random.uniform(0, 1) for _ in range(len(COUNTRIES_1))]
         }
     )
 
     df2 = pd.DataFrame({
-        'country_2': COUNTRIES_1,
-        'y_values': [random.uniform(0, 1) for _ in range(len(COUNTRIES_1))]
+            'country_2': COUNTRIES_1,
+            'y_values': [random.uniform(0, 1) for _ in range(len(COUNTRIES_1))]
         }
     )
 
-    fuzz.fuzzy_left_merge(df1.copy(), df2.copy(), key1='country_1', key2='country_2')
-
+    fuzz.fuzzy_left_merge(df1.copy(), df2.copy(), left_on='country_1', right_on='country_2')

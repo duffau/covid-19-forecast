@@ -1,7 +1,7 @@
 import pytest
 import pickle
 import io
-from get_data.url_cache import URLCache
+from data_prep.get_data.url_cache import URLCache
 
 
 @pytest.fixture

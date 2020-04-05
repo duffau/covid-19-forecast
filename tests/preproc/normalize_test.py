@@ -1,4 +1,4 @@
-import preproc.normalize as normz
+import data_prep.preproc.normalize as normz
 
 
 def test__strip_whitespace():

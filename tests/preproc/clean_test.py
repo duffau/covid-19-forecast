@@ -1,5 +1,5 @@
 import pytest
-import preproc.clean as clean
+import data_prep.preproc.clean as clean
 from pandas import Series
 
 @pytest.fixture
