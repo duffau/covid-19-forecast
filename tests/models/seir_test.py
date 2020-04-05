@@ -107,3 +107,19 @@ def test_simulate_model(seir_model):
     assert (R > 0).any()
 
     assert ((S + E + I + R) - N < 1e-15).all()
+
+
+def test_fit_model(seir_model):
+    n = 50
+    xatol = 1e-3
+    t_eval = range(n)
+    y_obs = seir_model.simulate(t_eval=t_eval)
+    start_params = SEIRParams.from_random(seed=42)
+    start_params.gamma = GAMMA
+    start_params.alpha = ALPHA
+    start_params.S0 = S0
+    new_model = SEIR(params=start_params)
+    new_model.fit(y_obs, t_eval, options={'xatol': xatol})
+    print(seir_model.params)
+    print(new_model.params)
+    assert (new_model.params.values - seir_model.params.values < 0.01).all()

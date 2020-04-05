@@ -10,6 +10,9 @@ import numpy as np
 
 class SIR(Model):
 
+    FIT_PARAMS_LOWER = np.array([0.0, 0.0, 0.0])
+    FIT_PARAMS_UPPER = np.array([5.0, 1.0, 1.0])
+
     def __init__(self, params: SIRParams):
         super().__init__(params)
 
@@ -30,14 +33,15 @@ class SIR(Model):
 
     @property
     def fit_params(self):
-        param_lower = np.array([0.0, 0.0, 0.0])
-        param_upper = np.array([5.0, 1.0, 1.0])
-        return self.repam(np.array([self.params.beta, self.params.R0, self.params.I0]), param_lower, param_upper)
+        param_lower = self.FIT_PARAMS_LOWER
+        param_upper = self.FIT_PARAMS_UPPER
+        selected_params = np.array([self.params.beta, self.params.R0, self.params.I0])
+        return self.repam(selected_params, param_lower, param_upper)
 
     def _minimize_wrapper(self, fit_params, y_obs, t_eval):
         # print(f'fit_params: {fit_params}')
-        param_lower = np.array([0.0, 0.0, 0.0])
-        param_upper = np.array([5.0, 1.0, 1.0])
+        param_lower = self.FIT_PARAMS_LOWER
+        param_upper = self.FIT_PARAMS_UPPER
         beta, R0, I0 = self.inv_repam(fit_params, param_lower, param_upper)
         # print(f'beta, R0, I0: {beta, R0, I0}')
         gamma = None
