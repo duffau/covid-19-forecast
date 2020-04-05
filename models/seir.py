@@ -1,12 +1,13 @@
 from typing import Iterable
-from models.params import SEIRParams
+from .model import Model
+from .params import SEIRParams
 from scipy.integrate import solve_ivp
 
 
-class SEIR:
+class SEIR(Model):
 
     def __init__(self, params: SEIRParams):
-        self.params = params
+        super().__init__(params)
 
     def fit(self, y_obs):
         pass
