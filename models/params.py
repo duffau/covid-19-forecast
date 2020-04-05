@@ -1,6 +1,24 @@
-from collections import namedtuple
-SIRParams = namedtuple('SIRParams', ['beta', 'gamma', 'S0', 'I0', 'R0'])
-SIRParams.__new__.__defaults__ = (None,) * len(SIRParams._fields)
+class Params:
+    pass
 
-SEIRParams = namedtuple('SEIRParams', ['beta', 'gamma', 'alpha', 'S0', 'E0', 'I0', 'R0'])
-SEIRParams.__new__.__defaults__ = (None,) * len(SEIRParams._fields)
+
+class SIRParams(Params):
+
+    def __init__(self, beta=None, gamma=None, S0=None, I0=None, R0=None):
+        self.beta = beta
+        self.gamma = gamma
+        self.S0 = S0
+        self.I0 = I0
+        self.R0 = R0
+
+
+class SEIRParams(Params):
+
+    def __init__(self, beta=None, gamma=None, alpha=None, S0=None, E0=None ,I0=None, R0=None):
+        self.beta = beta
+        self.gamma = gamma
+        self.alpha = alpha
+        self.S0 = S0
+        self.E0 = E0
+        self.I0 = I0
+        self.R0 = R0
