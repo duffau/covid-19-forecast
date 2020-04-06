@@ -9,10 +9,12 @@ import numpy as np
 
 
 class SEIR(Model):
-    FIT_PARAMS_LOWER = np.array([0.0, 0.0, 0.0, 0.0])
+    FIT_PARAMS_LOWER = np.array([0.0, -1e-15, -1e-15, -1e-15])
     FIT_PARAMS_UPPER = np.array([5.0, 1.0, 1.0, 1.0])
 
-    def __init__(self, params: SEIRParams):
+    def __init__(self, params: SEIRParams, seed=42):
+        if not params:
+            params = SEIRParams.from_random(seed=seed)
         super().__init__(params)
 
     def fit(self, y_obs, t_eval, options=None):

@@ -13,7 +13,9 @@ class SIR(Model):
     FIT_PARAMS_LOWER = np.array([0.0, 0.0, 0.0])
     FIT_PARAMS_UPPER = np.array([5.0, 1.0, 1.0])
 
-    def __init__(self, params: SIRParams):
+    def __init__(self, params: SIRParams=None, seed=42):
+        if not params:
+            params = SIRParams.from_random(seed=seed)
         super().__init__(params)
 
     def fit(self, y_obs, t_eval, options=None):
