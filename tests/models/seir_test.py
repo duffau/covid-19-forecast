@@ -88,6 +88,10 @@ def test_init_model(seir_model):
     pass
 
 
+def test_model_name(seir_model):
+    assert seir_model.name == 'SEIR'
+
+
 def test_simulate_model(seir_model):
     n = 50
     t_eval = range(n)
@@ -111,15 +115,14 @@ def test_simulate_model(seir_model):
 
 def test_fit_model(seir_model):
     n = 50
-    xatol = 1e-3
+    xatol = 1e-5
+    fatol = 1e-5
     t_eval = range(n)
     y_obs = seir_model.simulate(t_eval=t_eval)
-    start_params = SEIRParams.from_random(seed=42)
+    start_params = SEIRParams.from_random(seed=1234)
     start_params.gamma = GAMMA
     start_params.alpha = ALPHA
     start_params.S0 = S0
     new_model = SEIR(params=start_params)
-    new_model.fit(y_obs, t_eval, options={'xatol': xatol})
-    print(seir_model.params)
-    print(new_model.params)
+    new_model.fit(y_obs, t_eval, options={'xatol': xatol, 'fatol': fatol})
     assert (new_model.params.values - seir_model.params.values < 0.01).all()

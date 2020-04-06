@@ -84,6 +84,10 @@ def test_init_model(sir_model):
     pass
 
 
+def test_model_name(sir_model):
+    assert sir_model.name == 'SIR'
+
+
 def test_simulate_model(sir_model):
     n = 50
     t_eval = range(n)
