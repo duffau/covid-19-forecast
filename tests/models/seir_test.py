@@ -110,7 +110,7 @@ def test_simulate_model(seir_model):
     assert (I > 0).any()
     assert (R > 0).any()
 
-    assert ((S + E + I + R) - N < 1e-15).all()
+    assert (np.abs((S + E + I + R) - N) < 1e-15).all()
 
 
 def test_fit_model(seir_model):

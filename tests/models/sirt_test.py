@@ -2,13 +2,14 @@ import pytest
 from models import SIRtParams, SIRt
 import numpy as np
 
-BETA_T = [0.6, 0.4, 0.3, 0.1, 1.0]
-T = [0.01, 0.2, 1.1, 1.4, 1.8]
+T = range(50)
+BETA_T = np.interp(T, [0, 10], [0.65, 0.5])
 GAMMA = 0.35
 N = 1.0
 I0 = 0.01
 R0 = 0.001
 S0 = N - I0 - R0
+
 
 
 @pytest.fixture
@@ -83,6 +84,14 @@ def test_simulate_model(sirt_model):
     n = 50
     t_eval = range(n)
     S, I, R = sirt_model.simulate(t_eval=t_eval)
+
+    # import matplotlib.pyplot as plt
+    # plt.plot(t_eval,S, label='S')
+    # plt.plot(t_eval, I, label='I')
+    # plt.plot(T, R, label='R')
+    # plt.legend()
+    # plt.show()
+
     assert len(S) == n
     assert len(I) == n
     assert len(R) == n
@@ -95,7 +104,7 @@ def test_simulate_model(sirt_model):
     assert (I > 0).any()
     assert (R > 0).any()
 
-    assert ((S + I + R) - N < 1e-15).all()
+    assert (np.abs((S + I + R) - N) < 1e-15).all()
 
 
 def test_fit_model(sirt_model):
@@ -108,4 +117,18 @@ def test_fit_model(sirt_model):
     start_params.S0 = S0
     new_model = SIRt(params=start_params, beta_t=BETA_T, t=T)
     new_model.fit(y_obs, t_eval, options={'xatol': xatol})
-    assert (new_model.params.values - sirt_model.params.values < 0.01).all()
+    assert (np.abs(new_model.params.values - sirt_model.params.values) < 0.01).all()
+
+
+def test_fit_model_and_beta(sirt_model):
+    n = 50
+    xatol = 1e-3
+    t_eval = range(n)
+    y_obs = sirt_model.simulate(t_eval=t_eval)
+    start_params = SIRtParams.from_random(seed=42)
+    start_params.gamma = GAMMA
+    start_params.S0 = S0
+    new_model = SIRt(params=start_params)
+    new_model.fit(y_obs, t_eval, lowess_frac=0.01, options={'xatol': xatol})
+    assert (np.abs(new_model.beta(t_eval) - sirt_model.beta(t_eval)) < 1.0).all()
+    assert (np.abs(new_model.params.values - sirt_model.params.values) < 0.5).all()

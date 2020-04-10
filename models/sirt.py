@@ -5,6 +5,7 @@ from .utils import *
 
 from scipy.integrate import solve_ivp
 from scipy.optimize import minimize
+import statsmodels.api as sm
 import numpy as np
 
 
@@ -21,7 +22,9 @@ class SIRt(Model):
             params = SIRtParams.from_random(seed=seed)
         super().__init__(params)
 
-    def fit(self, y_obs, t_eval, options=None):
+    def fit(self, y_obs, t_eval, lowess_frac=0.5, options=None):
+        if not len(self.beta_t) == 0:
+            self.fit_beta(y_obs, t_eval, lowess_frac=lowess_frac)
 
         _options = {'maxiter': 2500, 'maxfev': 5000}
         if options:
@@ -45,6 +48,28 @@ class SIRt(Model):
 
     def beta(self, t):
         return np.interp(t, self.t, self.beta_t)
+
+    def fit_beta(self, y_obs, t_eval, lowess_frac=0.5):
+        log_I_t = np.log(y_obs[1])
+        t_eval = np.array(t_eval)
+        log_I_t, t_eval = self._filter_monotonic_growth(log_I_t, t_eval)
+        log_I_t_hat = sm.nonparametric.lowess(endog=log_I_t,
+                                        exog=t_eval,
+                                        frac=lowess_frac,
+                                        return_sorted=False)
+
+        slopes = self._slopes(log_I_t_hat, t_eval)
+        gamma = self.params.gamma
+        self.beta_t = (slopes / gamma + 1) * gamma
+        self.t = t_eval[1:]
+
+    def _filter_monotonic_growth(self, y, t_eval):
+        is_growing = np.diff(y, prepend=0) > 0
+        return y[is_growing], t_eval[is_growing]
+
+    def _slopes(self, y, t_eval):
+        return np.diff(y) / np.diff(t_eval)
+
 
     def _minimize_wrapper(self, fit_params, y_obs, t_eval):
         # print(f'fit_params: {fit_params}')
