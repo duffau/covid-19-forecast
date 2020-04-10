@@ -111,4 +111,4 @@ def test_fit_model(sir_model):
     start_params.S0 = S0
     new_model = SIR(params=start_params)
     new_model.fit(y_obs, t_eval, options={'xatol': xatol})
-    assert (new_model.params.values - sir_model.params.values < 0.01).all()
+    assert (np.abs(new_model.params.values - sir_model.params.values) < 0.01).all()

@@ -125,4 +125,4 @@ def test_fit_model(seir_model):
     start_params.S0 = S0
     new_model = SEIR(params=start_params)
     new_model.fit(y_obs, t_eval, options={'xatol': xatol, 'fatol': fatol})
-    assert (new_model.params.values - seir_model.params.values < 0.01).all()
+    assert (np.abs(new_model.params.values - seir_model.params.values) < 0.01).all()
