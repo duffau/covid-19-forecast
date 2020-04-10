@@ -1,3 +1,4 @@
+from typing import Iterable, Tuple
 import numpy as np
 
 
@@ -52,6 +53,34 @@ class SIRParams(Params):
         rand = np.random.random(size=(5,))
         rand *= np.array((1., 1., 0.1, 0.1, 0.1))
         rand += np.array((0., 0., 0.9, 0.0, 0.0))
+        return cls.from_values(rand)
+
+
+class SIRtParams(Params):
+
+    def __init__(self, gamma: float = None, S0: float = None, I0: float = None, R0: float = None):
+        self.gamma = gamma
+        self.S0 = S0
+        self.I0 = I0
+        self.R0 = R0
+
+    def __repr__(self):
+        return f'SIRt(gamma={self.gamma}, S0={self.S0}, I0={self.I0}, R0={self.R0})'
+
+    @property
+    def values(self) -> np.ndarray:
+        return np.array([self.gamma, self.S0, self.I0, self.R0])
+
+    @classmethod
+    def from_values(cls, values):
+        return cls(*values)
+
+    @classmethod
+    def from_random(cls, seed=42):
+        np.random.seed(seed)
+        rand = np.random.random(size=(4,))
+        rand *= np.array((1., 0.1, 0.1, 0.1))
+        rand += np.array((0., 0.9, 0.0, 0.0))
         return cls.from_values(rand)
 
 
