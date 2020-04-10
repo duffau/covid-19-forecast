@@ -28,12 +28,6 @@ def sir_model(sir_params):
     return model
 
 
-@pytest.fixture
-def sir_sim(model):
-    t_eval = range(50)
-    return model.simulate(t_eval=t_eval)
-
-
 def test_init_sir_params(sir_params):
     pass
 
