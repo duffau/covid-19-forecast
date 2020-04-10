@@ -26,7 +26,7 @@ class SIR(Model):
 
         res = minimize(
             fun=self._minimize_wrapper,
-            x0=self.fit_params,
+            x0=self.free_params,
             args=(y_obs, t_eval),
             method='Nelder-Mead',
             options=_options
@@ -34,7 +34,7 @@ class SIR(Model):
         print(res)
 
     @property
-    def fit_params(self):
+    def free_params(self):
         param_lower = self.FIT_PARAMS_LOWER
         param_upper = self.FIT_PARAMS_UPPER
         selected_params = np.array([self.params.beta, self.params.R0, self.params.I0])
