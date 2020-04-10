@@ -23,7 +23,7 @@ class SIRt(Model):
         super().__init__(params)
 
     def fit(self, y_obs, t_eval, lowess_frac=0.5, options=None):
-        if not len(self.beta_t) == 0:
+        if len(self.beta_t) == 0:
             self.fit_beta(y_obs, t_eval, lowess_frac=lowess_frac)
 
         _options = {'maxiter': 2500, 'maxfev': 5000}

@@ -11,6 +11,13 @@ R0 = 0.001
 S0 = N - I0 - R0
 
 
+def mean_absolute_error(actual, expected):
+    return np.mean(absolute_error(actual, expected))
+
+
+def absolute_error(actual, expected):
+    return np.mean(np.abs(actual - expected))
+
 
 @pytest.fixture
 def sirt_params():
@@ -117,7 +124,7 @@ def test_fit_model(sirt_model):
     start_params.S0 = S0
     new_model = SIRt(params=start_params, beta_t=BETA_T, t=T)
     new_model.fit(y_obs, t_eval, options={'xatol': xatol})
-    assert (np.abs(new_model.params.values - sirt_model.params.values) < 0.01).all()
+    assert (absolute_error(new_model.params.values, sirt_model.params.values) < 0.01).all()
 
 
 def test_fit_model_and_beta(sirt_model):
@@ -130,5 +137,5 @@ def test_fit_model_and_beta(sirt_model):
     start_params.S0 = S0
     new_model = SIRt(params=start_params)
     new_model.fit(y_obs, t_eval, lowess_frac=0.01, options={'xatol': xatol})
-    assert (np.abs(new_model.beta(t_eval) - sirt_model.beta(t_eval)) < 1.0).all()
-    assert (np.abs(new_model.params.values - sirt_model.params.values) < 0.5).all()
+    assert mean_absolute_error(sirt_model.beta(t_eval), new_model.beta(t_eval)) < 0.2
+    assert mean_absolute_error(new_model.params.values, sirt_model.params.values) < 0.01
