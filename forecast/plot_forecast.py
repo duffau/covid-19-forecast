@@ -8,14 +8,12 @@ from forecast import ForecastInfo
 
 
 def plot_forecast(df_forecast: DataFrame, forecast_info: ForecastInfo, days_short_term=5, days_long_term=30) -> plt.Figure:
-    fig = plt.figure(figsize=(8, 5), constrained_layout=True)
-    gs = fig.add_gridspec(4, 3)
-    long_term_plot = fig.add_subplot(gs[0:2, 0:2])
-    beta_plot = fig.add_subplot(gs[2:4, 0:2])
-    stat_box_1 = fig.add_subplot(gs[0, 2])
-    stat_box_2 = fig.add_subplot(gs[1, 2])
-    stat_box_3 = fig.add_subplot(gs[2, 2])
-    stat_box_4 = fig.add_subplot(gs[3, 2])
+    fig = plt.figure(figsize=(8, 8), constrained_layout=True)
+    gs = fig.add_gridspec(3, 2)
+    stat_box_1 = fig.add_subplot(gs[0, 0])
+    stat_box_2 = fig.add_subplot(gs[0, 1])
+    infected_plot = fig.add_subplot(gs[1, 0:2])
+    r0_plot = fig.add_subplot(gs[2, 0:2])
 
     stats = calc_plot_stats(df_forecast, forecast_info)
     r0 = stats['r0']
@@ -26,25 +24,24 @@ def plot_forecast(df_forecast: DataFrame, forecast_info: ForecastInfo, days_shor
 
     make_centered_text_box(stat_box_1, f'Peak date:\n {peak_date.strftime("%d-%m-%Y")}')
     make_centered_text_box(stat_box_2, f'Peak number of infected:\n {format_counts(peak_infected)}')
-    # make_centered_text_box(stat_box_3, f'Basic reproducion number\n$R_0 = {r0:.2g}$')
-    # make_centered_text_box(stat_box_4, f'Current reproducion number\n$R_t = {rt:.2g}$')
 
     today = np.datetime64('now')
-    short_term_mask = df_forecast.dates < today + np.timedelta64(days_short_term, 'D')
+    # short_term_mask = df_forecast.dates < today + np.timedelta64(days_short_term, 'D')
     long_term_mask = df_forecast.dates < today + np.timedelta64(days_long_term, 'D')
 
     make_infected_removed_plot(
-        long_term_plot,
+        infected_plot,
         dates=df_forecast.dates[long_term_mask],
         infected_forecast=df_forecast.infected_forecast[long_term_mask],
         infected_obs=df_forecast.infected_obs[long_term_mask],
         title=f'Forecasting {days_long_term} days ahead.'
     )
 
-    make_beta_plot(
-        beta_plot,
-        dates=Series(forecast_info.beta_dates),
-        beta_t=Series(forecast_info.beta_t),
+    make_r0_plot(
+        r0_plot,
+        r0_t=forecast_info.beta_t,
+        dates=forecast_info.beta_dates,
+        dates_obs=forecast_info.beta_obs_dates,
         title=f'Estimated transmission rate - Transmissions per infected per day.'
     )
 
@@ -78,26 +75,32 @@ def make_infected_removed_plot(ax, dates: Iterable[datetime],
     return ax
 
 
-def make_beta_plot(ax, dates: Sequence[datetime],
-                   beta_t: Sequence[float],
-                   title='', title_size=10,
-                   ylabel="Persons per day",
-                   date_formatter=DateFormatter("%d-%b")):
+def make_centered_text_box(ax, textstr, size=11):
+    ax.text(0.5, 0.5, textstr, size=size, ha="center", va="center")
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+    return ax
+
+
+def make_r0_plot(ax,
+                 r0_t: Sequence[float],
+                 dates: Sequence[datetime],
+                 dates_obs: Sequence[datetime],
+                 title='', title_size=10,
+               ylabel="Transmissions per day",
+               date_formatter=DateFormatter("%d-%b")):
     ax.set_title(title, fontdict={'fontsize': title_size})
 
-    ax.plot(dates, beta_t, label="Avg. transmission rate (beta)")
+    r0_obs = r0_t[np.isin(dates, dates_obs)]
+    dates_fct = dates[~np.isin(dates, dates_obs)]
+    r0_fct = r0_t[~np.isin(dates, dates_obs)]
+    ax.plot(dates_obs, r0_obs, label="Avg. transmission rate")
+    ax.plot(dates_fct, r0_fct, '--', label="Avg. transmission rate - forecast")
     ax.xaxis.set_major_formatter(date_formatter)
     ax.tick_params(axis='x', rotation=25)
     ax.grid("True")
     ax.set_ylabel(ylabel)
     ax.legend()
-    return ax
-
-
-def make_centered_text_box(ax, textstr, size=11):
-    ax.text(0.5, 0.5, textstr, size=size, ha="center", va="center")
-    ax.get_xaxis().set_visible(False)
-    ax.get_yaxis().set_visible(False)
     return ax
 
 
