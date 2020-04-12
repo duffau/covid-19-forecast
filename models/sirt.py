@@ -80,11 +80,11 @@ class SIRt(Model):
         return np.diff(y) / np.diff(t_eval)
 
     def _minimize_wrapper(self, fit_params, y_obs, t_eval):
-        print(f'fit_params: {fit_params}')
+        # print(f'fit_params: {fit_params}')
         param_lower = self.FIT_PARAMS_LOWER
         param_upper = self.FIT_PARAMS_UPPER
         R0, I0 = self.inv_repam(fit_params, param_lower, param_upper)
-        print(f'R0, I0: {R0, I0}')
+        # print(f'R0, I0: {R0, I0}')
         gamma = None
         S0 = None
         self._update_params(gamma, I0, S0, R0)
@@ -103,7 +103,7 @@ class SIRt(Model):
         val += ((S_hat_t - S_t) ** 2).mean()
         val += ((I_hat_t - I_t) ** 2).mean()
         val += ((R_hat_t - R_t) ** 2).mean()
-        print(f'sum_sq: {val}')
+        # print(f'sum_sq: {val}')
         return val
 
     def _update_params(self, gamma, I0, S0, R0):
@@ -129,5 +129,6 @@ class SIRt(Model):
     def simulate(self, t_eval: Iterable[float], N=1.0):
         y0 = (self.params.S0, self.params.I0, self.params.R0)
         t_span = (min(t_eval), max(t_eval))
-        sol = solve_ivp(self._deriv, t_span, y0, t_eval=t_eval, args=(self.beta, self.params.gamma))
-        return sol.y * N
+        sol = solve_ivp(self._deriv, t_span, y0, args=(self.beta, self.params.gamma))
+        S, I, R = sol.y * N
+        return np.interp(t_eval, sol.t, S), np.interp(t_eval, sol.t, I), np.interp(t_eval, sol.t, R)

@@ -94,4 +94,5 @@ class SEIR(Model):
         y0 = (self.params.S0, self.params.E0, self.params.I0, self.params.R0)
         t_span = (min(t_eval), max(t_eval))
         sol = solve_ivp(self._deriv, t_span, y0, t_eval=t_eval, args=(self.params.beta, self.params.gamma, self.params.alpha))
-        return sol.y * N
+        S, E, I, R = sol.y * N
+        return np.interp(t_eval, sol.t, S), np.interp(t_eval, sol.t, E), np.interp(t_eval, sol.t, I), np.interp(t_eval, sol.t, R)

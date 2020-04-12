@@ -138,4 +138,4 @@ def test_fit_model_and_beta(sirt_model):
     new_model = SIRt(params=start_params)
     new_model.fit(y_obs, t_eval, lowess_frac=0.01, options={'xatol': xatol})
     assert mean_absolute_error(sirt_model.beta(t_eval), new_model.beta(t_eval)) < 0.2
-    assert mean_absolute_error(new_model.params.values, sirt_model.params.values) < 0.01
+    assert mean_absolute_error(new_model.params.values, sirt_model.params.values) < 0.015
