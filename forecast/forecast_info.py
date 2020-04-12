@@ -21,7 +21,7 @@ class ForecastInfo:
         self.forecast_time = forecast_time
         self.latest_data_point = latest_data_point
         self.params = params
-        if beta_t and beta_dates:
+        if beta_t is not None and beta_dates is not None:
             assert len(beta_t) == len(beta_dates)
         self.beta_t = beta_t
         self.beta_dates = beta_dates
