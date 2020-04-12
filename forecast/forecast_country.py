@@ -27,9 +27,8 @@ def forecast_countries(df: pd.DataFrame,
 
     for country in countries:
         if country in skip_countries:
-            print(f"Skipping {country}")
+            logger.info(f"Skipping {country}")
             continue
-
         df_country = df[df[col_country] == country]
         if start_params_collection:
             start_params = start_params_collection.get(country)
@@ -94,6 +93,7 @@ def forecast(df,
 
     def pad_nan(obs_array, n_predicted):
         return np.pad(obs_array, (0, n_predicted), 'constant', constant_values=np.nan)
+
     try:
         beta_t = model.beta(t_eval_pred)
         beta_dates = dates_eval_pred

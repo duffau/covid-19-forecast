@@ -12,7 +12,6 @@ logger = logging.getLogger(__name__)
 
 N_DAYS_PREDICT = 400
 COUNTRIES = ['Denmark', 'Iran',  'Spain', 'Italy', 'Sweden']
-COUNTRIES = ['Denmark']
 SEED = 42
 
 
