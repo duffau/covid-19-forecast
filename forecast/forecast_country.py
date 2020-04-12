@@ -94,6 +94,14 @@ def forecast(df,
 
     def pad_nan(obs_array, n_predicted):
         return np.pad(obs_array, (0, n_predicted), 'constant', constant_values=np.nan)
+    try:
+        beta_t = model.beta(t_eval_pred)
+        beta_dates = dates_eval_pred
+        beta_obs_dates = (model.t * SECS_PER_DAY).astype('timedelta64[s]') + dates_obs[0]
+    except AttributeError:
+        beta_t = [model.params.beta]*len(t_eval_pred)
+        beta_dates = dates_eval_pred
+        beta_obs_dates = dates_obs
 
     forecast_data = {
         'country': country,
@@ -103,12 +111,15 @@ def forecast(df,
         'infected_obs': pad_nan(infected_obs, n_days_predict),
         'infected_forecast': I_t,
         'removed_obs': pad_nan(removed_obs, n_days_predict),
-        'removed_forecast': R_t
+        'removed_forecast': R_t,
     }
 
     df_forecast = pd.DataFrame(forecast_data)
     forecast_info = extract_forecast_info(country=country,
                                           model_name=model.name,
                                           df=df,
+                                          beta_t=beta_t,
+                                          beta_dates=beta_dates,
+                                          beta_obs_dates=beta_obs_dates,
                                           params=model.params)
     return df_forecast, forecast_info
