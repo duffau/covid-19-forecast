@@ -63,15 +63,20 @@ def forecast(df,
     except AttributeError:
         dates_obs = pd.to_datetime(df.last_update_date).values
 
+    susceptible_obs = df.total_susceptible.values.astype(float)
+    infected_obs = df.total_infected.values.astype(float)
+    removed_obs = df.total_removed.values.astype(float)
+
     N = df.population.iloc[0]
-    susceptible_obs = df.total_susceptible.values / N
-    infected_obs = df.total_infected.values / N
-    removed_obs = df.total_removed.values / N
-    y_obs = susceptible_obs, infected_obs, removed_obs
+    susceptible_obs_scaled = susceptible_obs / N
+    infected_obs_scaled = infected_obs / N
+    removed_obs_scaled = removed_obs / N
+
+    y_obs = susceptible_obs_scaled, infected_obs_scaled, removed_obs_scaled
     logger.info(f'N: {N}')
 
     model.params.gamma = GAMMA
-    model.params.S0 = susceptible_obs[0]
+    model.params.S0 = susceptible_obs_scaled[0]
 
     dates_pred = np.arange(dates_obs[-1] + np.timedelta64(1, 'D'), dates_obs[-1] + np.timedelta64(n_days_predict + 1, 'D'), np.timedelta64(1, 'D'))
     dates_eval_pred = np.append(dates_obs, dates_pred)
@@ -87,7 +92,7 @@ def forecast(df,
     logger.info(f'R0 = {beta / gamma:.2f}')
     logger.info(f'beta = {beta:.3g}, gamma = {gamma:.3g}, S0 = {S0:.3g}, I0 = {I0:.3g}, R0 = {R0:.3g}')
 
-    S_t, I_t, R_t = model.simulate(t_eval=t_eval_pred)
+    S_t, I_t, R_t = model.simulate(t_eval=t_eval_pred, N=N)
 
     def pad_nan(obs_array, n_predicted):
         return np.pad(obs_array, (0, n_predicted), 'constant', constant_values=np.nan)
