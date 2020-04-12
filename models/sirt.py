@@ -97,7 +97,7 @@ class SIRt(Model):
         return inv_sigmoid(fit_params, lower, upper)
 
     def _sum_sq(self, y_obs, t_eval):
-        S_hat_t, I_hat_t, R_hat_t = self.simulate(t_eval=t_eval)
+        S_hat_t, I_hat_t, R_hat_t = self._simulate(t_eval=t_eval)
         S_t, I_t, R_t = y_obs
         val = 0
         val += ((S_hat_t - S_t) ** 2).mean()
@@ -126,9 +126,16 @@ class SIRt(Model):
         dRdt = gamma * I
         return dSdt, dIdt, dRdt
 
-    def simulate(self, t_eval: Iterable[float], N=1.0):
+    def _simulate(self, t_eval: Iterable[float], N=1.0):
         y0 = (self.params.S0, self.params.I0, self.params.R0)
         t_span = (min(t_eval), max(t_eval))
         sol = solve_ivp(self._deriv, t_span, y0, args=(self.beta, self.params.gamma))
+        S, I, R = sol.y * N
+        return np.interp(t_eval, sol.t, S), np.interp(t_eval, sol.t, I), np.interp(t_eval, sol.t, R)
+
+    def simulate(self, t_eval: Iterable[float], N=1.0):
+        y0 = (self.params.S0, self.params.I0, self.params.R0)
+        t_span = (min(t_eval), max(t_eval))
+        sol = solve_ivp(self._deriv, t_span, y0, t_eval=t_eval, args=(self.beta, self.params.gamma))
         S, I, R = sol.y * N
         return np.interp(t_eval, sol.t, S), np.interp(t_eval, sol.t, I), np.interp(t_eval, sol.t, R)
