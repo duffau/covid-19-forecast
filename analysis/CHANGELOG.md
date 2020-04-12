@@ -1,4 +1,32 @@
+## Saturday 11/4
 
+Instead of relying on approximation of the growth in new cases to be exponential,
+maybe it's possible to simply back out a time varying beta using the
+differential equation for `I_t` given a gamma is fixed.
+```
+dI_t/dt = beta * I_t * S_t - gamma*I_t       <=>
+((dI_t/dt)/*I_t + gamma)/S_t = beta 
+```
+First I try it out on simulated data:
+
+![SIR simulaiton](changelog_img/11-04-2020/sir_sim.png)
+
+To operationalize this idea i estimate beta using a discrete approximation:
+
+```python
+df['beta_backed_out'] = (df['total_infected'].diff()/df['total_infected'].shift(-1) + GAMMA)/df['total_susceptible']
+```
+![Beta estimate attempt - Simulated](changelog_img/11-04-2020/beta_backed_out.png)
+
+It's not entirely promising, nor a complete disaster. 
+
+Trying it out on real data puts the nail in the coffin on that idea. Looking at the plot
+first of all the beta estimates are very volatile, which might be fixed with some kind of smoother,
+but the scale is completely off. Dividing by the number of susceptible which is on the order of
+the total population of a country is too much. This might be a testimony to the true number of
+susceptibles being much less than the total population,  especially in the eyes of a SIR-model. 
+
+![Beta estimate attempt - real data](changelog_img/11-04-2020/denmark_beta_backed_out.png)
 
 ## Sunday 29/3
 

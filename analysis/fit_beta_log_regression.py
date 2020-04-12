@@ -28,7 +28,7 @@ df = df_all[df_all.country == country]
 x_var = 'dates'
 y_var = 'log_total_infected'
 
-df_fit = df[['date', 'total_infected', y_var]].replace([np.inf, -np.inf], np.nan).dropna()
+df_fit = df[['date', 'total_infected', 'total_susceptible', y_var]].replace([np.inf, -np.inf], np.nan).dropna()
 dates_obs = pd.to_datetime(df_fit.date).values
 y_obs = df_fit[y_var].values
 
@@ -101,3 +101,12 @@ param_string = f'$\\gamma = {GAMMA:.3g}$ (assumed)\nLOESS frac = {LOESS_FRAC:.3g
 ax.text(0.01, .75, param_string, ha='left', va='top', transform=plt.gca().transAxes)
 plt.tight_layout()
 plt.savefig(op.join(PLOT_FOLDER, f'{country.lower()}_beta.png'))
+
+df_fit['beta_backed_out'] = (df_fit['total_infected'].diff()/df_fit['total_infected'].shift(-1) + GAMMA)/df_fit['total_susceptible']
+ax = df_fit.plot(x='date', y=['beta_backed_out'], logy=False, title=country)
+ax.yaxis.set_major_formatter(FormatStrFormatter('%.2g'))
+ax.set_ylabel('avg. transmissions per infected per day')
+param_string = f'$\\gamma = {GAMMA:.3g}$ (assumed)'
+ax.text(0.99, .75, param_string, ha='right', va='top', transform=plt.gca().transAxes)
+plt.tight_layout()
+plt.savefig(op.join(PLOT_FOLDER, f'{country.lower()}_beta_backed_out.png'))
