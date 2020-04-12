@@ -1,4 +1,4 @@
-from typing import Iterable, Sized
+from typing import Iterable, Sequence
 from .model import Model
 from .params import SIRtParams
 from .utils import *
@@ -7,6 +7,9 @@ from scipy.integrate import solve_ivp
 from scipy.optimize import minimize
 import statsmodels.api as sm
 import numpy as np
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class SIRt(Model):
@@ -14,22 +17,24 @@ class SIRt(Model):
     FIT_PARAMS_LOWER = np.array([0.0, 0.0])
     FIT_PARAMS_UPPER = np.array([1.0, 1.0])
 
-    def __init__(self, params: SIRtParams = None, beta_t: Sized = tuple(), t: Sized = tuple(), seed=42):
+    def __init__(self, params: SIRtParams = None, beta_t: Sequence = tuple(), t: Sequence = tuple(), seed=42):
         assert len(beta_t) == len(t), f'beta_t and t must have the same length: len(beta_t) = {len(beta_t)} != len(t) = {len(t)}'
-        self.beta_t = beta_t
-        self.t = t
+        self.beta_t = np.array(beta_t)
+        self.t = np.array(t)
         if not params:
             params = SIRtParams.from_random(seed=seed)
         super().__init__(params)
 
-    def fit(self, y_obs, t_eval, lowess_frac=0.5, options=None):
+    def fit(self, y_obs, t_eval, lowess_frac=0.5, options=None, verbose=False):
         if len(self.beta_t) == 0:
+            logger.info('Fitting beta path ...')
             self.fit_beta(y_obs, t_eval, lowess_frac=lowess_frac)
 
         _options = {'maxiter': 2500, 'maxfev': 5000}
         if options:
             _options.update(options)
 
+        logger.info('Fitting remaining free parameters ...')
         res = minimize(
             fun=self._minimize_wrapper,
             x0=self.free_params,
@@ -49,34 +54,37 @@ class SIRt(Model):
     def beta(self, t):
         return np.interp(t, self.t, self.beta_t)
 
+    def _filter_growth_path(self, y, t_eval):
+        top_index = np.argmax(y)
+        return y[0:top_index], t_eval[0:top_index]
+
     def fit_beta(self, y_obs, t_eval, lowess_frac=0.5):
         log_I_t = np.log(y_obs[1])
-        t_eval = np.array(t_eval)
-        log_I_t, t_eval = self._filter_monotonic_growth(log_I_t, t_eval)
+        _t_eval = np.array(t_eval)
+        log_I_t, _t_eval = self._filter_growth_path(log_I_t, _t_eval)
         log_I_t_hat = sm.nonparametric.lowess(endog=log_I_t,
-                                        exog=t_eval,
-                                        frac=lowess_frac,
-                                        return_sorted=False)
-
-        slopes = self._slopes(log_I_t_hat, t_eval)
+                                              exog=_t_eval,
+                                              frac=lowess_frac,
+                                              missing='drop',
+                                              return_sorted=False)
+        slopes = self._slopes(log_I_t_hat, _t_eval)
         gamma = self.params.gamma
-        self.beta_t = (slopes / gamma + 1) * gamma
-        self.t = t_eval[1:]
-
-    def _filter_monotonic_growth(self, y, t_eval):
-        is_growing = np.diff(y, prepend=0) > 0
-        return y[is_growing], t_eval[is_growing]
+        beta_t = (slopes / gamma + 1) * gamma
+        t = _t_eval[1:]
+        self.beta_t = beta_t[~np.isnan(beta_t)]
+        self.t = t[~np.isnan(beta_t)]
+        print(f'beta_t: {self.beta_t}')
+        print(f't: {self.t}')
 
     def _slopes(self, y, t_eval):
         return np.diff(y) / np.diff(t_eval)
 
-
     def _minimize_wrapper(self, fit_params, y_obs, t_eval):
-        # print(f'fit_params: {fit_params}')
+        print(f'fit_params: {fit_params}')
         param_lower = self.FIT_PARAMS_LOWER
         param_upper = self.FIT_PARAMS_UPPER
         R0, I0 = self.inv_repam(fit_params, param_lower, param_upper)
-        # print(f'beta, R0, I0: {beta, R0, I0}')
+        print(f'R0, I0: {R0, I0}')
         gamma = None
         S0 = None
         self._update_params(gamma, I0, S0, R0)
@@ -95,7 +103,7 @@ class SIRt(Model):
         val += ((S_hat_t - S_t) ** 2).mean()
         val += ((I_hat_t - I_t) ** 2).mean()
         val += ((R_hat_t - R_t) ** 2).mean()
-        # print(f'sum_sq: {val}')
+        print(f'sum_sq: {val}')
         return val
 
     def _update_params(self, gamma, I0, S0, R0):
