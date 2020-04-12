@@ -1,4 +1,4 @@
-from typing import Iterable
+from typing import Sequence
 from datetime import datetime
 from pandas import DataFrame
 
@@ -7,12 +7,25 @@ from models import SIRParams
 
 class ForecastInfo:
 
-    def __init__(self, id: str, model_name: str, forecast_time: datetime, latest_data_point: datetime, params: SIRParams):
+    def __init__(self,
+                 id: str,
+                 model_name: str,
+                 forecast_time: datetime,
+                 latest_data_point: datetime,
+                 params: SIRParams,
+                 beta_t: Sequence[float] = None,
+                 beta_dates: Sequence[datetime] = None,
+                 beta_obs_dates: Sequence[datetime] = None):
         self.id = id
         self.model_name = model_name
         self.forecast_time = forecast_time
         self.latest_data_point = latest_data_point
         self.params = params
+        if beta_t and beta_dates:
+            assert len(beta_t) == len(beta_dates)
+        self.beta_t = beta_t
+        self.beta_dates = beta_dates
+        self.beta_obs_dates = beta_obs_dates
 
     def __str__(self):
         sorted_attributes = sorted(self.__dict__.items(), key=lambda item: item[0])
@@ -36,12 +49,21 @@ class ForecastInfoCollection:
         return self.collection.get(id)
 
 
-def extract_cssegi_forecast_info(country: str, model_name: str, params: SIRParams, df: DataFrame):
+def extract_cssegi_forecast_info(
+        country: str,
+        model_name: str,
+        params: SIRParams,
+        beta_t: Sequence[float],
+        beta_dates: Sequence[datetime],
+        beta_obs_dates: Sequence[datetime],
+        df: DataFrame):
     return ForecastInfo(
         id=country,
         model_name=model_name,
         forecast_time=datetime.now(),
         latest_data_point=df.date.max().to_pydatetime(),
-        params=params
+        params=params,
+        beta_t=beta_t,
+        beta_dates=beta_dates,
+        beta_obs_dates=beta_obs_dates
     )
-
