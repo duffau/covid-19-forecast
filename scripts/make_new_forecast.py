@@ -2,6 +2,7 @@ import logging
 import pandas as pd
 import os.path as op
 import pickle
+from collections import defaultdict
 from datetime import datetime
 from models import SIRtParams as Params
 from models import SIRt as Model
@@ -11,8 +12,9 @@ import scripts.config as config
 logger = logging.getLogger(__name__)
 
 N_DAYS_PREDICT = 400
-COUNTRIES = ['Denmark', 'Iran',  'Spain', 'Italy', 'Sweden']
-SEED = 42
+COUNTRIES = ['Denmark', 'Iran', 'Spain', 'Italy', 'Sweden']
+SEED = 43
+DEFAULT_PARAMS = Params(I0=1e-6, R0=1e-6)
 
 
 def main():
@@ -24,9 +26,10 @@ def main():
 
     df_all = pd.read_pickle(data_file)
 
-    start_params = {
-        # 'Denmark': Params(gamma=None, R0=1e-9, I0=1e-5, S0=None),
-    }
+    start_params = defaultdict(lambda: DEFAULT_PARAMS)
+    start_params['Denmark'] = Params(I0=1e-12, R0=1e-12)
+    start_params['Spain'] = Params(I0=1e-11, R0=1e-11)
+    start_params['Italy'] = Params(I0=1e-11, R0=1e-11)
 
     df_forecasts, forecast_info_collection = forecast_countries(
         df_all,

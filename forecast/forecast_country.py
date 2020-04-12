@@ -31,7 +31,7 @@ def forecast_countries(df: pd.DataFrame,
             continue
         df_country = df[df[col_country] == country]
         if start_params_collection:
-            start_params = start_params_collection.get(country)
+            start_params = start_params_collection[country]
         else:
             start_params = None
         model = model_class(params=start_params, seed=seed)
