@@ -53,10 +53,11 @@ def extract_cssegi_forecast_info(
         country: str,
         model_name: str,
         params: SIRParams,
-        beta_t: Sequence[float],
-        beta_dates: Sequence[datetime],
-        beta_obs_dates: Sequence[datetime],
-        df: DataFrame):
+        df: DataFrame,
+        beta_t: Sequence[float] = None,
+        beta_dates: Sequence[datetime] = None,
+        beta_obs_dates: Sequence[datetime] = None,
+):
     return ForecastInfo(
         id=country,
         model_name=model_name,
