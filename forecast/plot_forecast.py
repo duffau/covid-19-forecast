@@ -3,27 +3,29 @@ from datetime import datetime
 from pandas import DataFrame, Series
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 from matplotlib.dates import DateFormatter
 from forecast import ForecastInfo
 
+COLORS = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00', '#ffff33', '#a65628', '#f781bf', '#999999']
 
-def plot_forecast(df_forecast: DataFrame, forecast_info: ForecastInfo, days_short_term=5, days_long_term=30) -> plt.Figure:
+
+def plot_forecast(df_forecast: DataFrame, forecast_info: ForecastInfo, days_long_term=30) -> plt.Figure:
     fig = plt.figure(figsize=(8, 8), constrained_layout=True)
-    gs = fig.add_gridspec(3, 2)
+    gs = fig.add_gridspec(5, 2)
     stat_box_1 = fig.add_subplot(gs[0, 0])
     stat_box_2 = fig.add_subplot(gs[0, 1])
-    infected_plot = fig.add_subplot(gs[1, 0:2])
-    r0_plot = fig.add_subplot(gs[2, 0:2])
+    infected_plot = fig.add_subplot(gs[1:3, 0:2])
+    r0_plot = fig.add_subplot(gs[3:5, 0:2])
 
     stats = calc_plot_stats(df_forecast, forecast_info)
-    r0 = stats['r0']
     peak_infected = stats['peak_infected']
     peak_date = stats['peak_date']
 
     fig.suptitle(df_forecast.country.iloc[0])
 
     make_centered_text_box(stat_box_1, f'Peak date:\n {peak_date.strftime("%d-%m-%Y")}')
-    make_centered_text_box(stat_box_2, f'Peak number of infected:\n {format_counts(peak_infected)}')
+    make_centered_text_box(stat_box_2, f'Peak number of infected:\n {format_counts_long(peak_infected)}')
 
     today = np.datetime64('now')
     # short_term_mask = df_forecast.dates < today + np.timedelta64(days_short_term, 'D')
@@ -39,10 +41,10 @@ def plot_forecast(df_forecast: DataFrame, forecast_info: ForecastInfo, days_shor
 
     make_r0_plot(
         r0_plot,
-        r0_t=forecast_info.beta_t,
+        r0_t=stats['r0'],
         dates=forecast_info.beta_dates,
         dates_obs=forecast_info.beta_obs_dates,
-        title=f'Estimated transmission rate - Transmissions per infected per day.'
+        title=f'Estimated basic reproduction number $R_0$ - Transmissions per infected per day at time 0.'
     )
 
     return fig
@@ -55,6 +57,7 @@ def make_infected_removed_plot(ax, dates: Iterable[datetime],
                                removed_obs: Sequence[float] = None,
                                title='', title_size=10,
                                ylabel="Persons",
+                               yticks_formatter=ticker.FuncFormatter(lambda x, pos: format_counts_short(x)),
                                date_formatter=DateFormatter("%d-%b")):
     ax.set_title(title, fontdict={'fontsize': title_size})
 
@@ -67,6 +70,7 @@ def make_infected_removed_plot(ax, dates: Iterable[datetime],
     if removed_obs is not None:
         ax.plot(dates, removed_obs, "k.:", label="Removed - Observed")
 
+    ax.yaxis.set_major_formatter(yticks_formatter)
     ax.xaxis.set_major_formatter(date_formatter)
     ax.tick_params(axis='x', rotation=25)
     ax.grid("True")
@@ -87,15 +91,17 @@ def make_r0_plot(ax,
                  dates: Sequence[datetime],
                  dates_obs: Sequence[datetime],
                  title='', title_size=10,
-               ylabel="Transmissions per day",
-               date_formatter=DateFormatter("%d-%b")):
+                 ylabel="Transmissions per day",
+                 date_formatter=DateFormatter("%d-%b")):
     ax.set_title(title, fontdict={'fontsize': title_size})
 
-    r0_obs = r0_t[np.isin(dates, dates_obs)]
-    dates_fct = dates[~np.isin(dates, dates_obs)]
-    r0_fct = r0_t[~np.isin(dates, dates_obs)]
-    ax.plot(dates_obs, r0_obs, label="Avg. transmission rate")
-    ax.plot(dates_fct, r0_fct, '--', label="Avg. transmission rate - forecast")
+    r0_obs = np.array(r0_t)
+    r0_obs[~np.isin(dates, dates_obs)] = np.nan
+
+    r0_fct = np.array(r0_t)
+    r0_fct[np.isin(dates, dates_obs)] = np.nan
+    ax.plot(dates, r0_obs, color=COLORS[1], label="$R_0$")
+    ax.plot(dates, r0_fct, color=COLORS[1], linestyle='dashed', label="$R_0$ - forecast")
     ax.xaxis.set_major_formatter(date_formatter)
     ax.tick_params(axis='x', rotation=25)
     ax.grid("True")
@@ -118,15 +124,26 @@ def calc_plot_stats(df_forecast: DataFrame, forecast_info: ForecastInfo) -> dict
     }
 
 
-def format_counts(count):
+def format_counts_long(count):
     if count < 1e5:
-        return f'{count:.0f}'
+        return format(int(count), ',')
     elif count < 1e6:
         return f'{count / 1e3:.0f} Thousand'
     elif count < 1e9:
         return f'{count / 1e6:.2f} Million'
     else:
         return f'{count / 1e9:.2f} Billion'
+
+
+def format_counts_short(count):
+    if count < 1e3:
+        return format(int(count), ',')
+    elif count < 1e6:
+        return f'{count / 1e3:.1f}K'
+    elif count < 1e9:
+        return f'{count / 1e6:.1f}M'
+    else:
+        return f'{count / 1e9:.1f}B'
 
 
 def save_plot(fig: plt.Figure, filename: str) -> None:

@@ -30,7 +30,7 @@ def main():
         logger.info(f'Plotting {country} ...')
         df_plot = df_forecasts[df_forecasts.country == country].copy()
         forecast_info = forecast_info_collection.get(country)
-        fig = plot_forecast(df_plot, forecast_info, days_short_term=5, days_long_term=120)
+        fig = plot_forecast(df_plot, forecast_info, days_long_term=120)
         basefilename = f'{country.lower()}_{forecast_info.model_name}'
         save_plot(fig, op.join(out_plot_folder, basefilename + '.png'))
         with open(op.join(out_plot_folder, basefilename + '.ini'), 'w') as ini_file:
