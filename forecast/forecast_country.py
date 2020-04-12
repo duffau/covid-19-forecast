@@ -88,9 +88,7 @@ def forecast(df,
 
     t_eval_pred = (dates_eval_pred - dates_eval_pred[0]).astype('timedelta64[s]').astype('float64') / SECS_PER_DAY
 
-    beta, gamma, S0, I0, R0 = model.params.values
-    logger.info(f'R0 = {beta / gamma:.2f}')
-    logger.info(f'beta = {beta:.3g}, gamma = {gamma:.3g}, S0 = {S0:.3g}, I0 = {I0:.3g}, R0 = {R0:.3g}')
+    logger.info(model.params)
 
     S_t, I_t, R_t = model.simulate(t_eval=t_eval_pred, N=N)
 
