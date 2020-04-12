@@ -100,9 +100,9 @@ class SIRt(Model):
         S_hat_t, I_hat_t, R_hat_t = self._simulate(t_eval=t_eval)
         S_t, I_t, R_t = y_obs
         val = 0
-        val += ((S_hat_t - S_t) ** 2).mean()
+        # val += ((S_hat_t - S_t) ** 2).mean()
         val += ((I_hat_t - I_t) ** 2).mean()
-        val += ((R_hat_t - R_t) ** 2).mean()
+        # val += ((R_hat_t - R_t) ** 2).mean()
         # print(f'sum_sq: {val}')
         return val
 
