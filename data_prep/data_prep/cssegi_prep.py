@@ -12,8 +12,12 @@ import data_prep.fuzzy_merge as fuz
 COL_DATE_RE_PATTERN = r'\d{1,2}/\d{1,2}/\d{1,2}'
 COL_DATE_DATE_FORMAT = '%m/%d/%y'
 VAR_NAME_PATTERN = '^time_series_covid19_(\w+)_global.csv$'
+COUNTRY_RENAME = {
+    'US': 'United States'
+}
 pd.set_option('display.max_columns', 500)
 pd.set_option('display.max_rows', 1000)
+
 
 
 def run(csv_file_paths: List[str],
@@ -32,6 +36,7 @@ def run(csv_file_paths: List[str],
         df.reset_index(inplace=True)
         df.rename(columns={'x': var_name}, inplace=True)
         df.date = pd.to_datetime(df.date, format=COL_DATE_DATE_FORMAT)
+        df['Country/Region'] = df['Country/Region'].replace(to_replace=COUNTRY_RENAME)
         df = df.drop(labels=['Province/State', 'Long', 'Lat'], axis=1)
         df = df.groupby(['Country/Region', 'date']).sum().reset_index()
         df = df.sort_values(by=['Country/Region', 'date'])
