@@ -7,8 +7,6 @@ from glob import glob
 import pickle
 
 logger = logging.getLogger(__name__)
-# OUT_TIME_SERIES_FOLDER = '../data/forecasts/time_series'
-# OUT_INFO_FOLDER = '../data/forecasts/info'
 
 
 def main():

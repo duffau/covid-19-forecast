@@ -73,8 +73,6 @@ class SIRt(Model):
         t = _t_eval[1:]
         self.beta_t = beta_t[~np.isnan(beta_t)]
         self.t = t[~np.isnan(beta_t)]
-        print(f'beta_t: {self.beta_t}')
-        print(f't: {self.t}')
 
     def _slopes(self, y, t_eval):
         return np.diff(y) / np.diff(t_eval)
