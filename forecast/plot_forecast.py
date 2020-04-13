@@ -11,7 +11,7 @@ COLORS = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00', '#ffff33', '#a6
 
 
 def plot_forecast(df_forecast: DataFrame, forecast_info: ForecastInfo, days_long_term=30) -> plt.Figure:
-    fig = plt.figure(figsize=(8, 8), constrained_layout=True)
+    fig = plt.figure(figsize=(7, 7), constrained_layout=True)
     gs = fig.add_gridspec(5, 2)
     stat_box_1 = fig.add_subplot(gs[0, 0])
     stat_box_2 = fig.add_subplot(gs[0, 1])
@@ -39,12 +39,13 @@ def plot_forecast(df_forecast: DataFrame, forecast_info: ForecastInfo, days_long
         title=f'Forecasting {days_long_term} days ahead.'
     )
 
+    long_term_mask = forecast_info.beta_dates < today + np.timedelta64(days_long_term, 'D')
     make_r0_plot(
         r0_plot,
-        r0_t=stats['r0'],
-        dates=forecast_info.beta_dates,
+        r0_t=stats['r0'][long_term_mask],
+        dates=forecast_info.beta_dates[long_term_mask],
         dates_obs=forecast_info.beta_obs_dates,
-        title=f'Estimated basic reproduction number $R_0$ - Transmissions per infected per day at time 0.'
+        title=f'Estimated basic reproduction number $R_0$\nTransmissions per infected per day at time 0.'
     )
 
     return fig
@@ -148,6 +149,7 @@ def format_counts_short(count):
 
 def save_plot(fig: plt.Figure, filename: str) -> None:
     fig.savefig(filename)
+    plt.close(fig)
 
 
 if __name__ == '__main__':
