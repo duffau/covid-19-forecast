@@ -11,11 +11,13 @@ Implemented the closed form solution to the SIR model from [Bohner et al (2018)]
 In the article they claim to find the solution to the classic SIR model of
 [Bailey (1975)]. In equation (1) they define the model as,
 
+$$
 \begin{align*}
 \frac{dS}{dt} &= -b \frac{IS}{I + S} \\\\
 \frac{dI}{dt} &= b \frac{IS}{I + S} - cI \\\\
 \frac{dR}{dt} &= cI
 \end{align*}
+$$
 
 with $b,c>0$ and $S + I + R = N$, where I have translated their notation. 
 This model seems to be different than the [classical model](https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology#Bio-mathematical_deterministic_treatment_of_the_SIR_model),
@@ -36,13 +38,13 @@ calculating $R_0$, which is $\beta/\gamma$ in the classical SIR-model.
 [Bohner et al (2018)] also give the closed form solution to this system in [equation (4)][Bohner et al (2018)],
 where the number of infected as a function of time is given by,
 
-\begin{equation}\label{eq:infected}
+\begin{equation} \label{eq:1}
 I(t) = I_0 (1 + \kappa)^{b/(b-c)} \left(1 + \kappa e^{(b-c)(t-t_0)}\right)^{-b/(b-c)}e^{(b-c)(t-t_0)}.
 \end{equation}
 
 
 Setting aside the question of interpretability and equivalence between the two versions
-of the SIR model, it's quite easy to fit the closed form equation \eqref{eq:infected} on the number of infected.
+of the SIR model, it's quite easy to fit the closed form equation \eqref{eq:1} on the number of infected.
 Looking at the plots beneath we see that model fits quite well.
 
 ![](changelog_img/15-04-2020/sir_Austria.png)
