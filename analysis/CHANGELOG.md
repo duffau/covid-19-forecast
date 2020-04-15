@@ -11,11 +11,13 @@ Implemented the closed form solution to the SIR model from [Bohner et al (2018)]
 In the article they claim to find the solution to the classic SIR model of
 [Bailey (1975)]. In equation (1) they define the model as,
 
+$$
 \begin{align*}
 \frac{dS}{dt} &= -b \frac{IS}{I + S} \\\\
 \frac{dI}{dt} &= b \frac{IS}{I + S} - cI \\\\
 \frac{dR}{dt} &= cI
 \end{align*}
+$$
 
 with $b,c>0$ and $S + I + R = N$, where I have translated their notation. 
 This model seems to be different than the [classical model](https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology#Bio-mathematical_deterministic_treatment_of_the_SIR_model),
