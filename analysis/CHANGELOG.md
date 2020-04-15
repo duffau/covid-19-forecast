@@ -1,4 +1,5 @@
 ---
+mathjax: true
 title: Analysis Changelog
 ---
 
