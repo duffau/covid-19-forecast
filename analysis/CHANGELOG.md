@@ -17,11 +17,23 @@ In the article they claim to find the solution to the classic SIR model of
 \frac{dR}{dt} &= cI
 \end{align*}
 
-where I have translated their notation. They give the closed form solution to this system,
-and the number of infected as a function of time is given by,
+with $b,c>0$ and $S + I + R = N$, where I have translated their notation. 
+This model seems to be different than the [classical model](https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology#Bio-mathematical_deterministic_treatment_of_the_SIR_model),
+ 
+\begin{align*}
+\frac{dS}{dt} &= -\beta \frac{IS}{N} \\\\
+\frac{dI}{dt} &= \beta \frac{IS}{N} - \gamma I \\\\
+\frac{dR}{dt} &= \gamma I
+\end{align*}
+
+with $\beta,\gamma>0$ and $S + I + R = N$. [Bohner et al (2018)] do write that, the model
+described in their equation (1) is the classic SIR model of [Bailey (1975)].
+
+[Bohner et al (2018)] also give the closed form solution to this system in equation (4),
+where the number of infected as a function of time is given by,
 
 $$
-I(t) = I_0 (1 + \kappa)^{b/(b-c)} \left(1 + \kappa e^{(b-c)(t-t_0)}\right)^{-b/(b-c)}e^{(b-c)(t-t_0)}
+I(t) = I_0 (1 + \kappa)^{b/(b-c)} \left(1 + \kappa e^{(b-c)(t-t_0)}\right)^{-b/(b-c)}e^{(b-c)(t-t_0)}.
 $$
 
 ![](changelog_img/15-04-2020/sir_Austria.png)
