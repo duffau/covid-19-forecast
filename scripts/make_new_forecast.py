@@ -12,25 +12,27 @@ import scripts.config as config
 logger = logging.getLogger(__name__)
 
 N_DAYS_PREDICT = 400
-COUNTRIES = ['Denmark', 'Iran', 'Spain', 'Italy', 'Sweden']
+# COUNTRIES = ['Denmark', 'Iran', 'Spain', 'Italy', 'Sweden']
 SEED = 43
-DEFAULT_PARAMS = Params(I0=1e-6, R0=1e-6)
+DEFAULT_PARAMS = Params(I0=1e-10, R0=1e-10)
 
 
 def main():
     out_time_series_folder = config.FORECAST_TS_DIR
     out_info_folder = config.FORECAST_INFO_DIR
     data_file = config.CSSEGI_PREPROC_DATA_FILE
+    skip_countries = ['Moldova']
 
     logger.info('Calculating new forecast ...')
 
     df_all = pd.read_pickle(data_file)
 
     start_params = defaultdict(lambda: DEFAULT_PARAMS)
+    start_params['Sweden'] = Params(I0=1e-11, R0=1e-11)
     start_params['Denmark'] = Params(I0=1e-12, R0=1e-12)
     start_params['Spain'] = Params(I0=1e-11, R0=1e-11)
     start_params['Italy'] = Params(I0=1e-11, R0=1e-11)
-
+    start_params['Moldova'] = Params(I0=1e-11, R0=1e-11)
     df_forecasts, forecast_info_collection = forecast_countries(
         df_all,
         col_country='country',
@@ -38,7 +40,7 @@ def main():
         extract_forecast_info=extract_cssegi_forecast_info,
         n_days_predict=N_DAYS_PREDICT,
         start_params_collection=start_params,
-        countries=COUNTRIES,
+        skip_countries=skip_countries,
         seed=SEED
     )
     update_time = datetime.now().strftime('%Y-%m-%d')

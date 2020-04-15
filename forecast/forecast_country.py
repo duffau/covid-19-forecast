@@ -35,13 +35,16 @@ def forecast_countries(df: pd.DataFrame,
         else:
             start_params = None
         model = model_class(params=start_params, seed=seed)
-        df_forecast, forecast_info = forecast(df_country,
-                                              country,
-                                              model,
-                                              extract_forecast_info,
-                                              n_days_predict)
-        df_forecasts.append(df_forecast)
-        forecast_info_col.add(forecast_info)
+        try:
+            df_forecast, forecast_info = forecast(df_country,
+                                                  country,
+                                                  model,
+                                                  extract_forecast_info,
+                                                  n_days_predict)
+            df_forecasts.append(df_forecast)
+            forecast_info_col.add(forecast_info)
+        except Exception as e:
+            logger.error(repr(e))
     return pd.concat(df_forecasts, axis=0, ignore_index=True), forecast_info_col
 
 
@@ -82,7 +85,6 @@ def forecast(df,
 
     SECS_PER_DAY = 60 * 60 * 24
     t_eval = (dates_obs - dates_obs[0]).astype('timedelta64[s]').astype('float64') / SECS_PER_DAY
-
     model.fit(y_obs, t_eval)
 
     t_eval_pred = (dates_eval_pred - dates_eval_pred[0]).astype('timedelta64[s]').astype('float64') / SECS_PER_DAY
