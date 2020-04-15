@@ -19,14 +19,16 @@ $$
 \end{align*}
 $$
 
-with $b,c>0$ and $S + I + R = N$, where I have translated their notation. 
+with \(b,c>0\) and $S + I + R = N$, where I have translated their notation. 
 This model seems to be different than the [classical model](https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology#Bio-mathematical_deterministic_treatment_of_the_SIR_model),
  
+$$
 \begin{align*}
 \frac{dS}{dt} &= -\beta \frac{IS}{N} \\\\
 \frac{dI}{dt} &= \beta \frac{IS}{N} - \gamma I \\\\
 \frac{dR}{dt} &= \gamma I
 \end{align*}
+$$
 
 with $\beta,\gamma>0$ and $S + I + R = N$. [Bohner et al (2018)] do write that, the model
 described in their equation (1) is the classic SIR model of [Bailey (1975)].
