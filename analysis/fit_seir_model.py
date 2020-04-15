@@ -29,7 +29,7 @@ start_params = {
     'Spain': Params(beta=2. / INFECTIOUS_PERIOD, E0=.001, R0=0.001, I0=0.001)
 }
 
-countries = ['Denmark', 'Iran', 'Sweden', 'Italy', 'Spain']
+countries = ['Austria','Denmark', 'Iran', 'Sweden', 'Italy', 'Spain']
 
 for country in countries:
     plot_filename = f'{country}_{model_name}.png'.lower()
@@ -62,7 +62,7 @@ for country in countries:
         return dSdt, dEdt, dIdt, dRdt
 
 
-    def eval_seir_model(beta, gamma, alpha, S0, I0, E0, R0, N, t_span, t_eval=None):
+    def eval_seir_model(beta, gamma, alpha, S0, E0, I0, R0, N, t_span, t_eval=None):
         y0 = (S0, E0, I0, R0)
         print(f'beta = {beta}, gamma = {gamma}, alpha = {alpha}, S0 = {S0}, E0 = {E0}, I0 = {I0}, R0 = {R0}')
         sol = solve_ivp(seir_deriv, t_span, y0, t_eval=t_eval, args=(N, beta, gamma, alpha))
