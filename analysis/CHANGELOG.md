@@ -1,6 +1,10 @@
+---
+title: Analysis Changelog
+---
+
 {%- include mathjax.html -%}
 
-## Wednesday 15/4
+## SIR Closed form solution - Wednesday 15/4
 
 Implemented the closed form solution to the SIR model from [Bohner et al (2018)]. 
 In the article they claim to find the solution to the classic SIR model of
