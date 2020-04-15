@@ -1,9 +1,4 @@
-<script
-  type="text/javascript"
-  charset="utf-8"
-  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
- >
-</script>
+{%- include mathjax.html -%}
 
 ## Wednesday 15/4
 
@@ -19,7 +14,7 @@ $$
 \end{align*}
 $$
 
-with \(b,c>0\) and $S + I + R = N$, where I have translated their notation. 
+with <span>$b,c>0$</span> and $S + I + R = N$, where I have translated their notation. 
 This model seems to be different than the [classical model](https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology#Bio-mathematical_deterministic_treatment_of_the_SIR_model),
  
 $$
