@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 class SIRt(Model):
     """SIR model expecting a time varying beta for simulations"""
     FIT_PARAMS_LOWER = np.array([0.0, 0.0])
-    FIT_PARAMS_UPPER = np.array([1.0, 1.0])
+    FIT_PARAMS_UPPER = np.array([0.01, 0.01])
 
     def __init__(self, params: SIRtParams = None, beta_t: Sequence = tuple(), t: Sequence = tuple(), seed=42):
         assert len(beta_t) == len(t), f'beta_t and t must have the same length: len(beta_t) = {len(beta_t)} != len(t) = {len(t)}'
