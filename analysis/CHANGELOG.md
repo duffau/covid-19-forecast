@@ -41,14 +41,14 @@ calculating $R_0$, which is $\beta/\gamma$ in the classical SIR-model.
 where the number of infected as a function of time is given by,
 
 $$
-\begin{equation} \label{eq:1}
+\begin{equation} \label{eq:infected-closed-form}
 I(t) = I_0 (1 + \kappa)^{b/(b-c)} \left(1 + \kappa e^{(b-c)(t-t_0)}\right)^{-b/(b-c)}e^{(b-c)(t-t_0)}.
 \end{equation}
 $$
 
 Setting aside the question of interpretability and equivalence between the two versions
-of the SIR model, it's quite easy to fit the closed form equation \eqref{eq:1} on the number of infected.
-Looking at the plots beneath we see that model fits quite well.
+of the SIR model, it's quite easy to fit the closed form equation \eqref{eq:infected-closed-form} 
+on the number of infected. Looking at the plots beneath we see that model fits quite well.
 
 ![](changelog_img/15-04-2020/sir_Austria.png)
 ![](changelog_img/15-04-2020/sir_China.png)
