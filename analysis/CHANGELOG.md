@@ -1,3 +1,32 @@
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+ >
+</script>
+
+## Wednesday 15/4
+
+Implemented the closed form solution to the SIR model from [Bohner et al (2018)]. 
+In the article they claim to find the solution to the classic SIR model of
+[Bailey (1975)]. In equation (1) they define the model as,
+
+$$\frac{dI}{dt}$$
+
+```
+dI/dt =  
+```
+
+![](changelog_img/15-04-2020/sir_Austria.png)
+![](changelog_img/15-04-2020/sir_China.png)
+![](changelog_img/15-04-2020/sir_Denmark.png)
+![](changelog_img/15-04-2020/sir_Iran.png)
+![](changelog_img/15-04-2020/sir_Italy.png)
+![](changelog_img/15-04-2020/sir_Spain.png)
+![](changelog_img/15-04-2020/sir_Sweden.png)
+
+[Bohner et al (2018)]: https://arxiv.org/abs/1812.09759
+[Bailey (1975)]: https://www.amazon.com/Mathematical-Theory-Infectious-Diseases-2nd/dp/0852642318 
 ## Saturday 11/4
 
 Instead of relying on approximation of the growth in new cases to be exponential,
