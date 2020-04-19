@@ -113,3 +113,33 @@ class SEIRParams(Params):
         rand *= np.array((1., 1., 1., 0.1, 0.1, 0.1, 0.1))
         rand += np.array((0., 0., 0., 0.9, 0.0, 0.0, 0.0))
         return cls.from_values(rand)
+
+
+class SIRCFParams(Params):
+
+    def __init__(self, b=None, c=None, S0=None, I0=None, R0=None, t0=None):
+        self.b = b
+        self.c = c
+        self.S0 = S0
+        self.I0 = I0
+        self.R0 = R0
+        self.t0 = t0
+
+    def __repr__(self):
+        return f'SIRCFParams(b={self.b}, c={self.c}, S0={self.S0}, I0={self.I0}, R0={self.R0}, t0={self.t0})'
+
+    @property
+    def values(self) -> np.ndarray:
+        return np.array([self.b, self.c, self.S0, self.I0, self.R0, self.t0])
+
+    @classmethod
+    def from_values(cls, values):
+        return cls(*values)
+
+    @classmethod
+    def from_random(cls, seed=42):
+        np.random.seed(seed)
+        rand = np.random.random(size=(6,))
+        rand *= np.array((2., 2., 0.1, 0.1, 0.1, 20))
+        rand += np.array((0., 0., 0.9, 0.0, 0.0, 0))
+        return cls.from_values(rand)

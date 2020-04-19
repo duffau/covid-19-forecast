@@ -2,7 +2,9 @@ from .params import Params
 from .params import SIRParams
 from .params import SEIRParams
 from .params import SIRtParams
+from .params import SIRCFParams
 from .model import Model
 from .seir import SEIR
 from .sir import SIR
 from .sirt import SIRt
+from .sir_cf import SIRClosedForm
