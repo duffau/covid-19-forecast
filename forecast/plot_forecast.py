@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 from matplotlib.dates import DateFormatter
 from forecast import ForecastInfo
+from utils import uri
 
 COLORS = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00', '#ffff33', '#a65628', '#f781bf', '#999999']
 
@@ -172,4 +173,4 @@ if __name__ == '__main__':
         df_plot = df_forecast[df_forecast.country == country].copy()
         forecast_info = forecast_info_collection.get(country)
         fig = plot_forecast(df_plot, forecast_info)
-        save_plot(fig, f'../forecast_plots/{country.lower()}_{forecast_info.model_name}.png')
+        save_plot(fig, f'../forecast_plots/{uri.clean(country.lower())}_{forecast_info.model_name}.png')

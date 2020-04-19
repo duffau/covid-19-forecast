@@ -6,7 +6,7 @@ import glob
 from configparser import ConfigParser
 import logging
 import scripts.config as config
-import re
+from utils import uri
 
 logger = logging.getLogger(__name__)
 
@@ -16,8 +16,6 @@ INDEX_MD_FILE = config.INDEX_MD_FILE
 README_FOLDER = op.dirname(README_FILE)
 OUTPUT_DATE_FORMAT = "%d-%m-%Y"
 
-RE_REPLACE_DASH_MARKDOWN_LINKS = r'\s|\,'
-RE_REMOVE_MARKDOWN_LINKS = r'[^a-zA-Z0-9_\-]'
 
 
 BASE_TEMPLATE = '''
@@ -49,16 +47,10 @@ def make_plot_toc(plot_paths: List[str]):
         country = extract_country(plot_path)
         plot_toc_entries.append(PLOT_TOC_ENTRY_TEMPLATE.format(
             country=country,
-            country_link=_clean_md_links(country)
+            country_link=uri.clean(country)
         ))
     return plot_toc_entries
 
-
-def _clean_md_links(s: str):
-    s = s.lower()
-    s = re.sub(RE_REPLACE_DASH_MARKDOWN_LINKS, '-', s)
-    s = re.sub(RE_REMOVE_MARKDOWN_LINKS, '', s)
-    return s
 
 def make_full_markdown(header_tmp,
                        forecast_tmp,
