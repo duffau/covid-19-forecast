@@ -232,11 +232,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Albania
 
 |![Albania](forecast_plots/albania_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Algeria
 
@@ -244,11 +246,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Andorra
 
 |![Andorra](forecast_plots/andorra_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Angola
 
@@ -256,11 +260,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Antigua and barbuda
 
 |![Antigua and barbuda](forecast_plots/antigua and barbuda_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Argentina
 
@@ -268,11 +274,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Armenia
 
 |![Armenia](forecast_plots/armenia_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Australia
 
@@ -280,11 +288,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Austria
 
 |![Austria](forecast_plots/austria_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Azerbaijan
 
@@ -292,11 +302,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Bahamas
 
 |![Bahamas](forecast_plots/bahamas_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Bahrain
 
@@ -304,11 +316,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Bangladesh
 
 |![Bangladesh](forecast_plots/bangladesh_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Barbados
 
@@ -316,11 +330,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Belarus
 
 |![Belarus](forecast_plots/belarus_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Belgium
 
@@ -328,11 +344,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Belize
 
 |![Belize](forecast_plots/belize_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Benin
 
@@ -340,11 +358,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Bhutan
 
 |![Bhutan](forecast_plots/bhutan_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Bolivia
 
@@ -352,11 +372,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Bosnia and herzegovina
 
 |![Bosnia and herzegovina](forecast_plots/bosnia and herzegovina_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Botswana
 
@@ -364,11 +386,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Brazil
 
 |![Brazil](forecast_plots/brazil_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Brunei
 
@@ -376,11 +400,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Bulgaria
 
 |![Bulgaria](forecast_plots/bulgaria_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Burkina faso
 
@@ -388,11 +414,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Burma
 
 |![Burma](forecast_plots/burma_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Burundi
 
@@ -400,11 +428,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Cabo verde
 
 |![Cabo verde](forecast_plots/cabo verde_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Cambodia
 
@@ -412,11 +442,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Cameroon
 
 |![Cameroon](forecast_plots/cameroon_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Canada
 
@@ -424,11 +456,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Central african republic
 
 |![Central african republic](forecast_plots/central african republic_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Chad
 
@@ -436,11 +470,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Chile
 
 |![Chile](forecast_plots/chile_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### China
 
@@ -448,11 +484,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Colombia
 
 |![Colombia](forecast_plots/colombia_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Congo (brazzaville)
 
@@ -460,11 +498,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Congo (kinshasa)
 
 |![Congo (kinshasa)](forecast_plots/congo (kinshasa)_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Costa rica
 
@@ -472,11 +512,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Cote d'ivoire
 
 |![Cote d'ivoire](forecast_plots/cote d'ivoire_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Croatia
 
@@ -484,11 +526,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Cuba
 
 |![Cuba](forecast_plots/cuba_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Cyprus
 
@@ -496,11 +540,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Czechia
 
 |![Czechia](forecast_plots/czechia_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Denmark
 
@@ -508,11 +554,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Diamond princess
 
 |![Diamond princess](forecast_plots/diamond princess_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Djibouti
 
@@ -520,11 +568,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Dominica
 
 |![Dominica](forecast_plots/dominica_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Dominican republic
 
@@ -532,11 +582,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Ecuador
 
 |![Ecuador](forecast_plots/ecuador_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Egypt
 
@@ -544,11 +596,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### El salvador
 
 |![El salvador](forecast_plots/el salvador_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Equatorial guinea
 
@@ -556,11 +610,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Eritrea
 
 |![Eritrea](forecast_plots/eritrea_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Estonia
 
@@ -568,11 +624,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Eswatini
 
 |![Eswatini](forecast_plots/eswatini_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Ethiopia
 
@@ -580,11 +638,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Fiji
 
 |![Fiji](forecast_plots/fiji_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Finland
 
@@ -592,11 +652,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### France
 
 |![France](forecast_plots/france_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Gabon
 
@@ -604,11 +666,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Gambia
 
 |![Gambia](forecast_plots/gambia_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Georgia
 
@@ -616,11 +680,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Germany
 
 |![Germany](forecast_plots/germany_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Ghana
 
@@ -628,11 +694,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Greece
 
 |![Greece](forecast_plots/greece_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Grenada
 
@@ -640,11 +708,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Guatemala
 
 |![Guatemala](forecast_plots/guatemala_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Guinea-bissau
 
@@ -652,11 +722,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Guinea
 
 |![Guinea](forecast_plots/guinea_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Guyana
 
@@ -664,11 +736,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Haiti
 
 |![Haiti](forecast_plots/haiti_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Holy see
 
@@ -676,11 +750,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Honduras
 
 |![Honduras](forecast_plots/honduras_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Hungary
 
@@ -688,11 +764,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Iceland
 
 |![Iceland](forecast_plots/iceland_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### India
 
@@ -700,11 +778,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Indonesia
 
 |![Indonesia](forecast_plots/indonesia_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Iran
 
@@ -712,11 +792,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Iraq
 
 |![Iraq](forecast_plots/iraq_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Ireland
 
@@ -724,11 +806,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Israel
 
 |![Israel](forecast_plots/israel_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Italy
 
@@ -736,11 +820,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Jamaica
 
 |![Jamaica](forecast_plots/jamaica_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Japan
 
@@ -748,11 +834,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Jordan
 
 |![Jordan](forecast_plots/jordan_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Kazakhstan
 
@@ -760,11 +848,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Kenya
 
 |![Kenya](forecast_plots/kenya_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Korea, south
 
@@ -772,11 +862,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Kosovo
 
 |![Kosovo](forecast_plots/kosovo_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Kuwait
 
@@ -784,11 +876,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Kyrgyzstan
 
 |![Kyrgyzstan](forecast_plots/kyrgyzstan_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Laos
 
@@ -796,11 +890,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Latvia
 
 |![Latvia](forecast_plots/latvia_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Lebanon
 
@@ -808,11 +904,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Liberia
 
 |![Liberia](forecast_plots/liberia_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Libya
 
@@ -820,11 +918,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Liechtenstein
 
 |![Liechtenstein](forecast_plots/liechtenstein_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Lithuania
 
@@ -832,11 +932,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Luxembourg
 
 |![Luxembourg](forecast_plots/luxembourg_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Madagascar
 
@@ -844,11 +946,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Malawi
 
 |![Malawi](forecast_plots/malawi_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Malaysia
 
@@ -856,11 +960,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Maldives
 
 |![Maldives](forecast_plots/maldives_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Mali
 
@@ -868,11 +974,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Malta
 
 |![Malta](forecast_plots/malta_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Mauritania
 
@@ -880,11 +988,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Mauritius
 
 |![Mauritius](forecast_plots/mauritius_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Mexico
 
@@ -892,11 +1002,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Moldova
 
 |![Moldova](forecast_plots/moldova_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Monaco
 
@@ -904,11 +1016,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Mongolia
 
 |![Mongolia](forecast_plots/mongolia_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Montenegro
 
@@ -916,11 +1030,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Morocco
 
 |![Morocco](forecast_plots/morocco_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Mozambique
 
@@ -928,11 +1044,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Ms zaandam
 
 |![Ms zaandam](forecast_plots/ms zaandam_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Namibia
 
@@ -940,11 +1058,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Nepal
 
 |![Nepal](forecast_plots/nepal_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Netherlands
 
@@ -952,11 +1072,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### New zealand
 
 |![New zealand](forecast_plots/new zealand_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Nicaragua
 
@@ -964,11 +1086,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Niger
 
 |![Niger](forecast_plots/niger_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Nigeria
 
@@ -976,11 +1100,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### North macedonia
 
 |![North macedonia](forecast_plots/north macedonia_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Norway
 
@@ -988,11 +1114,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Oman
 
 |![Oman](forecast_plots/oman_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Pakistan
 
@@ -1000,11 +1128,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Panama
 
 |![Panama](forecast_plots/panama_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Papua new guinea
 
@@ -1012,11 +1142,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Paraguay
 
 |![Paraguay](forecast_plots/paraguay_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Peru
 
@@ -1024,11 +1156,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Philippines
 
 |![Philippines](forecast_plots/philippines_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Poland
 
@@ -1036,11 +1170,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Portugal
 
 |![Portugal](forecast_plots/portugal_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Qatar
 
@@ -1048,11 +1184,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Romania
 
 |![Romania](forecast_plots/romania_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Russia
 
@@ -1060,11 +1198,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Rwanda
 
 |![Rwanda](forecast_plots/rwanda_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Saint kitts and nevis
 
@@ -1072,11 +1212,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Saint lucia
 
 |![Saint lucia](forecast_plots/saint lucia_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Saint vincent and the grenadines
 
@@ -1084,11 +1226,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### San marino
 
 |![San marino](forecast_plots/san marino_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Sao tome and principe
 
@@ -1096,11 +1240,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Saudi arabia
 
 |![Saudi arabia](forecast_plots/saudi arabia_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Senegal
 
@@ -1108,11 +1254,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Serbia
 
 |![Serbia](forecast_plots/serbia_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Seychelles
 
@@ -1120,11 +1268,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Sierra leone
 
 |![Sierra leone](forecast_plots/sierra leone_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Singapore
 
@@ -1132,11 +1282,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Slovakia
 
 |![Slovakia](forecast_plots/slovakia_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Slovenia
 
@@ -1144,11 +1296,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Somalia
 
 |![Somalia](forecast_plots/somalia_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### South africa
 
@@ -1156,11 +1310,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### South sudan
 
 |![South sudan](forecast_plots/south sudan_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Spain
 
@@ -1168,11 +1324,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Sri lanka
 
 |![Sri lanka](forecast_plots/sri lanka_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Sudan
 
@@ -1180,11 +1338,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Suriname
 
 |![Suriname](forecast_plots/suriname_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Sweden
 
@@ -1192,11 +1352,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Switzerland
 
 |![Switzerland](forecast_plots/switzerland_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Syria
 
@@ -1204,11 +1366,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Taiwan*
 
 |![Taiwan*](forecast_plots/taiwan*_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Tanzania
 
@@ -1216,11 +1380,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Thailand
 
 |![Thailand](forecast_plots/thailand_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Timor-leste
 
@@ -1228,11 +1394,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Togo
 
 |![Togo](forecast_plots/togo_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Trinidad and tobago
 
@@ -1240,11 +1408,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Tunisia
 
 |![Tunisia](forecast_plots/tunisia_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Turkey
 
@@ -1252,11 +1422,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Uganda
 
 |![Uganda](forecast_plots/uganda_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Ukraine
 
@@ -1264,11 +1436,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### United arab emirates
 
 |![United arab emirates](forecast_plots/united arab emirates_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### United kingdom
 
@@ -1276,11 +1450,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### United states
 
 |![United states](forecast_plots/united states_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Uruguay
 
@@ -1288,11 +1464,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Uzbekistan
 
 |![Uzbekistan](forecast_plots/uzbekistan_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Venezuela
 
@@ -1300,11 +1478,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Vietnam
 
 |![Vietnam](forecast_plots/vietnam_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### West bank and gaza
 
@@ -1312,11 +1492,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Western sahara
 
 |![Western sahara](forecast_plots/western sahara_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### World
 
@@ -1324,11 +1506,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Yemen
 
 |![Yemen](forecast_plots/yemen_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 ### Zambia
 
@@ -1336,11 +1520,13 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
+
 ### Zimbabwe
 
 |![Zimbabwe](forecast_plots/zimbabwe_SIRClosedForm.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
+
 
 [sir_model_wiki]: https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology#The_SIR_model
 [csse-data-repo]: https://github.com/CSSEGISandData/COVID-19
