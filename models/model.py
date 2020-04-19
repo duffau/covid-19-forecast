@@ -1,11 +1,12 @@
 from typing import Iterable
 from .params import Params
+from copy import deepcopy
 
 
 class Model:
 
     def __init__(self, params: Params):
-        self.params = params
+        self.params = deepcopy(params)
 
     def __repr__(self):
         return f'{self.__class__.__name__}(params={repr(self.params)})'
