@@ -20,6 +20,7 @@ calc-forecast:
 	${PIPENV_RUN} scripts/make_new_forecast.py
 
 plot-forecast:
+	${PIPENV_RUN} scripts/remove_forecast_plots.py
 	${PIPENV_RUN} scripts/make_forecast_plots.py
 
 make-readme:
