@@ -44,16 +44,16 @@ The current model is only fitted on the number of infected using the closed form
 from [Bohner et al (2018)]. The fitted equation is given by,
 
 $$
-\begin{equation} \label{eq:infected-closed-form}
-I(t) = I_0 (1 + \kappa)^{b/(b-c)} \left(1 + \kappa e^{(b-c)(t-t_0)}\right)^{-b/(b-c)}e^{(b-c)(t-t_0)}.
-\end{equation}
+\begin{{equation}}
+I(t) = I_0 (1 + \kappa)^{{b/(b-c)}} \left(1 + \kappa e^{{(b-c)(t-t_0)}}\right)^{{-b/(b-c)}}e^{{(b-c)(t-t_0)}}.
+\end{{equation}}
 $$
 
 where $b$ and $c$ are free parameters governing the rate of transmission and recovery, respectively, 
 $I_0$ is the number of infected at time $t_0$ and $\kappa = I_0/S_0$.
 
-Data is downloaded from *Johns Hopkins University Center for Systems Science and Engineering* COVID-19 [data repository][csse-data-repo], used in their 
-[dashboard][john-hopkins-dashboard] app.
+Data is downloaded from *Johns Hopkins University Center for Systems Science and Engineering* 
+COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopkins-dashboard] app.
 
 ### Plots
 {plots}
