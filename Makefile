@@ -1,9 +1,9 @@
 PIPENV_RUN := pipenv run python
-all : get-data data-prep calc-forecast plot-forecast make-content deploy-github
-from-data-prep: data-prep calc-forecast plot-forecast make-content deploy-github
-from-calc-forecast: calc-forecast plot-forecast make-content deploy-github
-from-plot: plot-forecast make-content deploy-github
-from-readme: make-content deploy-github
+all : get-data data-prep calc-forecast plot-forecast make-content deploy
+from-data-prep: data-prep calc-forecast plot-forecast make-content deploy
+from-calc-forecast: calc-forecast plot-forecast make-content deploy
+from-plot: plot-forecast make-content deploy
+from-readme: make-content deploy
 
 to-plot-forecast: get-data data-prep calc-forecast plot-forecast
 
@@ -26,5 +26,5 @@ plot-forecast:
 make-content:
 	${PIPENV_RUN} scripts/make_content.py
 
-deploy-github:
+deploy:
 	${PIPENV_RUN} scripts/deploy.py
