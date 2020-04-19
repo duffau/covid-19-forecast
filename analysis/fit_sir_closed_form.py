@@ -8,7 +8,7 @@ pd.set_option('display.max_rows', 1000)
 PLOT_FOLDER = 'plots/forecasts'
 DATA_FILE = '../data/pre-processed/cssegi_sand_data/cssegi_agg_data.pickle'
 
-country = 'Italy'
+country = 'United States'
 df_all = pd.read_pickle(DATA_FILE)
 df = df_all[df_all.country == country]
 N = df.population.iloc[0]
@@ -16,7 +16,10 @@ infected_obs = df.total_infected.values/N
 t_obs = np.array(range(len(infected_obs)))
 
 start_params_collection = {
-    'China': [2.65194937e-01,8.42629781e-02,1.01377756e-04,1.62245063e-06,1.63972157e-07]
+    # 'United States'
+    'Denmark': [0.2813704174980795, 0.18321537063550936, 0.004060442991341253, 8.361917352330868e-07, 0.9466666351336532],
+    'Iran': [0.851106161124286, 0.7347290955723527, 0.007204309357283659, 1.8612704255846171e-06, 19.647176377769476],
+    'China': [2.65194937e-01, 8.42629781e-02,1.01377756e-04,1.62245063e-06,1.63972157e-07]
 }
 
 def i_t_Shabbir_et_al(t, beta, gamma, S0, I0):
@@ -89,10 +92,14 @@ res = minimize(
     options={'gtol': 1e-14}
 )
 print(res)
-print(inv_repam(res.x))
+b, c, s0, i0, t0 = inv_repam(res.x)
+print(f'b = {b}, c = {c}, S0 = {s0}, I0 = {i0}, t0 = {t0}')
 
 It = i_t(t, *inv_repam(res.x))
 plt.plot(t_obs, It, label='fitted params')
+param_string = f'$b= {b:.3g}$, $c = {c:.3g}$\n$S_0 = {s0:.3g}$\n$I_0 = {i0:.3g}$'
+plt.text(0.01, .5, param_string, ha='left', va='top', transform=plt.gca().transAxes)
+
 plt.title(f'Infected - {country}')
 plt.ylabel('Pct. of population')
 plt.xlabel('Days')

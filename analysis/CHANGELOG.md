@@ -57,6 +57,7 @@ on the number of infected. Looking at the plots beneath we see that model fits q
 ![](changelog_img/15-04-2020/sir_Italy.png)
 ![](changelog_img/15-04-2020/sir_Spain.png)
 ![](changelog_img/15-04-2020/sir_Sweden.png)
+![](changelog_img/15-04-2020/sir_United States.png)
 
 [Bohner et al (2018)]: https://arxiv.org/abs/1812.09759
 [Bailey (1975)]: https://www.amazon.com/Mathematical-Theory-Infectious-Diseases-2nd/dp/0852642318 
