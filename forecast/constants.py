@@ -1,0 +1,8 @@
+COUNTRY_VAR = 'country'
+DATES_VAR = 'dates'
+SUSCEPTIBLE_OBS_VAR = 'susceptible_obs'
+SUSCEPTIBLE_FORECAST_VAR = 'susceptible_forecast'
+INFECTED_OBS_VAR = 'infected_obs'
+INFECTED_FORECAST_VAR = 'infected_forecast'
+REMOVED_OBS_VAR = 'removed_obs'
+REMOVED_FORECAST_VAR = 'removed_forecast'
