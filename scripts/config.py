@@ -33,7 +33,7 @@ INDEX_MD_FILE = os.path.join(THIS_DIR, '../index.md')
 
 # Forecast config
 N_DAYS_PREDICT = 400
-COUNTRIES = ['Denmark', 'Iran', 'Spain', 'Italy', 'Sweden']
+COUNTRIES = []
 SKIP_COUNTRIES = []
 SEED = 43
 START_PARAMS = SIR_CF_START_PARAMS
