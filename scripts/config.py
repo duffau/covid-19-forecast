@@ -29,6 +29,7 @@ FORECAST_INFO_DIR = os.path.join(DATA_DIR, 'forecasts', 'info')
 
 FORECAST_PLOT_FOLDER = os.path.join(THIS_DIR, '../forecast_plots')
 README_FILE = os.path.join(THIS_DIR, '../README.md')
+INDEX_MD_FILE = os.path.join(THIS_DIR, '../index.md')
 
 # Forecast config
 N_DAYS_PREDICT = 400

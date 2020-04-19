@@ -12,6 +12,7 @@ logger = logging.getLogger(__name__)
 
 FORECAST_PLOT_FOLDER = config.FORECAST_PLOT_FOLDER
 README_FILE = config.README_FILE
+INDEX_MD_FILE = config.INDEX_MD_FILE
 README_FOLDER = op.dirname(README_FILE)
 OUTPUT_DATE_FORMAT = "%d-%m-%Y"
 
@@ -27,14 +28,29 @@ The site is hosted here: https://duffau.github.io/covid-19-forecast/.
 ## Forecasts
 *Updated: {date}*
 
-Forecasts are based on the simple [SIR model][sir_model_wiki] which assumes
-an individual can be in one of three states,
+Forecasts are based on a variation of the simple [SIR model][sir_model_wiki] found 
+in the article of [Bohner et al (2018)].
+
+In the model an individual can be in one of three states,
 
 - Susceptible: Part of the population not immune to the disease, 
 - Infected: Is currently infected,
 - Removed: Is immune after a recovery or death.
 
-The model is governed by two parameters, the rate at which individuals contract the disease 𝛽 (beta), and the rate at which they are removed from the infected group 𝛾 (gamma). 
+The model is governed by two parameters, the rate at which individuals contract the disease, 
+and the rate at which they are removed from the infected group. 
+
+The current model is only fitted on the number of infected using the closed form solution
+from [Bohner et al (2018)]. The fitted equation is given by,
+
+$$
+\begin{equation} \label{eq:infected-closed-form}
+I(t) = I_0 (1 + \kappa)^{b/(b-c)} \left(1 + \kappa e^{(b-c)(t-t_0)}\right)^{-b/(b-c)}e^{(b-c)(t-t_0)}.
+\end{equation}
+$$
+
+where $b$ and $c$ are free parameters governing the rate of transmission and recovery, respectively, 
+$I_0$ is the number of infected at time $t_0$ and $\kappa = I_0/S_0$.
 
 Data is downloaded from *Johns Hopkins University Center for Systems Science and Engineering* COVID-19 [data repository][csse-data-repo], used in their 
 [dashboard][john-hopkins-dashboard] app.
@@ -45,6 +61,9 @@ Data is downloaded from *Johns Hopkins University Center for Systems Science and
 [sir_model_wiki]: https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology#The_SIR_model
 [csse-data-repo]: https://github.com/CSSEGISandData/COVID-19
 [john-hopkins-dashboard]: https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6
+[Bohner et al (2018)]: https://arxiv.org/abs/1812.09759
+[Bailey (1975)]: https://www.amazon.com/Mathematical-Theory-Infectious-Diseases-2nd/dp/0852642318 
+
 '''
 
 README_PLOT_TEMPLATE = '''|![{country}]({file_path})|\n|:----------------------------------------:|\n| *Latest data point: {latest_data_point}*|'''
@@ -91,8 +110,10 @@ def main():
     update_date = dateparser.parse(forecast_infos[0]['forecast_time'].strip('"'))
     plots_md = make_plots_markdown(forecast_plots_paths, latest_data_points)
     readme_markdown = make_readme_markdown(plots_md, update_date)
-    with open(README_FILE, 'w') as readme_file:
-        readme_file.write(readme_markdown)
+    with open(README_FILE, 'w') as file:
+        file.write(readme_markdown)
+    with open(INDEX_MD_FILE, 'w') as file:
+        file.write(readme_markdown)
 
 
 if __name__ == '__main__':
