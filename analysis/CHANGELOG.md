@@ -7,7 +7,7 @@ title: Analysis Changelog
 
 ## SIR Closed form - time varying parameters - Sunday 19/4
 
-In the script [fit_time_series_sir.py](analysis/fit_time_series_sir.py) I'm experimenting with
+In the script [fit_time_series_sir.py](https://github.com/duffau/covid-19-forecast/tree/3cb9d0312627a5b513ba87673b6e2ca1e681b79f/analysis/fit_time_series_sir.py) I'm experimenting with
 the a model with time varying parameters $b$ and $c$ from [Bohner et al (2018)] example
 model defined in equation (10) which is an application of their main theorem.
 
@@ -29,7 +29,7 @@ to simulated data from the classical SIR model where $\beta$ and $\gamma$ are kn
 
 In the above plot is the relation between the classical $\beta$ and $b$ parameter for different
 values of $\gamma$, coming from the simulating and fitting procedure. The code for the 
-analysis can be found [here](analysis/fit_sir_closed_form_beta_dependence.py).
+analysis can be found [here](https://github.com/duffau/covid-19-forecast/blob/3cb9d0312627a5b513ba87673b6e2ca1e681b79f/analysis/fit_sir_closed_form_beta_dependence.py).
 
 ## SIR Closed form solution - Wednesday 15/4
 
