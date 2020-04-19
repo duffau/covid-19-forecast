@@ -39,13 +39,15 @@ SEED = 43
 START_PARAMS = SIR_CF_START_PARAMS
 
 # Readme templates
-README_HEADER_TEMPLATE = os.path.join(THIS_DIR, '../templates/header_rm.md')
+README_HEADER = os.path.join(THIS_DIR, '../templates/header_rm.md')
+README_INTRO_TEMPLATE = os.path.join(THIS_DIR, '../templates/intro_rm.md')
 README_FORECAST_TEMPLATE = os.path.join(THIS_DIR, '../templates/forecast_rm.md')
 README_PLOT_TEMPLATE = os.path.join(THIS_DIR, '../templates/plots.md')
 README_REFS_TEMPLATE = os.path.join(THIS_DIR, '../templates/refs.md')
 
 # Pages templates
-PAGES_HEADER_TEMPLATE = os.path.join(THIS_DIR, '../templates/header_pages.md')
+PAGES_HEADER = os.path.join(THIS_DIR, '../templates/header_pages.md')
+PAGES_INTRO_TEMPLATE = os.path.join(THIS_DIR, '../templates/intro_pages.md')
 PAGES_FORECAST_TEMPLATE = os.path.join(THIS_DIR, '../templates/forecast_pages.md')
 PAGES_PLOT_TEMPLATE = os.path.join(THIS_DIR, '../templates/plots.md')
 PAGES_REFS_TEMPLATE = os.path.join(THIS_DIR, '../templates/refs.md')

@@ -16,10 +16,10 @@ INDEX_MD_FILE = config.INDEX_MD_FILE
 README_FOLDER = op.dirname(README_FILE)
 OUTPUT_DATE_FORMAT = "%d-%m-%Y"
 
+BASE_TEMPLATE = '''{_header}\n{_body}'''
 
-
-BASE_TEMPLATE = '''
-{_header}
+BODY_TEMPLATE = '''
+{_intro}
 {_forecast}
 {_plots}
 
@@ -52,26 +52,33 @@ def make_plot_toc(plot_paths: List[str]):
     return plot_toc_entries
 
 
-def make_full_markdown(header_tmp,
+def make_full_markdown(header,
+                       intro_tmp,
                        forecast_tmp,
                        plots_tmp,
                        refs_tmp,
                        plot_cells: List[str],
                        plots_toc: List[str],
-                       update_date: datetime):
-    template = BASE_TEMPLATE.format(
-        _header=header_tmp,
+                       update_date: datetime) -> str:
+
+    body_template = BODY_TEMPLATE.format(
+        _intro=intro_tmp,
         _forecast=forecast_tmp,
         _plots=plots_tmp,
         _refs=refs_tmp
     )
-
-    readme_markdown = template.format(
+    body = body_template.format(
         date=update_date.strftime(OUTPUT_DATE_FORMAT),
         plots_toc='\n'.join(plots_toc),
         plots='\n\n'.join(plot_cells)
     )
-    return readme_markdown
+
+    markdown = BASE_TEMPLATE.format(
+        _header=header,
+        _body=body,
+    )
+
+    return markdown
 
 
 def extract_country(plot_filepath):
@@ -81,8 +88,11 @@ def extract_country(plot_filepath):
 
 
 def make_readme(plot_cells, plot_toc, update_date):
-    with open(config.README_HEADER_TEMPLATE) as file:
-        header_template = file.read()
+    with open(config.README_HEADER) as file:
+        header = file.read()
+
+    with open(config.README_INTRO_TEMPLATE) as file:
+        intro_template = file.read()
 
     with open(config.README_FORECAST_TEMPLATE) as file:
         forecast_template = file.read()
@@ -94,7 +104,8 @@ def make_readme(plot_cells, plot_toc, update_date):
         refs_template = file.read()
 
     return make_full_markdown(
-        header_tmp=header_template,
+        header=header,
+        intro_tmp=intro_template,
         forecast_tmp=forecast_template,
         plots_tmp=plot_template,
         refs_tmp=refs_template,
@@ -105,8 +116,11 @@ def make_readme(plot_cells, plot_toc, update_date):
 
 
 def make_pages_index(plot_cells, plot_toc, update_date):
-    with open(config.PAGES_HEADER_TEMPLATE) as file:
-        header_template = file.read()
+    with open(config.PAGES_HEADER) as file:
+        header = file.read()
+
+    with open(config.PAGES_INTRO_TEMPLATE) as file:
+        intro_template = file.read()
 
     with open(config.PAGES_FORECAST_TEMPLATE) as file:
         forecast_template = file.read()
@@ -118,7 +132,8 @@ def make_pages_index(plot_cells, plot_toc, update_date):
         refs_template = file.read()
 
     return make_full_markdown(
-        header_tmp=header_template,
+        header=header,
+        intro_tmp=intro_template,
         forecast_tmp=forecast_template,
         plots_tmp=plot_template,
         refs_tmp=refs_template,
