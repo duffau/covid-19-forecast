@@ -162,8 +162,13 @@ def save_plot(fig: plt.Figure, filename: str) -> None:
     plt.close()
 
 
+def make_filename(country: str, model_name: ForecastInfo, extension='.png'):
+    return f'{uri.clean(country)}_{model_name}{extension}'
+
+
 if __name__ == '__main__':
     import pandas as pd
+    import os.path as op
 
     # countries = ['Denmark', 'Spain', 'Iran', 'Italy', 'Sweden']
     df_forecast = pd.read_pickle('../data/forecasts/time_series/2020-03-20.pickle')
@@ -173,4 +178,5 @@ if __name__ == '__main__':
         df_plot = df_forecast[df_forecast.country == country].copy()
         forecast_info = forecast_info_collection.get(country)
         fig = plot_forecast(df_plot, forecast_info)
-        save_plot(fig, f'../forecast_plots/{uri.clean(country.lower())}_{forecast_info.model_name}.png')
+        filename = make_filename(country, forecast_info.model_name)
+        save_plot(fig, op.join('..', 'forecast_plots', filename))

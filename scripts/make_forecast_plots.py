@@ -1,10 +1,11 @@
 import pandas as pd
 import os
 import os.path as op
-from forecast import plot_forecast, save_plot
 import logging
 from glob import glob
 import pickle
+from forecast import plot_forecast, save_plot, make_filename
+
 
 logger = logging.getLogger(__name__)
 
@@ -29,7 +30,7 @@ def main():
         df_plot = df_forecasts[df_forecasts.country == country].copy()
         forecast_info = forecast_info_collection.get(country)
         fig = plot_forecast(df_plot, forecast_info, days_long_term=120)
-        basefilename = f'{country.lower()}_{forecast_info.model_name}'
+        basefilename = make_filename(country, forecast_info.model_name)
         save_plot(fig, op.join(out_plot_folder, basefilename + '.png'))
         with open(op.join(out_plot_folder, basefilename + '.ini'), 'w') as ini_file:
             ini_file.write(forecast_info.to_ini())
