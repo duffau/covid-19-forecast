@@ -19,10 +19,11 @@ BASE_TEMPLATE = '''
 {_header}
 {_forecast}
 {_plots}
+
 {_refs}
 '''
-
-PLOT_CELL_TEMPLATE = '''|![{country}]({file_path})|\n|:----------------------------------------:|\n| *Latest data point: {latest_data_point}*|'''
+PLOT_TOC_ENTRY_TEMPLATE = '- [{country}](#{country})'
+PLOT_CELL_TEMPLATE = '''### {country}\n|![{country}]({file_path})|\n|:----------------------------------------:|\n| *Latest data point: {latest_data_point}*|'''
 
 
 def make_plots_markdown(plot_paths: List[str], latest_data_point_dates: List[datetime]):
@@ -37,11 +38,20 @@ def make_plots_markdown(plot_paths: List[str], latest_data_point_dates: List[dat
     return plot_cells
 
 
+def make_plot_toc(plot_paths: List[str]):
+    plot_toc_entries = []
+    for plot_path in plot_paths:
+        country = extract_country(plot_path)
+        plot_toc_entries.append(PLOT_TOC_ENTRY_TEMPLATE.format(country=country))
+    return plot_toc_entries
+
+
 def make_full_markdown(header_tmp,
                        forecast_tmp,
                        plots_tmp,
                        refs_tmp,
                        plot_cells: List[str],
+                       plots_toc: List[str],
                        update_date: datetime):
     template = BASE_TEMPLATE.format(
         _header=header_tmp,
@@ -52,6 +62,7 @@ def make_full_markdown(header_tmp,
 
     readme_markdown = template.format(
         date=update_date.strftime(OUTPUT_DATE_FORMAT),
+        plots_toc='\n'.join(plots_toc),
         plots='\n\n'.join(plot_cells)
     )
     return readme_markdown
@@ -63,7 +74,7 @@ def extract_country(plot_filepath):
     return country.capitalize()
 
 
-def make_readme(plot_cells, update_date):
+def make_readme(plot_cells, plot_toc, update_date):
     with open(config.README_HEADER_TEMPLATE) as file:
         header_template = file.read()
 
@@ -81,12 +92,13 @@ def make_readme(plot_cells, update_date):
         forecast_tmp=forecast_template,
         plots_tmp=plot_template,
         refs_tmp=refs_template,
+        plots_toc=plot_toc,
         plot_cells=plot_cells,
         update_date=update_date
     )
 
 
-def make_pages_index(plot_cells, update_date):
+def make_pages_index(plot_cells, plot_toc, update_date):
     with open(config.PAGES_HEADER_TEMPLATE) as file:
         header_template = file.read()
 
@@ -104,6 +116,7 @@ def make_pages_index(plot_cells, update_date):
         forecast_tmp=forecast_template,
         plots_tmp=plot_template,
         refs_tmp=refs_template,
+        plots_toc=plot_toc,
         plot_cells=plot_cells,
         update_date=update_date
     )
@@ -123,9 +136,10 @@ def main():
     latest_data_points = [dateparser.parse(forecast_info['latest_data_point'].strip('"')) for forecast_info in forecast_infos]
     update_date = dateparser.parse(forecast_infos[0]['forecast_time'].strip('"'))
     plots_md = make_plots_markdown(forecast_plots_paths, latest_data_points)
+    plots_toc = make_plot_toc(forecast_plots_paths)
 
-    readme_markdown = make_readme(plots_md, update_date)
-    pages_markdown = make_pages_index(plots_md, update_date)
+    readme_markdown = make_readme(plots_md, plots_toc, update_date)
+    pages_markdown = make_pages_index(plots_md, plots_toc, update_date)
     with open(README_FILE, 'w') as file:
         file.write(readme_markdown)
     with open(INDEX_MD_FILE, 'w') as file:
