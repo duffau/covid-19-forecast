@@ -143,12 +143,25 @@ def make_pages_index(plot_cells, plot_toc, update_date):
     )
 
 
+def order_plots(forecast_plots_paths, forecast_info_paths):
+    forecast_plots_paths = sorted(forecast_plots_paths)
+    forecast_info_paths = sorted(forecast_info_paths)
+    assert len(forecast_plots_paths) == len(forecast_info_paths), f'len(forecast_plots_paths) = {len(forecast_plots_paths)} != len(forecast_info_paths) = {len(forecast_info_paths)}'
+    world_index = [i for i, path in enumerate(forecast_plots_paths) if 'world' in path.lower()]
+    if len(world_index) == 1:
+        world_index = world_index[0]
+        forecast_plots_paths.insert(0, forecast_plots_paths.pop(world_index))
+        forecast_info_paths.insert(0, forecast_info_paths.pop(world_index))
+        logger.info('World plot put in front.')
+    return forecast_plots_paths, forecast_info_paths
+
+
 def main():
     logger.info('Compiling README ...')
     config = ConfigParser()
-    forecast_plots_paths = sorted(glob.glob(op.join(FORECAST_PLOT_FOLDER, '*.png')))
-    forecast_info_paths = sorted(glob.glob(op.join(FORECAST_PLOT_FOLDER, '*.ini')))
-    assert len(forecast_plots_paths) == len(forecast_info_paths), f'len(forecast_plots_paths) = {len(forecast_plots_paths)} != len(forecast_info_paths) = {len(forecast_info_paths)}'
+    forecast_plots_paths = glob.glob(op.join(FORECAST_PLOT_FOLDER, '*.png'))
+    forecast_info_paths = glob.glob(op.join(FORECAST_PLOT_FOLDER, '*.ini'))
+    forecast_plots_paths, forecast_info_paths = order_plots(forecast_plots_paths, forecast_info_paths)
 
     forecast_infos = []
     for forecast_info_path in forecast_info_paths:

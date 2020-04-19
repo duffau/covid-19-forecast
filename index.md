@@ -43,6 +43,7 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 
 ## Plots
 
+- [World](#world)
 - [Afghanistan](#afghanistan)
 - [Albania](#albania)
 - [Algeria](#algeria)
@@ -225,10 +226,16 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 - [Vietnam](#vietnam)
 - [West bank and gaza](#west-bank-and-gaza)
 - [Western sahara](#western-sahara)
-- [World](#world)
 - [Yemen](#yemen)
 - [Zambia](#zambia)
 - [Zimbabwe](#zimbabwe)
+
+### World
+
+|![World](forecast_plots/world_aggregate.png)|
+|:----------------------------------------:|
+| *Latest data point: 18-04-2020*|
+
 
 ### Afghanistan
 
@@ -1500,13 +1507,6 @@ COVID-19 [data repository][csse-data-repo], used in their [dashboard][john-hopki
 ### Western sahara
 
 |![Western sahara](forecast_plots/western sahara_SIRClosedForm.png)|
-|:----------------------------------------:|
-| *Latest data point: 18-04-2020*|
-
-
-### World
-
-|![World](forecast_plots/world_aggregate.png)|
 |:----------------------------------------:|
 | *Latest data point: 18-04-2020*|
 
