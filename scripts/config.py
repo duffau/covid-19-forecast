@@ -1,4 +1,5 @@
 import os
+from .start_params import *
 
 THIS_DIR = os.path.dirname(os.path.realpath(__file__))
 DATA_DIR = os.path.join(THIS_DIR, '../data')
@@ -28,3 +29,10 @@ FORECAST_INFO_DIR = os.path.join(DATA_DIR, 'forecasts', 'info')
 
 FORECAST_PLOT_FOLDER = os.path.join(THIS_DIR, '../forecast_plots')
 README_FILE = os.path.join(THIS_DIR, '../README.md')
+
+# Forecast config
+N_DAYS_PREDICT = 400
+COUNTRIES = ['Denmark', 'Iran', 'Spain', 'Italy', 'Sweden']
+SKIP_COUNTRIES = []
+SEED = 43
+START_PARAMS = SIR_CF_START_PARAMS
