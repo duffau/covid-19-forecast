@@ -5,6 +5,19 @@ title: Analysis Changelog
 
 {%- include mathjax.html -%}
 
+## SIR Closed form - time varying parameters - Sunday 19/4
+
+In the script [fit_time_series_sir.py](analysis/fit_time_series_sir.py) I'm experimenting with
+the a model with time varying parameters $b$ and $c$ from [Bohner et al (2018)] example
+model defined in equation (10) which is an application of their main theorem.
+
+This model is a discrete time version of a their dynamic SIR model in equation (8). The
+plot below is their solution to $I(t)$ ($y(t)$ in the paper) where b(t) is a sine wave and 
+$c(t)$ is a cosine wave. The model has no practical use but is just to check the
+time varying parameters work.
+
+![](changelog_img/19-04-2020/varying_params.png)
+
 ## SIR Closed form - parameter relation - Sunday 19/4
 
 I have investigated whether the parameters of the two SIR-models, the one from [Bohner et al (2018)]
@@ -15,7 +28,8 @@ to simulated data from the classical SIR model where $\beta$ and $\gamma$ are kn
 ![](changelog_img/19-04-2020/beta_b_relation.png)
 
 In the above plot is the relation between the classical $\beta$ and $b$ parameter for different
-values of $\gamma$, coming from the simulating and fitting procedure.
+values of $\gamma$, coming from the simulating and fitting procedure. The code for the 
+analysis can be found [here](analysis/fit_sir_closed_form_beta_dependence.py).
 
 ## SIR Closed form solution - Wednesday 15/4
 
