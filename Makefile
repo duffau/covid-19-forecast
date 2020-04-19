@@ -5,6 +5,8 @@ from-calc-forecast: calc-forecast plot-forecast make-readme deploy-github
 from-plot: plot-forecast make-readme deploy-github
 from-readme: make-readme deploy-github
 
+to-plot-forecast: get-data data-prep calc-forecast plot-forecast
+
 
 get-data :
 	${PIPENV_RUN} scripts/download_cssegi_sand_data.py
