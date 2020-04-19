@@ -5,6 +5,18 @@ title: Analysis Changelog
 
 {%- include mathjax.html -%}
 
+## SIR Closed form - parameter relation - Sunday 19/4
+
+I have investigated whether the parameters of the two SIR-models, the one from [Bohner et al (2018)]
+reproduced in euqation \eqref{bohner-sir} and the classical one \eqref{classic-sir}, have any
+simple relationship. To that end, I have fitted the closed form equation for $I(t)$ \eqref{eq:infected-closed-form}
+to simulated data from the classical SIR model where $\beta$ and $\gamma$ are known.  
+
+![](changelog_img/19-04-2020/beta_b_relation.png)
+
+In the above plot is the relation between the classical $\beta$ and $b$ parameter for different
+values of $\gamma$, coming from the simulating and fitting procedure.
+
 ## SIR Closed form solution - Wednesday 15/4
 
 Implemented the closed form solution to the SIR model from [Bohner et al (2018)]. 
@@ -12,22 +24,24 @@ In the article they claim to find the solution to the classic SIR model of
 [Bailey (1975)]. In equation (1) they define the model as,
 
 $$
-\begin{align*}
+\begin{align}
+\label{bohner-sir}
 \frac{dS}{dt} &= -b \frac{IS}{I + S} \\\\
 \frac{dI}{dt} &= b \frac{IS}{I + S} - cI \\\\
 \frac{dR}{dt} &= cI
-\end{align*}
+\end{align}
 $$
 
 with $b,c>0$ and $S + I + R = N$, where I have translated their notation. 
 This model seems to be different than the [classical model](https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology#Bio-mathematical_deterministic_treatment_of_the_SIR_model),
  
 $$ 
-\begin{align*}
+\begin{align}
+\label{classic-sir}
 \frac{dS}{dt} &= -\beta \frac{IS}{N} \\\\
 \frac{dI}{dt} &= \beta \frac{IS}{N} - \gamma I \\\\
 \frac{dR}{dt} &= \gamma I
-\end{align*}
+\end{align}
 $$
 
 with $\beta,\gamma>0$ and $S + I + R = N$. [Bohner et al (2018)] do write that, the model
