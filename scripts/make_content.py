@@ -23,7 +23,7 @@ BASE_TEMPLATE = '''
 {_refs}
 '''
 PLOT_TOC_ENTRY_TEMPLATE = '- [{country}](#{country_link})'
-PLOT_CELL_TEMPLATE = '''### {country}\n|![{country}]({file_path})|\n|:----------------------------------------:|\n| *Latest data point: {latest_data_point}*|'''
+PLOT_CELL_TEMPLATE = '''### {country}\n\n|![{country}]({file_path})|\n|:----------------------------------------:|\n| *Latest data point: {latest_data_point}*|'''
 
 
 def make_plots_markdown(plot_paths: List[str], latest_data_point_dates: List[datetime]):
