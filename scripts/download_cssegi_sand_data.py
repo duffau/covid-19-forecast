@@ -28,7 +28,7 @@ def main():
         csv_file_path = op.join(out_dir, filename)
         with open(csv_file_path, 'wb') as csv_file:
             csv_file.write(resp.content)
-        time.sleep(2)
+        time.sleep(1)
 
 
 if __name__ == '__main__':
