@@ -22,7 +22,7 @@ BASE_TEMPLATE = '''
 
 {_refs}
 '''
-PLOT_TOC_ENTRY_TEMPLATE = '- [{country}](#{country})'
+PLOT_TOC_ENTRY_TEMPLATE = '- [{country}](#{country_link})'
 PLOT_CELL_TEMPLATE = '''### {country}\n|![{country}]({file_path})|\n|:----------------------------------------:|\n| *Latest data point: {latest_data_point}*|'''
 
 
@@ -42,7 +42,10 @@ def make_plot_toc(plot_paths: List[str]):
     plot_toc_entries = []
     for plot_path in plot_paths:
         country = extract_country(plot_path)
-        plot_toc_entries.append(PLOT_TOC_ENTRY_TEMPLATE.format(country=country))
+        plot_toc_entries.append(PLOT_TOC_ENTRY_TEMPLATE.format(
+            country=country,
+            country_link=country.lower().replace(' ', '-')
+        ))
     return plot_toc_entries
 
 
