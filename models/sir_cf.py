@@ -9,8 +9,8 @@ import numpy as np
 
 
 class SIRClosedForm(Model):
-    FIT_PARAMS_UPPER = np.array([5.0, 5.0, 1.0, 1.0, 100.0])
-    FIT_PARAMS_LOWER = np.array([0.0, 0.0, 0.0, 0.0, 0.0])
+    FIT_PARAMS_UPPER = np.array([5.0, 0.7, 1.0, 1.0, 100.0])
+    FIT_PARAMS_LOWER = np.array([0.0, 0.17, 0.0, 0.0, 0.0])
 
     def __init__(self, params: SIRCFParams=None, seed=42):
         if not params:
