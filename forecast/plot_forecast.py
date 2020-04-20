@@ -132,7 +132,7 @@ def format_date(date):
 
 
 def format_counts_long(count):
-    if count is not None:
+    if not np.isnan(count):
         if count < 1e5:
             return format(int(count), ',')
         elif count < 1e6:
