@@ -26,7 +26,6 @@ logger = logging.getLogger(__name__)
 def run(csv_file_paths: List[str],
         known_errors: Union[KnownErrors, None],
         world_pop_file: str,
-        world_hosp_beds_file: str,
         output_file: str, ):
     dfs = []
     for csv_file_path in csv_file_paths:
@@ -86,18 +85,6 @@ def add_population(df, df_pop):
     nan_countries = df.country[pd.isna(df.population)].unique()
     nan_countries = "\n".join(nan_countries)
     logger.info(f'\nCountries with NAN population:\n{nan_countries}')
-    return df
-
-
-def add_hosp_beds(df, df_beds):
-    print('Adding hospital beds variable ...')
-    df = fuz.fuzzy_left_merge(df, df_beds[['Country Name', 'Fact']], left_on='country', right_on='Country Name')
-    df = df.drop('Country Name', axis=1)
-    df = df.rename(columns={'Fact': 'hospital_beds_per_thousand_cap'})
-    df['hospital_beds_total'] = df.population * df.hospital_beds_per_thousand_cap / 1000
-    nan_countries = df.country[pd.isna(df.hospital_beds_total)].unique()
-    nan_countries = "\n".join(nan_countries)
-    logger.info(f'\nCountries with NAN hospital_beds_total:\n{nan_countries}')
     return df
 
 
