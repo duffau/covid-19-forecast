@@ -1,6 +1,7 @@
 import logging
 import pandas as pd
 import os.path as op
+import os
 import pickle
 from datetime import datetime
 from models import SIRClosedForm as Model
@@ -38,6 +39,7 @@ def main():
     )
     update_time = datetime.now().strftime('%Y-%m-%d')
 
+    os.makedirs(out_time_series_folder, exist_ok=True)
     forecast_file_path = op.join(out_time_series_folder, update_time + '.pickle')
     with open(forecast_file_path, 'wb') as forecast_file:
         pd.to_pickle(df_forecasts, forecast_file)
