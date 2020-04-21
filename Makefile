@@ -12,7 +12,6 @@ to-plot-forecast: get-data data-prep calc-forecast plot-forecast
 get-data :
 	${PIPENV_RUN} scripts/download_cssegi_sand_data.py
 	${PIPENV_RUN} scripts/download_population_world_bank.py
-	${PIPENV_RUN} scripts/download_hospital_beds_world_bank.py
 
 data-prep :
 	${PIPENV_RUN} scripts/run_data_prep.py

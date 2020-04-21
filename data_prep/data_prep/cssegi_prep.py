@@ -34,7 +34,6 @@ def run(csv_file_paths: List[str],
         var_name = extract_var_name(csv_file_path)
         df = pd.read_csv(csv_file_path)
         df = append_x_to_date_columns(df)
-        df.info()
         df = pd.wide_to_long(df, stubnames=['x'], i=['Province/State', 'Country/Region'], j='date', suffix=COL_DATE_RE_PATTERN)
         df.reset_index(inplace=True)
         df.rename(columns={'x': var_name}, inplace=True)
@@ -49,9 +48,6 @@ def run(csv_file_paths: List[str],
 
     df_world_pop = utils.read_data(world_pop_file)
     df = add_population(df, df_world_pop)
-
-    df_world_hosp_beds = utils.read_data(world_hosp_beds_file)
-    df = add_hosp_beds(df, df_world_hosp_beds)
 
     df = utils.construct_sir_variables(
         df,
