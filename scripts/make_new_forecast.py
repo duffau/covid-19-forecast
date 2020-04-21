@@ -44,6 +44,7 @@ def main():
     with open(forecast_file_path, 'wb') as forecast_file:
         pd.to_pickle(df_forecasts, forecast_file)
 
+    os.makedirs(out_info_folder, exist_ok=True)
     forecast_infos_file_path = op.join(out_info_folder, update_time + '.pickle')
     with open(forecast_infos_file_path, 'wb') as forecast_info_file:
         pickle.dump(forecast_info_collection, forecast_info_file)
