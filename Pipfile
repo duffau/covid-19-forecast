@@ -4,7 +4,6 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-matplotlib = "*"
 pytest = "*"
 pytest-cov = "*"
 pytest-mock = "*"
@@ -16,6 +15,7 @@ altair = "*"
 statsmodels = "*"
 fuzzywuzzy = "*"
 python-levenshtein = "*"
+matplotlib = "*"
 
 [requires]
 python_version = "3.6"
