@@ -1,5 +1,6 @@
 PIPENV_RUN := pipenv run python
 all : get-data data-prep calc-forecast plot-forecast content deploy
+pages: get-data data-prep calc-forecast plot-forecast content
 from-data-prep: data-prep calc-forecast plot-forecast content deploy
 from-calc-forecast: calc-forecast plot-forecast content deploy
 from-plot: plot-forecast content deploy
