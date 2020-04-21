@@ -30,7 +30,7 @@ class SIRClosedForm(Model):
             method='BFGS',
             options=_options
         )
-        print(res)
+        return res
 
     @property
     def free_params(self):

@@ -29,7 +29,7 @@ class SEIR(Model):
             method='Nelder-Mead',
             options=_options
         )
-        print(res)
+        return res
 
     @property
     def free_params(self):
