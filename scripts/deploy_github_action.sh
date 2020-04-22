@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
+git config user.name "$GITHUB_ACTOR"
+git config user.email "${GITHUB_ACTOR}@bots.github.com"
 
 repo_uri="https://x-access-token:${ACCESS_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+
+
 
 cd "$GITHUB_WORKSPACE"
 
