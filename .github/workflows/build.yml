@@ -26,3 +26,7 @@ jobs:
     - name: Build pages
       run: |
         PYTHONPATH=$PYTHONPATH:. make pages
+    - name: Deploy pages
+      run: ./scripts/deploy_github_action.sh
+      env:
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
