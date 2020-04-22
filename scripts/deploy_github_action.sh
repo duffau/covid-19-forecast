@@ -12,6 +12,7 @@ commit_msg="Deployed forecast ${date_str}"
 
 git add forecast_plots
 git commit -am "${commit_msg}"
+git tag -d $commit_tag
 git push $repo_uri -d $commit_tag
 git tag $commit_tag
 git push $repo_uri master --tags
