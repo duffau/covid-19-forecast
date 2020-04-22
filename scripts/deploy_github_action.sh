@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-set -eu
 
 repo_uri="https://x-access-token:${ACCESS_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
 
