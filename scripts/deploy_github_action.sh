@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -eu
+
 git config user.name "$GITHUB_ACTOR"
 git config user.email "${GITHUB_ACTOR}@bots.github.com"
 
@@ -15,10 +17,8 @@ commit_msg="Deployed forecast ${date_str}"
 
 git add forecast_plots
 git commit -am "${commit_msg}"
-git tag -d $commit_tag
-git push $repo_uri -d $commit_tag
-git tag $commit_tag
-git push $repo_uri master --tags
+git tag --force $commit_tag
+git push $repo_uri master -f --tags
 
 if [ $? -ne 0 ]; then
     echo "nothing to commit"
