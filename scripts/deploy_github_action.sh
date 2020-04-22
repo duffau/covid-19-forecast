@@ -7,8 +7,8 @@ repo_uri="https://x-access-token:${ACCESS_TOKEN}@github.com/${GITHUB_REPOSITORY}
 cd "$GITHUB_WORKSPACE"
 
 date_str=$(date +%Y-%m-%d)
-commit_tag = v$date_str
-commit_msg = "Deployed forecast ${date_str}"
+commit_tag=v$date_str
+commit_msg="Deployed forecast ${date_str}"
 
 git add forecast_plots
 git commit -am "${commit_msg}"
