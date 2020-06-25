@@ -7,7 +7,7 @@ The development of the estimation method is documented in the [CHANGELOG of the 
 
 The site is hosted here: https://duffau.github.io/covid-19-forecast/.
 ## Forecasts
-*Updated: 24-06-2020*
+*Updated: 25-06-2020*
 
 Forecasts are based on a variation of the simple [SIR model][sir_model_wiki] found 
 in the article of [Bohner et al (2018)].
